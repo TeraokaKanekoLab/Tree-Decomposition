@@ -7,6 +7,13 @@ g++ src/min-deg-heu.cpp -o min-deg-heu
 ./min-deg-heu <graph data file>
 ```
 
+If you want to try with a simple graph as an example, this might help.
+
+```
+g++ src/min-deg-heu.cpp -o min-deg-heu
+./min-deg-heu graph/simple_graph
+```
+
 ### Graph Data File Format
 The graph data files need to follow the rule below. `<endpoint n>` needs to be int (edge No.)
 
