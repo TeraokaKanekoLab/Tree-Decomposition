@@ -1,8 +1,15 @@
 # Graph Classification with Tree Decomposition
+## General
+We aim to classify graphs by exploiting the relation between the width and core size of core-tree-decomposition. The concept is well explained in Chap. 5 of [An Experimental Study of the Treewidth of Real-World Graph Data (Extended Version)](https://arxiv.org/pdf/1901.06862.pdf). The final goal is to find out some parameter or feature from such charts as Figure 6 in the paper that describes the characteristics of the grahs.
+
+## C++ Version
+We recommend to use C++ 20 when you run the codes.
+
 ## Git Clone to Your Local Machine
 ```
 git clone https://github.com/TeraokaKanekoLab/Tree-Decomposition.git
 ```
+
 ## How to Run the Program
 ### Compile and Execute
 
