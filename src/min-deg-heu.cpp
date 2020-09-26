@@ -37,7 +37,7 @@ struct node {
     std::vector<int> endpoints;
 };
 
-// we are doing operator overloading through this
+// We are doing operator overloading through this
 // if node A's degree is smaller than node B's, we consider node A "bigger" than node B
 // this funciton is for sorting all nodes in increasing order of degree.
 // if n1 and n2 have the same degree, node with smaller number is "bigger"
