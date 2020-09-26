@@ -8,7 +8,7 @@ g++ src/min-deg-heu.cpp -o min-deg-heu
 ```
 
 ### Graph Data File Format
-The graph data files need to follow the rule below. <endpoint n> needs to be int (edge No.)
+The graph data files need to follow the rule below. `<endpoint n>` needs to be int (edge No.)
 
 ```
 <# of nodes> <# of edges>
