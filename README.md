@@ -1,4 +1,8 @@
 # Graph Classification with Tree Decomposition
+## Git Clone to Your Local Machine
+```
+git clone https://github.com/TeraokaKanekoLab/Tree-Decomposition.git
+```
 ## How to Run the Program
 ### Compile and Execute
 
