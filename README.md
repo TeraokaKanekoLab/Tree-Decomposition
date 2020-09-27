@@ -36,7 +36,6 @@ g++ src/min-deg-heu.cpp -o min-deg-heu
 The graph data files need to follow the rule below. `<endpoint n>` needs to be int (edge No.)
 
 ```
-<# of nodes> <# of edges>
 <endpoint 1> <endpoint 2>
 <endpoint 3> <endpoint 4>
 .
@@ -50,7 +49,6 @@ Let's say there is a graph like this.
 The following data (`graph/simple_graph.txt`) represents this simple graph with 9 nodes and 12 edges, which are <0, 1>, ..., <6, 8>.
 
 ```
-9 12
 0 1
 0 2
 1 2
