@@ -67,28 +67,6 @@ struct graph {
             adj_matrix.push_back(there_edge);
         }
 
-        // initialize all nodes
-        for (int i = 0; i < num_nodes; ++i) {
-            node new_node;
-            new_node.degree = 0;
-            new_node.number = i;
-            new_node.is_hub = false;
-            nodes.push_back(new_node);
-        }
-
-        // save edge information to each node
-        for (int i = 0; i < num_edges; ++i) {
-            int ep1, ep2;
-            graph_data >> ep1 >> ep2;
-            nodes[ep1].degree++;
-            nodes[ep1].key_degree++;
-            nodes[ep1].endpoints.push_back(ep2);
-            nodes[ep2].key_degree++;
-            nodes[ep2].endpoints.push_back(ep1);
-            adj_matrix[ep1][ep2] = true;
-            adj_matrix[ep2][ep1] = true;
-        }
-
         graph_data.close();
     }
 };
