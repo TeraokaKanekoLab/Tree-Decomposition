@@ -47,6 +47,8 @@ struct graph {
 
     void make_graph()
     {
+        for (auto e : edges)
+            num_nodes = max(num_nodes, max(e.first, e.second) + 1);
     }
 
     void read_edges(string filename)
@@ -58,15 +60,13 @@ struct graph {
             exit(-1);
         }
 
-        // create adjancy matrix
-        for (int i = 0; i < num_nodes; ++i) {
-            vector<bool> there_edge;
-            for (int i = 0; i < num_nodes; ++i) {
-                there_edge.push_back(false);
-            }
-            adj_matrix.push_back(there_edge);
+        // Read edge information from file
+        int u, v;
+        while (graph_data >> u >> v) {
+            add_edge(u, v);
+            num_nodes = max(num_nodes, max(u, v) + 1);
+            num_edges++;
         }
-
         graph_data.close();
     }
 };
@@ -96,6 +96,9 @@ int main(int argc, char* argv[])
         cout << "usage: " << argv[0] << " <filename>" << endl;
         exit(-1);
     }
+
+    graph g;
+    g.read_edges(argv[1]);
 
     return 0;
 }
