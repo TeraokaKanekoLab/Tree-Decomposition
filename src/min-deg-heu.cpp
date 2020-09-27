@@ -76,6 +76,12 @@ struct graph {
         }
         graph_data.close();
     }
+
+    void print_info()
+    {
+        cout << "nodes: " << num_nodes << ", edges: " << num_edges << endl;
+        return;
+    }
 };
 
 void solve(graph g)
@@ -101,8 +107,9 @@ int main(int argc, char* argv[])
 
     graph g;
     g.read_edges(argv[1]);
-    g.make_graph();
-    solve(g);
+    // g.make_graph();
+    // solve(g);
+    g.print_info();
 
     return 0;
 }
