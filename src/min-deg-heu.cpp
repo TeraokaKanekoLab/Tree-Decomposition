@@ -78,25 +78,6 @@ struct graph {
     }
 };
 
-void print_adj_matrix(int num_nodes, const vector<vector<bool>>& adj_matrix)
-{
-    cout << "  ";
-    for (int i = 0; i < num_nodes; ++i) {
-        cout << i << " ";
-    }
-    cout << endl;
-    for (int i = 0; i < num_nodes; ++i) {
-        cout << i << " ";
-        for (int j = 0; j < num_nodes; ++j) {
-            if (adj_matrix[i][j])
-                cout << "1 ";
-            else
-                cout << "0 ";
-        }
-        cout << endl;
-    }
-}
-
 int main(int argc, char* argv[])
 {
     if (argc != 2) {
