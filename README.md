@@ -5,8 +5,9 @@ We aim to classify graphs by exploiting the relation between the width and core 
 ## Version History
 | Version | Date  | Commit | Notes |
 | :-----: | :-: | :-: | :-: |
-| **1.0** | September 26, 2020 | [9937d5a](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/9937d5a5b84864d6940aa1f04f197c1cc46925f9) | Read graph data and create a correct `std::vector` |
-| 1.1 | September 26, 2020 | [e4a2749](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/e4a2749e97babef9878898a89a98953fc08d581d) | Updated `README.md` |
+| 0.1 | September 26, 2020 | [9937d5a](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/9937d5a5b84864d6940aa1f04f197c1cc46925f9) | Read graph data and create a correct `std::vector` |
+| 0.1.1 | September 26, 2020 | [e4a2749](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/e4a2749e97babef9878898a89a98953fc08d581d) | Updated `README.md` |
+| 0.2 | September 27, 2020 | [b820dc5](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/b820dc59d32b19a977b60574ae9c212071448a31) | Cleaned code and started again |
 
 
 ## C++ Version
@@ -29,7 +30,7 @@ If you want to try with a simple graph as an example, this might help.
 
 ```
 g++ src/min-deg-heu.cpp -o min-deg-heu
-./min-deg-heu graph/simple_graph
+./min-deg-heu graph/simple_graph.txt
 ```
 
 ### Graph Data File Format
