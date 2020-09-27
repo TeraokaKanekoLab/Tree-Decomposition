@@ -78,6 +78,20 @@ struct graph {
     }
 };
 
+void solve(graph g)
+{
+    typedef pair<int, int> node; // (deg, vertex)
+    int tree_width = 0;
+    vector<int> parent;
+    priority_queue<node, vector<node>, greater<node>> Q;
+
+    parent.resize(g.num_nodes);
+    for (int u = 0; u < g.num_nodes; ++u) {
+        parent[u] = u;
+        Q.push(node(g.adj[u].size(), u));
+    }
+}
+
 int main(int argc, char* argv[])
 {
     if (argc != 2) {
@@ -87,6 +101,8 @@ int main(int argc, char* argv[])
 
     graph g;
     g.read_edges(argv[1]);
+    g.make_graph();
+    solve(g);
 
     return 0;
 }
