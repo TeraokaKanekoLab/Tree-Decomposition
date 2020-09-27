@@ -53,7 +53,7 @@ struct graph {
         }
         for (vector<int> nbh : adj) {
             sort(nbh.begin(), nbh.end()); // sort endpoint indices in case edges are not sorted in the file as we expect
-            nbh.erase(unique(nbh.begin(), nbh.end()), nbh.end());
+            nbh.erase(unique(nbh.begin(), nbh.end()), nbh.end()); // classic way of erasing duplicates;
         }
     }
 
