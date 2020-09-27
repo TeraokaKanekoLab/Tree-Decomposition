@@ -34,7 +34,7 @@ struct graph {
     // We expect the number of nodes and that of edges are both under INT_MAX = 2,147,483,647
     // on the assumption that the biggest number in https://snap.stanford.edu/data/ is 1,806,067,135 of com-Friendster.
     // We consider int type suitable for this situation.
-    int num_nodes = 0;
+    int num_nodes = 0; // This value may be different from the official number of nodes.
     int num_edges = 0;
     vector<vector<int>> adj;
     vector<pair<int, int>> edges;
