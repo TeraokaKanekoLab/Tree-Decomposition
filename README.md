@@ -3,9 +3,10 @@
 We aim to classify graphs by exploiting the relation between the width and core size of core-tree-decomposition. The concept is well explained in Chap. 5 of [An Experimental Study of the Treewidth of Real-World Graph Data (Extended Version)](https://arxiv.org/pdf/1901.06862.pdf). The final goal is to find out some parameter or feature from such charts as Figure 6 in the paper that describes the characteristics of the grahs.
 
 ## Version History
-| Version | Date  | Notes |
-| :-----: | :-: | :-: |
-| **1.0** | September 26, 2020 | Read graph data and create a correct `std::vector` |
+| Version | Date  | Commit | Notes |
+| :-----: | :-: | :-: | :-: |
+| **1.0** | September 26, 2020 | [9937d5a](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/9937d5a5b84864d6940aa1f04f197c1cc46925f9) | Read graph data and create a correct `std::vector` |
+| 1.1 | September 26, 2020 | [e4a2749](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/e4a2749e97babef9878898a89a98953fc08d581d) | Updated `README.md` |
 
 
 ## C++ Version
