@@ -20,14 +20,13 @@ Copyright © 2020 Cirus Thenter. All rights reserved?
 <endpoint n> needs to be int (edge No.)
 */
 
+#include <algorithm>
 #include <fstream>
 #include <iostream>
 #include <queue>
 #include <set>
 #include <string>
 #include <vector>
-
-#define TREE_WIDTH 2
 
 using namespace std;
 
@@ -37,7 +36,7 @@ struct graph {
     // We consider int type suitable for this situation.
     int num_nodes = 0;
     int num_edges = 0;
-    vector<vector<bool>> adj_matrix;
+    vector<vector<int>> adj;
     vector<pair<int, int>> edges;
 
     void add_edge(int u, int v)
@@ -47,8 +46,15 @@ struct graph {
 
     void make_graph()
     {
-        for (auto e : edges)
-            num_nodes = max(num_nodes, max(e.first, e.second) + 1);
+        adj.resize(num_nodes);
+        for (pair<int, int> e : edges) {
+            adj[e.first].push_back(e.second);
+            adj[e.second].push_back(e.first);
+        }
+        for (vector<int> nbh : adj) {
+            sort(nbh.begin(), nbh.end()); // sort endpoint indices in case edges are not sorted in the file as we expect
+            nbh.erase(unique(nbh.begin(), nbh.end()), nbh.end());
+        }
     }
 
     void read_edges(string filename)
@@ -64,6 +70,7 @@ struct graph {
         int u, v;
         while (graph_data >> u >> v) {
             add_edge(u, v);
+            // compute number of nodes (|V|) and number of edges (|E|)
             num_nodes = max(num_nodes, max(u, v) + 1);
             num_edges++;
         }
