@@ -81,10 +81,10 @@ struct graph {
         }
         graph_data.close();
     }
+
     vector<int> parent;
     int root(int v)
-    {
-        // union-find data structure
+    { // union-find data structure
         if (parent[v] == v || parent[v] == -1)
             return v;
         return parent[v] = root(parent[v]);
@@ -101,13 +101,14 @@ struct graph {
         vector<int> nbh;
         normalize(adj[u]);
         for (auto v : adj[u]) {
-            if (parent[v] == v)
+            if (parent[v] == v) {
                 nbh.push_back(v);
-            else {
+            } else {
                 normalize(adj[v]);
                 for (auto w : adj[v]) {
-                    if (parent[w] == w)
+                    if (parent[w] == w) {
                         nbh.push_back(w);
+                    }
                 }
             }
         }
