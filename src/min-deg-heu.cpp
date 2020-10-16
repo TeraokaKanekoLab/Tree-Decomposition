@@ -139,15 +139,15 @@ struct graph {
                 Q.push({ nbh.size(), u });
                 continue;
             }
-            remove_cnt++;
             int true_deg = (int)nbh.size();
             if (true_deg > tree_width) {
                 if (tree_width == 0) {
-                    true_num_nodes = num_nodes - (remove_cnt - 1);
+                    true_num_nodes = num_nodes - remove_cnt;
                     cout << "true num_nodes: " << true_num_nodes << endl;
                 }
                 tree_width = true_deg;
             }
+            remove_cnt++;
         }
     }
 
