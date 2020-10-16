@@ -121,6 +121,8 @@ struct graph {
         int tree_width = 0;
         parent.resize(num_nodes);
         priority_queue<node, vector<node>, greater<node>> Q;
+        int true_num_nodes = num_nodes;
+        int remove_cnt = 0;
 
         for (int u = 0; u < num_nodes; ++u) {
             parent[u] = u;
@@ -137,8 +139,15 @@ struct graph {
                 Q.push({ nbh.size(), u });
                 continue;
             }
-            tree_width = max(tree_width, (int)nbh.size());
-            cout << "node " << u << " width: " << tree_width << endl;
+            remove_cnt++;
+            int true_deg = (int)nbh.size();
+            if (true_deg > tree_width) {
+                if (tree_width == 0) {
+                    true_num_nodes = num_nodes - (remove_cnt - 1);
+                    cout << "true num_nodes: " << true_num_nodes << endl;
+                }
+                tree_width = true_deg;
+            }
         }
     }
 
