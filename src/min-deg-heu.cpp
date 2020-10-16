@@ -21,7 +21,12 @@ Copyright © 2020 Cirus Thenter. All rights reserved?
 */
 
 #include <algorithm>
+#include <cassert>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 #include <fstream>
+#include <functional>
 #include <iostream>
 #include <queue>
 #include <set>
@@ -76,6 +81,65 @@ struct graph {
         }
         graph_data.close();
     }
+    vector<int> parent;
+    int root(int v)
+    {
+        // union-find data structure
+        if (parent[v] == v || parent[v] == -1)
+            return v;
+        return parent[v] = root(parent[v]);
+    }
+    void normalize(vector<int>& S)
+    {
+        for (auto& v : S)
+            v = root(v);
+        sort(S.begin(), S.end());
+        S.erase(unique(S.begin(), S.end()), S.end());
+    }
+    vector<int> neighbor(int u)
+    {
+        vector<int> nbh;
+        normalize(adj[u]);
+        for (auto v : adj[u]) {
+            if (parent[v] == v)
+                nbh.push_back(v);
+            else {
+                normalize(adj[v]);
+                for (auto w : adj[v]) {
+                    if (parent[w] == w)
+                        nbh.push_back(w);
+                }
+            }
+        }
+        normalize(nbh);
+        return nbh;
+    }
+    void solve()
+    {
+        typedef pair<int, int> node; // (deg, vertex)
+        int tree_width = 0;
+        parent.resize(num_nodes);
+        priority_queue<node, vector<node>, greater<node>> Q;
+
+        for (int u = 0; u < num_nodes; ++u) {
+            parent[u] = u;
+            Q.push(node(adj[u].size(), u));
+        }
+        while (!Q.empty()) {
+
+            int deg = Q.top().first;
+            int u = Q.top().second;
+            Q.pop();
+
+            vector<int> nbh = neighbor(u); // get all the neighbours
+            if (nbh.size() > deg) { // if true degree is larger than the degree
+                Q.push({ nbh.size(), u });
+                continue;
+            }
+            tree_width = max(tree_width, (int)nbh.size());
+            cout << "node " << u << " width: " << tree_width << endl;
+        }
+    }
 
     void print_info()
     {
@@ -83,20 +147,6 @@ struct graph {
         return;
     }
 };
-
-void solve(graph g)
-{
-    typedef pair<int, int> node; // (deg, vertex)
-    int tree_width = 0;
-    vector<int> parent;
-    priority_queue<node, vector<node>, greater<node>> Q;
-
-    parent.resize(g.num_nodes);
-    for (int u = 0; u < g.num_nodes; ++u) {
-        parent[u] = u;
-        Q.push(node(g.adj[u].size(), u));
-    }
-}
 
 int main(int argc, char* argv[])
 {
@@ -107,9 +157,9 @@ int main(int argc, char* argv[])
 
     graph g;
     g.read_edges(argv[1]);
-    // g.make_graph();
-    // solve(g);
-    g.print_info();
+    // g.print_info();
+    g.make_graph();
+    g.solve();
 
     return 0;
 }
