@@ -11,6 +11,7 @@ We aim to classify graphs by exploiting the relation between the width and core 
 | 0.2.1 | September 27, 2020 | [f0f5563](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/f0f5563b63ae23d8ee8f05ac9e721cc586fef09d) | Read edges and compute num_nodes and num_edges |
 | **0.3** | September 27, 2020 | [0d1879e](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/0d1879eec149104f052d95b716501207b946274c) | Completed `strcut graph` |
 |**0.4**| October 16, 2020 | [600f395](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/600f395f6bbf65ea4a9f0ea1fc9e4db396ef91ae) | Show width when reducing each node |
+| 0.4.1 | October 16, 2020 | [75a7b4d](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/75a7b4d5009f667d1a721beff1fa5342cfb5da2f) | Count true # of nodes; confirmed with official data |
 
 ## C++ Version
 We recommend to use C++ 20 when you run the codes.
