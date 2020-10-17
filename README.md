@@ -14,7 +14,7 @@ We aim to classify graphs by exploiting the relation between the width and core 
 | 0.4.1 | October 16, 2020 | [75a7b4d](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/75a7b4d5009f667d1a721beff1fa5342cfb5da2f) | Count true # of nodes; confirmed with official data |
 | **0.5** | October 16, 2020 | [2de6338](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/2de6338050e060070e3f3355d7205318eea3a9ef) | Compute # of nodes removed and width at the time |
 | **0.6** | October 17, 2020 | [76d8af3](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/76d8af3aa179f340d622b98fb04dd0e489d6e29e) | Create output file that python can read |
-| **0.7** | October 17, 2020 | [e5d9f3d](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/e5d9f3dd3726b9595f88a161da9215519f081d68) | Added a python file for creating charts |
+| **0.7** | October 17, 2020 | [e5d9f3d](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/e5d9f3dd3726b9595f88a161da9215519f081d68) | Added a Python file for creating charts |
 
 ## C++ Version
 We recommend to use C++ 20 when you run the codes.
