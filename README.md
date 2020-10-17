@@ -49,7 +49,7 @@ The graph data files need to follow the rule below. `<endpoint n>` needs to be i
 ```
 
 Let's say there is a graph like this.
-![](https://ibb.co/b7RVZCH)
+![](https://i.ibb.co/g6F8pfv/images-dragged.jpg)
 
 The following data (`graph/simple_graph.txt`) represents this simple graph with 9 nodes and 12 edges, which are <0, 1>, ..., <6, 8>.
 
