@@ -8,7 +8,11 @@ def read_file():
         print("usage: python3", sys.argv[0], "<filename>")
         exit()
 
-    f = open(sys.argv[1], "r")
+    filepath = sys.argv[1]
+    f = open(filepath, "r")
+    idx = filepath.find("output/")
+    path = filepath[:idx]
+    filename = filepath[idx + 7:filepath.find(".txt")]
     lines = f.readlines()
     widths = []
     num_nodes = []
@@ -16,14 +20,16 @@ def read_file():
         width, num_node = map(int, line.split())
         widths.append(width)
         num_nodes.append(num_node)
-    return widths, num_nodes
+    return widths, num_nodes, path, filename
 
 
-def draw_chart(x_axis, y_axis):
+def draw_chart(x_axis, y_axis, path, filename):
     plt.plot(x_axis, y_axis)
-    plt.savefig('line_plot.pdf')
+    saved_name = path + "charts/" + filename + ".pdf"
+    print(saved_name)
+    plt.savefig(saved_name)
 
 
 if __name__ == '__main__':
-    width_array, num_nodes = read_file()
-    draw_chart(width_array, num_nodes)
+    width_array, num_nodes, path, filename = read_file()
+    draw_chart(width_array, num_nodes, path, filename)
