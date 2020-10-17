@@ -21,7 +21,7 @@ def read_file():
 
 def draw_chart(x_axis, y_axis):
     plt.plot(x_axis, y_axis)
-    plt.show()
+    plt.savefig('line_plot.pdf')
 
 
 if __name__ == '__main__':

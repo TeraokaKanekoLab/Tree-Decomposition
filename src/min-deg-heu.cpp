@@ -38,6 +38,7 @@ struct graph {
     vector<vector<int>> adj;
     vector<pair<int, int>> edges;
     string filename;
+    string path;
 
     void add_edge(int u, int v)
     {
@@ -60,7 +61,9 @@ struct graph {
     void read_edges(string file_name)
     {
         ifstream graph_data(file_name);
-        filename = file_name.substr(file_name.find("/") + 1);
+        int idx = file_name.find("graph/");
+        filename = file_name.substr(idx + 6);
+        path = file_name.substr(0, idx);
 
         if (!graph_data.good()) {
             cout << filename << ": file not found" << endl;
@@ -119,7 +122,7 @@ struct graph {
         priority_queue<node, vector<node>, greater<node>> Q;
         int true_num_nodes = num_nodes;
         int remove_cnt = 0;
-        ofstream output("output/" + filename);
+        ofstream output(path + "output/" + filename);
 
         for (int u = 0; u < num_nodes; ++u) {
             parent[u] = u;
