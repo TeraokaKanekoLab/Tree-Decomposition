@@ -37,6 +37,7 @@ struct graph {
     int num_edges = 0;
     vector<vector<int>> adj;
     vector<pair<int, int>> edges;
+    string filename;
 
     void add_edge(int u, int v)
     {
@@ -56,9 +57,10 @@ struct graph {
         }
     }
 
-    void read_edges(string filename)
+    void read_edges(string file_name)
     {
-        ifstream graph_data(filename);
+        ifstream graph_data(file_name);
+        filename = file_name.substr(file_name.find("/") + 1);
 
         if (!graph_data.good()) {
             cout << filename << ": file not found" << endl;
@@ -117,6 +119,7 @@ struct graph {
         priority_queue<node, vector<node>, greater<node>> Q;
         int true_num_nodes = num_nodes;
         int remove_cnt = 0;
+        ofstream output("output/" + filename);
 
         for (int u = 0; u < num_nodes; ++u) {
             parent[u] = u;
@@ -139,15 +142,20 @@ struct graph {
                     true_num_nodes = num_nodes - remove_cnt;
                     cout << "true num_nodes: " << true_num_nodes << endl;
                     remove_cnt = 0; // reset the count; we don't need nodes that have 0 edge
-                } else
-                    cout << tree_width << ", # of nodes removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)" << endl;
+                } else {
+                    cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)" << endl;
+                    output << tree_width << " " << remove_cnt << endl;
+                }
                 tree_width = true_deg;
             }
             remove_cnt++;
         }
+        cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)" << endl;
+        output << tree_width << " " << remove_cnt << endl;
     }
 
-    void print_info()
+    void
+    print_info()
     {
         cout << "nodes: " << num_nodes << ", edges: " << num_edges << endl;
         return;
