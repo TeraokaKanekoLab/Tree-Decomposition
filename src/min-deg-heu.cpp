@@ -74,7 +74,6 @@ struct graph {
         string tp;
         streampos oldpos = graph_data.tellg();
         while (getline(graph_data, tp)) {
-            cout << tp << endl;
             if (tp.find("#") == string::npos) {
                 graph_data.seekg(oldpos);
                 break;
@@ -84,8 +83,6 @@ struct graph {
             // compute number of nodes (|V|) and number of edges (|E|)
             // num_nodes = max(num_nodes, max(u, v) + 1);
             num_edges++;
-            if (num_edges > 10)
-                exit(0);
         }
 
         // start reading edge information from file
