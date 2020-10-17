@@ -70,7 +70,25 @@ struct graph {
             exit(-1);
         }
 
-        // Read edge information from file
+        // ignore commented out lines
+        string tp;
+        streampos oldpos = graph_data.tellg();
+        while (getline(graph_data, tp)) {
+            cout << tp << endl;
+            if (tp.find("#") == string::npos) {
+                graph_data.seekg(oldpos);
+                break;
+            }
+            oldpos = graph_data.tellg();
+            // add_edge(u, v);
+            // compute number of nodes (|V|) and number of edges (|E|)
+            // num_nodes = max(num_nodes, max(u, v) + 1);
+            num_edges++;
+            if (num_edges > 10)
+                exit(0);
+        }
+
+        // start reading edge information from file
         int u, v;
         while (graph_data >> u >> v) {
             add_edge(u, v);
