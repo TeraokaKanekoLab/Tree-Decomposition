@@ -92,7 +92,7 @@ struct graph {
             // compute number of nodes (|V|) and number of edges (|E|)
             num_nodes = max(num_nodes, max(u, v) + 1);
             num_edges++;
-            if (num_edges % 100000 == 0)
+            if (num_edges % 10000000 == 0)
                 cout << num_edges << endl;
         }
         graph_data.close();
