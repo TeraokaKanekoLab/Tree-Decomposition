@@ -21,15 +21,9 @@ Copyright © 2020 Cirus Thenter. All rights reserved?
 */
 
 #include <algorithm>
-#include <cassert>
-#include <cstdio>
-#include <cstdlib>
-#include <cstring>
 #include <fstream>
-#include <functional>
 #include <iostream>
 #include <queue>
-#include <set>
 #include <string>
 #include <vector>
 
@@ -146,7 +140,7 @@ struct graph {
                     cout << "true num_nodes: " << true_num_nodes << endl;
                     remove_cnt = 0; // reset the count; we don't need nodes that have 0 edge
                 } else
-                    cout << "width " << tree_width << ", # of nodes removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)" << endl;
+                    cout << tree_width << ", # of nodes removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)" << endl;
                 tree_width = true_deg;
             }
             remove_cnt++;
