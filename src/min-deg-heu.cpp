@@ -151,7 +151,7 @@ struct graph {
         }
     }
 
-    void solve()
+    void decompose()
     {
         typedef pair<int, int> node; // (deg, vertex)
         int tree_width = 0;
@@ -165,6 +165,7 @@ struct graph {
             parent[u] = u;
             Q.push(node(adj[u].size(), u));
         }
+
         while (!Q.empty()) {
 
             int deg = Q.top().first;
@@ -177,29 +178,50 @@ struct graph {
                 continue;
             }
             int true_deg = (int)nbh.size();
-            if (true_deg > tree_width) {
-                if (tree_width == 0) {
-                    true_num_nodes = num_nodes - remove_cnt;
-                    cout << "true num_nodes: " << true_num_nodes << endl;
-                    remove_cnt = 0; // reset the count; we don't need nodes that have 0 edge
-                } else {
-                    cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)" << endl;
-                    output << tree_width << " " << remove_cnt << endl;
-                }
-                tree_width = true_deg;
-            }
-            remove_cnt++;
+            // print_neighbor(u, nbh);
+            update_width(true_deg, tree_width, true_num_nodes, remove_cnt, output);
             contract(u);
         }
+        export_info(tree_width, remove_cnt, true_num_nodes, output);
+        output.close();
+    }
+
+    void update_width(int& true_deg, int& tree_width, int& true_num_nodes, int& remove_cnt, ofstream& output)
+    {
+        if (true_deg > tree_width) {
+            if (tree_width == 0) {
+                true_num_nodes = num_nodes - remove_cnt;
+                cout << "true num_nodes: " << true_num_nodes << endl;
+                remove_cnt = 0; // reset the count; we don't need nodes that have 0 edge
+            } else
+                export_info(tree_width, remove_cnt, true_num_nodes, output);
+            tree_width = true_deg;
+        }
+        remove_cnt++;
+    }
+
+    void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output)
+    {
         cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)" << endl;
         output << tree_width << " " << remove_cnt << endl;
-        output.close();
     }
 
     void print_info()
     {
         cout << "nodes: " << num_nodes << ", edges: " << num_edges << endl;
         return;
+    }
+
+    void print_neighbor(int u, vector<int> nbh)
+    {
+        cout << u << ": [";
+        for (int i = 0; i < nbh.size(); ++i) {
+            if (i == nbh.size() - 1)
+                cout << nbh[i];
+            else
+                cout << nbh[i] << ", ";
+        }
+        cout << "]" << endl;
     }
 };
 
@@ -212,9 +234,8 @@ int main(int argc, char* argv[])
 
     graph g;
     g.read_edges(argv[1]);
-    // g.print_info();
     g.make_graph();
-    g.solve();
+    g.decompose();
 
     return 0;
 }
