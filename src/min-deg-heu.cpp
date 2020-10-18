@@ -103,6 +103,7 @@ struct graph {
             return v;
         return parent[v] = root(parent[v]);
     }
+
     void normalize(vector<int>& S)
     {
         for (auto& v : S)
@@ -110,6 +111,7 @@ struct graph {
         sort(S.begin(), S.end());
         S.erase(unique(S.begin(), S.end()), S.end());
     }
+
     vector<int> neighbor(int u)
     {
         vector<int> nbh;
@@ -129,6 +131,26 @@ struct graph {
         normalize(nbh);
         return nbh;
     }
+
+    void contract(int u)
+    {
+        vector<int> live, dead;
+        for (auto v : adj[u]) {
+            if (parent[v] == v)
+                live.push_back(v);
+            else
+                dead.push_back(v);
+        }
+        parent[u] = -1;
+        adj[u].swap(live);
+        for (auto v : dead) {
+            normalize(adj[v]);
+            adj[u].insert(adj[u].end(), adj[v].begin(), adj[v].end());
+            adj[v].clear();
+            parent[v] = u;
+        }
+    }
+
     void solve()
     {
         typedef pair<int, int> node; // (deg, vertex)
@@ -167,6 +189,7 @@ struct graph {
                 tree_width = true_deg;
             }
             remove_cnt++;
+            contract(u);
         }
         cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)" << endl;
         output << tree_width << " " << remove_cnt << endl;
