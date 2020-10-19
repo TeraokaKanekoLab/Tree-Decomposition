@@ -167,17 +167,17 @@ struct graph {
         }
 
         while (!Q.empty()) {
-
             int deg = Q.top().first;
             int u = Q.top().second;
             Q.pop();
 
             vector<int> nbh = neighbor(u); // get all the neighbours
-            if (nbh.size() > deg) { // if true degree is larger than the degree
-                Q.push({ nbh.size(), u });
+            int true_deg = (int)nbh.size();
+
+            if (true_deg > deg) { // if true degree is larger than the degree
+                Q.push({ true_deg, u });
                 continue;
             }
-            int true_deg = (int)nbh.size();
             // print_neighbor(u, nbh);
             update_width(true_deg, tree_width, true_num_nodes, remove_cnt, output);
             contract(u);
