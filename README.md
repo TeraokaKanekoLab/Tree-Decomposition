@@ -17,6 +17,7 @@ We aim to classify graphs by exploiting the relation between the width and core 
 | **0.7** | October 17, 2020 | [e5d9f3d](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/e5d9f3dd3726b9595f88a161da9215519f081d68) | Added a Python file for creating charts |
 | **0.8** | October 17, 2020 | [4cb5f4f](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/4cb5f4f64d10a2903ebd50fff60f6fc7e792de58) | **`make` can create a chart from graph file** |
 | **0.9** | October 19, 2020 | [941a34d](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/941a34df676fe621957d6d0ae4e548fa6fb7a795) | created update_width() and export_info() |
+| **0.10** | October 27, 2020 | [61d9881](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/61d9881d9b2124b55412ddb7b273650fde72c0e0) | Decomposition takes max width size |
 
 ## C++ Version
 We recommend to use C++ 20 when you run the codes.
@@ -31,7 +32,7 @@ git clone https://github.com/TeraokaKanekoLab/Tree-Decomposition.git
 Let's say we have a graph data called `simple_graph.txt` in directory `graph`, we create a chart just by running the following command.
 
 ```
-make GRAPH=simple_graph.txt
+make GRAPH=simple_graph.txt WIDTH=100
 ```
 
 Check `charts/` directory and we find `simple_graph.pdf`. Make sure that the extension of the graph file is `.txt`.
