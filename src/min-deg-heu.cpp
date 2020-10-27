@@ -27,6 +27,8 @@ Copyright © 2020 Cirus Thenter. All rights reserved?
 #include <string>
 #include <vector>
 
+#define MAX_TREE_WIDTH 100
+
 using namespace std;
 
 struct graph {
@@ -151,7 +153,7 @@ struct graph {
         }
     }
 
-    void decompose()
+    void decompose(int max_tree_width)
     {
         typedef pair<int, int> node; // (deg, vertex)
         int tree_width = 0;
@@ -166,7 +168,7 @@ struct graph {
             Q.push(node(adj[u].size(), u));
         }
 
-        while (!Q.empty()) {
+        while (!Q.empty() && tree_width < max_tree_width) {
             int deg = Q.top().first;
             int u = Q.top().second;
             Q.pop();
@@ -227,15 +229,15 @@ struct graph {
 
 int main(int argc, char* argv[])
 {
-    if (argc != 2) {
-        cout << "usage: " << argv[0] << " <filename>" << endl;
+    if (argc != 3) {
+        cout << "usage: " << argv[0] << " <filename> <tree width>" << endl;
         exit(-1);
     }
 
     graph g;
     g.read_edges(argv[1]);
     g.make_graph();
-    g.decompose();
+    g.decompose(stoi(argv[2]));
 
     return 0;
 }
