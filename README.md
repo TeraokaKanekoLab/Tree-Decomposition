@@ -16,7 +16,7 @@ We aim to classify graphs by exploiting the relation between the width and core 
 | **0.6** | October 17, 2020 | [76d8af3](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/76d8af3aa179f340d622b98fb04dd0e489d6e29e) | Create output file that python can read |
 | **0.7** | October 17, 2020 | [e5d9f3d](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/e5d9f3dd3726b9595f88a161da9215519f081d68) | Added a Python file for creating charts |
 | **0.8** | October 17, 2020 | [4cb5f4f](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/4cb5f4f64d10a2903ebd50fff60f6fc7e792de58) | **`make` can create a chart from graph file** |
-| **0.9** | October 17, 2020 | [4cb5f4f](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/4cb5f4f64d10a2903ebd50fff60f6fc7e792de58) | **`make` can create a chart from graph file** |
+| **0.9** | October 19, 2020 | [941a34d](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/941a34df676fe621957d6d0ae4e548fa6fb7a795) | created update_width() and export_info() |
 
 ## C++ Version
 We recommend to use C++ 20 when you run the codes.
