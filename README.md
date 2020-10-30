@@ -37,6 +37,11 @@ Let's say we have a graph data called `simple_graph.txt` in directory `graph`, w
 make GRAPH=simple_graph.txt WIDTH=100
 ```
 
+### Compute without Priority Queue
+```
+make GRAPH=simple_graph.txt WIDTH=100
+```
+
 Check `charts/` directory and we find `simple_graph.pdf`. Make sure that the extension of the graph file is `.txt`.
 
 ### Compile and Execute
