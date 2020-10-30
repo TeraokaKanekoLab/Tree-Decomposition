@@ -19,6 +19,7 @@ We aim to classify graphs by exploiting the relation between the width and core 
 | **0.9** | October 19, 2020 | [941a34d](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/941a34df676fe621957d6d0ae4e548fa6fb7a795) | created update_width() and export_info() |
 | **0.10** | October 27, 2020 | [61d9881](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/61d9881d9b2124b55412ddb7b273650fde72c0e0) | Decomposition takes max width size |
 | **0.11** | October 30, 2020 | [f7a6a00](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/f7a6a0099b11d08ddcce896bc305911829b251f8) | Added src/min-deg-heu_wo_pq.cpp |
+| **0.12** | October 30, 2020 | [d42edfa](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/d42edfa96af346a858489401b725d2fd13f42eb8) | src/without_pq.cpp can create a chart |
 
 ## C++ Version
 We recommend to use C++ 20 when you run the codes.

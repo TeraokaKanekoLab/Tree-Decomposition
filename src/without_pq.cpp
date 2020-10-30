@@ -235,7 +235,7 @@ int main(int argc, char* argv[])
     int idx = file_name.find("graph/");
     filename = file_name.substr(idx + 6);
     path = file_name.substr(0, idx);
-    ofstream output(path + "output/" + filename);
+    ofstream output(path + "output/random-" + filename);
     graph master;
     master.read_edges();
     master.make_graph();

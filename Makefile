@@ -10,4 +10,4 @@ make:
 random:
 	g++ src/without_pq.cpp -o without_pq --std=c++17
 	./without_pq $(addprefix graph/,$(GRAPH)) $(WIDTH)
-	python3 src/create_chart.py $(addprefix output/,$(GRAPH))
+	python3 src/create_chart.py $(addprefix output/random-,$(GRAPH))
