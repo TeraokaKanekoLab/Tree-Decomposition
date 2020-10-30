@@ -160,6 +160,7 @@ struct graph {
         queue<node> Q;
         int true_num_nodes = num_nodes;
         int remove_cnt = 0;
+        int next_min = true_num_nodes;
 
         for (int u = 0; u < num_nodes; ++u) {
             parent[u] = u;
@@ -174,8 +175,10 @@ struct graph {
             vector<int> nbh = neighbor(u); // get all the neighbours
             int true_deg = (int)nbh.size();
 
-            if (true_deg > max_tree_width)
+            if (true_deg > max_tree_width) {
+                next_min = min(next_min, true_deg);
                 continue;
+            }
             // print_neighbor(u, nbh);
             if (true_deg == 0)
                 true_num_nodes--;
@@ -184,8 +187,8 @@ struct graph {
             contract(u);
         }
         export_info(max_tree_width, remove_cnt, true_num_nodes, output);
-        if (remove_cnt == true_num_nodes)
-            return 1;
+        if (remove_cnt != true_num_nodes)
+            return next_min;
         else
             return 0;
     }
@@ -241,9 +244,10 @@ int main(int argc, char* argv[])
     master.make_graph();
     graph g;
     int max_width = stoi(argv[2]);
-    for (int i = 1; i <= max_width; ++i) {
+    for (int width = 1; width <= max_width;) {
         copy_master(g, master);
-        if (g.decompose(i, output))
+        width = g.decompose(width, output); // returns 0 if all the nodes are removed
+        if (!width)
             break;
     }
     output.close();
