@@ -4,5 +4,5 @@ graph/com-amazon.ungraph.txt
 */.DS_Store
 a.out
 min-deg-heu
-min-deg-heu_wo_pq
+without_pq
 .vscode

@@ -31,6 +31,10 @@ Copyright © 2020 Cirus Thenter. All rights reserved?
 
 using namespace std;
 
+string file_name;
+string filename;
+string path;
+
 struct graph {
     // We expect the number of nodes and that of edges are both under INT_MAX = 2,147,483,647
     // on the assumption that the biggest number in https://snap.stanford.edu/data/ is 1,806,067,135 of com-Friendster.
@@ -39,33 +43,16 @@ struct graph {
     int num_edges = 0;
     vector<vector<int>> adj;
     vector<pair<int, int>> edges;
-    string filename;
-    string path;
+    vector<int> parent;
 
     void add_edge(int u, int v)
     {
         edges.push_back({ u, v });
     }
 
-    void make_graph()
-    {
-        adj.resize(num_nodes);
-        for (pair<int, int> e : edges) {
-            adj[e.first].push_back(e.second);
-            adj[e.second].push_back(e.first);
-        }
-        for (vector<int> nbh : adj) {
-            sort(nbh.begin(), nbh.end()); // sort endpoint indices in case edges are not sorted in the file as we expect
-            nbh.erase(unique(nbh.begin(), nbh.end()), nbh.end()); // classic way of erasing duplicates;
-        }
-    }
-
-    void read_edges(string file_name)
+    void read_edges()
     {
         ifstream graph_data(file_name);
-        int idx = file_name.find("graph/");
-        filename = file_name.substr(idx + 6);
-        path = file_name.substr(0, idx);
 
         if (!graph_data.good()) {
             cout << filename << ": file not found" << endl;
@@ -98,7 +85,19 @@ struct graph {
         graph_data.close();
     }
 
-    vector<int> parent;
+    void make_graph()
+    {
+        adj.resize(num_nodes);
+        for (pair<int, int> e : edges) {
+            adj[e.first].push_back(e.second);
+            adj[e.second].push_back(e.first);
+        }
+        for (vector<int> nbh : adj) {
+            sort(nbh.begin(), nbh.end()); // sort endpoint indices in case edges are not sorted in the file as we expect
+            nbh.erase(unique(nbh.begin(), nbh.end()), nbh.end()); // classic way of erasing duplicates;
+        }
+    }
+
     int root(int v)
     { // union-find data structure
         if (parent[v] == v || parent[v] == -1)
@@ -153,7 +152,7 @@ struct graph {
         }
     }
 
-    void decompose(int max_tree_width)
+    int decompose(int max_tree_width, ofstream& output)
     {
         typedef pair<int, int> node; // (deg, vertex)
         int tree_width = 0;
@@ -161,7 +160,6 @@ struct graph {
         queue<node> Q;
         int true_num_nodes = num_nodes;
         int remove_cnt = 0;
-        ofstream output(path + "output/" + filename);
 
         for (int u = 0; u < num_nodes; ++u) {
             parent[u] = u;
@@ -179,19 +177,17 @@ struct graph {
             if (true_deg > max_tree_width)
                 continue;
             // print_neighbor(u, nbh);
-            update_width(true_deg, tree_width, true_num_nodes, remove_cnt, output);
+            if (true_deg == 0)
+                true_num_nodes--;
+            else
+                remove_cnt++;
             contract(u);
         }
-        export_info(tree_width, remove_cnt, true_num_nodes, output);
-        output.close();
-    }
-
-    void update_width(int& true_deg, int& tree_width, int& true_num_nodes, int& remove_cnt, ofstream& output)
-    {
-        if (true_deg == 0)
-            true_num_nodes--;
+        export_info(max_tree_width, remove_cnt, true_num_nodes, output);
+        if (remove_cnt == true_num_nodes)
+            return 1;
         else
-            remove_cnt++;
+            return 0;
     }
 
     void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output)
@@ -220,17 +216,37 @@ struct graph {
     }
 };
 
+void copy_master(graph& g, graph& master)
+{
+    g.num_nodes = master.num_nodes; // This value may be different from the official number of nodes.
+    g.num_edges = master.num_edges;
+    g.adj = master.adj;
+    g.edges = master.edges;
+    g.parent = master.parent;
+}
+
 int main(int argc, char* argv[])
 {
     if (argc != 3) {
         cout << "usage: " << argv[0] << " <filename> <tree width>" << endl;
         exit(-1);
     }
-
+    file_name = argv[1];
+    int idx = file_name.find("graph/");
+    filename = file_name.substr(idx + 6);
+    path = file_name.substr(0, idx);
+    ofstream output(path + "output/" + filename);
+    graph master;
+    master.read_edges();
+    master.make_graph();
     graph g;
-    g.read_edges(argv[1]);
-    g.make_graph();
-    g.decompose(stoi(argv[2]));
+    int max_width = stoi(argv[2]);
+    for (int i = 1; i <= max_width; ++i) {
+        copy_master(g, master);
+        if (g.decompose(i, output))
+            break;
+    }
+    output.close();
 
     return 0;
 }
