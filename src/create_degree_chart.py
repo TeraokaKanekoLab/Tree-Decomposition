@@ -25,8 +25,8 @@ def read_file():
 
 def draw_chart(x_axis, y_axis, path, filename):
     plt.scatter(x_axis, y_axis)
-    plt.xlim(0, 100)
-    plt.ylim(0, 20000)
+    # plt.xlim(0, 100)
+    # plt.ylim(0, 20000)
     saved_name = path + "degree/charts/" + filename + ".pdf"
     print(saved_name)
     plt.xlabel("degree")

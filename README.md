@@ -20,6 +20,7 @@ We aim to classify graphs by exploiting the relation between the width and core 
 | **0.10** | October 27, 2020 | [61d9881](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/61d9881d9b2124b55412ddb7b273650fde72c0e0) | Decomposition takes max width size |
 | **0.11** | October 30, 2020 | [f7a6a00](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/f7a6a0099b11d08ddcce896bc305911829b251f8) | Added src/min-deg-heu_wo_pq.cpp |
 | **0.12** | October 30, 2020 | [d42edfa](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/d42edfa96af346a858489401b725d2fd13f42eb8) | src/without_pq.cpp can create a chart |
+| **0.13** | October 30, 2020 | [9522597](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/9522597b9bf303308960b1ac36c878afa4d4904a) | computes degree distribution |
 
 ## C++ Version
 We recommend to use C++ 20 when you run the codes.
@@ -37,12 +38,17 @@ Let's say we have a graph data called `simple_graph.txt` in directory `graph`, w
 make GRAPH=simple_graph.txt WIDTH=100
 ```
 
+Check `charts/` directory and we find `simple_graph.pdf`. Make sure that the extension of the graph file is `.txt`.
+
 ### Compute without Priority Queue
 ```
-make GRAPH=simple_graph.txt WIDTH=100
+make random GRAPH=simple_graph.txt WIDTH=100
 ```
 
-Check `charts/` directory and we find `simple_graph.pdf`. Make sure that the extension of the graph file is `.txt`.
+### Compute Degree Distribution
+```
+make deg GRAPH=simple_graph.txt 
+```
 
 ### Compile and Execute
 
