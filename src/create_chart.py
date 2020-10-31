@@ -28,7 +28,7 @@ def draw_chart(x_axis, y_axis, path, filename):
     saved_name = path + "charts/" + filename + ".pdf"
     print(saved_name)
     # plt.xlim(0, 100)
-    plt.ylim(0, 310000)
+    # plt.ylim(0, 310000)
     plt.xlabel("width")
     plt.ylabel("number of removed nodes")
     plt.title("Number of removed nodes over width")
