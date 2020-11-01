@@ -36,24 +36,24 @@ git clone https://github.com/TeraokaKanekoLab/Tree-Decomposition.git
 Let's say we have a graph data called `simple_graph.txt` in directory `graph`, we create a chart just by running the following command.
 
 ```
-make GRAPH=simple_graph.txt WIDTH=100
+make G=simple_graph.txt W=100
 ```
 
 Check `charts/` directory and we find `integrated-simple_graph.pdf`. Make sure that the extension of the graph file is `.txt`.
 
 ### Compute with Priority Queue
 ```
-make pq GRAPH=simple_graph.txt WIDTH=100
+make pq G=simple_graph.txt W=100
 ```
 
 ### Compute without Priority Queue
 ```
-make random GRAPH=simple_graph.txt WIDTH=100
+make random G=simple_graph.txt W=100
 ```
 
 ### Compute Degree Distribution
 ```
-make deg GRAPH=simple_graph.txt 
+make deg G=simple_graph.txt 
 ```
 
 ### Compile and Execute

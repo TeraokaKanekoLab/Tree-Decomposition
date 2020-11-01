@@ -41,8 +41,8 @@ def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, path, filename):
     # plt.xlim(0, 100)
     # plt.ylim(0, 310000)
     plt.xlabel("width")
-    plt.ylabel("# of removed nodes")
-    plt.title("# of removed nodes over width: " + filename)
+    plt.ylabel("% of removed nodes")
+    plt.title("% of removed nodes over width: " + filename)
     plt.legend(loc="lower right", fontsize=14)  # (7)凡例表示
     plt.savefig(saved_name)
 
