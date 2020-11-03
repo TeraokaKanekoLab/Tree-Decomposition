@@ -16,7 +16,9 @@ def read_file():
     lines = f.readlines()
     widths = []
     num_nodes = []
-    for line in lines:
+    num_edges = int(lines[0])
+    for i in range(1, length):
+        line = lines[i]
         width, num_node = map(int, line.split())
         widths.append(width)
         num_nodes.append(num_node)

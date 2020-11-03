@@ -98,7 +98,7 @@ struct graph {
             int deg = n.first;
             deg_counts[deg]++;
         }
-
+        output << num_edges << endl;
         for (int i = 1; i <= max_deg; ++i) {
             if (deg_counts[i] != 0)
                 output << i << " " << deg_counts[i] << endl;

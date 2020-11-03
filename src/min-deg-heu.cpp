@@ -194,6 +194,7 @@ struct graph {
             if (tree_width == 0) {
                 true_num_nodes = num_nodes - remove_cnt;
                 cout << "true num_nodes: " << true_num_nodes << endl;
+                output << true_num_nodes << endl;
                 remove_cnt = 0; // reset the count; we don't need nodes that have 0 edge
             } else
                 export_info(tree_width, remove_cnt, true_num_nodes, output);
