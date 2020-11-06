@@ -23,6 +23,7 @@ We aim to classify graphs by exploiting the relation between the width and core 
 | **0.13** | October 30, 2020 | [9522597](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/9522597b9bf303308960b1ac36c878afa4d4904a) | computes degree distribution |
 | **0.14** | October 31, 2020 | [1caceaf](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/1caceafaaf56a63007d1362138600e14c4e61993) | creates integrated charts |
 | **0.15** | November 3, 2020 | [538f71d](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/538f71d56d87532708dbbc8ac34634b129f77f65) | changed representation: from # of removed nodes to % of removed nodes |
+| **0.16** | November 6, 2020 | [5cd58da](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/538f71d56d87532708dbbc8ac34634b129f77f65) | modified filename rules |
 
 ## C++ Version
 We recommend to use C++ 20 when you run the codes.
