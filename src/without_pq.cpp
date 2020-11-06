@@ -244,7 +244,7 @@ int main(int argc, char* argv[])
     master.read_edges();
     master.make_graph();
     graph g;
-    for (int width = 195; width <= max_width;) {
+    for (int width = 1; width <= max_width;) {
         copy_master(g, master);
         width = g.decompose(width, output); // returns 0 if all the nodes are removed
         if (!width)

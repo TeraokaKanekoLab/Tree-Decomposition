@@ -21,6 +21,7 @@ Copyright © 2020 Cirus Thenter. All rights reserved?
 */
 
 #include <algorithm>
+#include <chrono>
 #include <fstream>
 #include <iostream>
 #include <queue>
@@ -238,7 +239,15 @@ int main(int argc, char* argv[])
     graph g;
     g.read_edges(argv[1]);
     g.make_graph();
+
+    auto start = chrono::high_resolution_clock::now();
     g.decompose(stoi(argv[2]));
+    auto stop = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
+
+    // To get the value of duration use the count()
+    // member function on the duration object
+    cout << double(duration.count()) / 1000000 << " s" << endl;
 
     return 0;
 }
