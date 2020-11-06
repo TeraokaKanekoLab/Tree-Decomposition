@@ -238,12 +238,12 @@ int main(int argc, char* argv[])
     int idx = file_name.find("graph/");
     filename = file_name.substr(idx + 6);
     path = file_name.substr(0, idx);
-    ofstream output(path + "output/random-" + filename);
+    int max_width = stoi(argv[2]);
+    ofstream output(path + "output/" + to_string(max_width) + "-random-" + filename);
     graph master;
     master.read_edges();
     master.make_graph();
     graph g;
-    int max_width = stoi(argv[2]);
     for (int width = 1; width <= max_width;) {
         copy_master(g, master);
         width = g.decompose(width, output); // returns 0 if all the nodes are removed

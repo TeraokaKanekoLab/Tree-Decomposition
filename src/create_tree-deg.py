@@ -4,15 +4,17 @@ import matplotlib.pyplot as plt
 
 
 def read_file():
-    if len(sys.argv) != 2:
-        print("usage: python3", sys.argv[0], "<filename>")
+    if len(sys.argv) != 3:
+        print("usage: python3", sys.argv[0], "<filename> <width>")
         exit()
 
     filepath = sys.argv[1]
-    f = open(filepath, "r")
+    width = sys.argv[2]
     idx = filepath.find("output/")
     path = filepath[:idx]
     filename = filepath[idx + 7:filepath.find(".txt")]
+    filepath = "output/"+width+"-"+filename+".txt"
+    f = open(filepath, "r")
     lines = f.readlines()
     widths1 = []
     num_nodes1 = []
@@ -26,7 +28,7 @@ def read_file():
         num_nodes1.append(num_node)
         percentages1.append(num_node/num_nodes * 100)
 
-    filepath = "output/random-"+filename+".txt"
+    filepath = "output/" + width+"-random"+"-"+filename+".txt"
     f = open(filepath, "r")
     lines = f.readlines()
     widths2 = []
@@ -46,6 +48,7 @@ def read_file():
     percentages3 = []
     current_ne = 0
     num_edges = int(lines[0])
+    length = len(lines)
     for i in range(1, length):
         line = lines[i]
         deg, num_node = map(int, line.split())
@@ -60,9 +63,10 @@ def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, path, filen
     plt.plot(x_axis1, y_axis1,  c="b",  label="optimal")
     plt.plot(x_axis2, y_axis2, c="r",  label="random")
     plt.plot(x_axis3, y_axis3, c="g",  label="degree")
-    saved_name = path + "charts/integrated-" + filename + ".pdf"
+    width = sys.argv[2]
+    saved_name = path + "charts/integrated-" + width + "-" + filename + ".pdf"
     print(saved_name)
-    # plt.xlim(0, 100)
+    plt.xlim(0, int(width))
     plt.ylim(0, 100)
     plt.xlabel("width/degree")
     plt.ylabel("% of removed nodes")

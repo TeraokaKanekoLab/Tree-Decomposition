@@ -161,7 +161,7 @@ struct graph {
         priority_queue<node, vector<node>, greater<node>> Q;
         int true_num_nodes = num_nodes;
         int remove_cnt = 0;
-        ofstream output(path + "output/" + filename);
+        ofstream output(path + "output/" + to_string(max_tree_width) + "-" + filename);
 
         for (int u = 0; u < num_nodes; ++u) {
             parent[u] = u;
