@@ -44,6 +44,8 @@ struct graph {
     vector<vector<int>> adj;
     vector<pair<int, int>> edges;
     vector<int> parent;
+    typedef pair<int, int> node; // (deg, vertex)
+    vector<node> nodes;
 
     void add_edge(int u, int v)
     {
@@ -95,6 +97,12 @@ struct graph {
         for (vector<int> nbh : adj) {
             sort(nbh.begin(), nbh.end()); // sort endpoint indices in case edges are not sorted in the file as we expect
             nbh.erase(unique(nbh.begin(), nbh.end()), nbh.end()); // classic way of erasing duplicates;
+        }
+
+        parent.resize(num_nodes);
+        for (int u = 0; u < num_nodes; ++u) {
+            parent[u] = u;
+            nodes.push_back(node(adj[u].size(), u));
         }
     }
 
@@ -154,23 +162,14 @@ struct graph {
 
     int decompose(int max_tree_width, ofstream& output)
     {
-        typedef pair<int, int> node; // (deg, vertex)
         int tree_width = 0;
-        parent.resize(num_nodes);
-        queue<node> Q;
         int true_num_nodes = num_nodes;
         int remove_cnt = 0;
         int next_min = true_num_nodes;
 
-        for (int u = 0; u < num_nodes; ++u) {
-            parent[u] = u;
-            Q.push(node(adj[u].size(), u));
-        }
-
-        while (!Q.empty()) {
-            int deg = Q.front().first;
-            int u = Q.front().second;
-            Q.pop();
+        for (node nd : nodes) {
+            int deg = nd.first;
+            int u = nd.second;
 
             vector<int> nbh = neighbor(u); // get all the neighbours
             int true_deg = (int)nbh.size();
@@ -226,6 +225,7 @@ void copy_master(graph& g, graph& master)
     g.adj = master.adj;
     g.edges = master.edges;
     g.parent = master.parent;
+    g.nodes = master.nodes;
 }
 
 int main(int argc, char* argv[])
