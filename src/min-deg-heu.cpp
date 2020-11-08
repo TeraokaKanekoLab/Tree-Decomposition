@@ -82,10 +82,6 @@ struct graph {
                 break;
             }
             oldpos = graph_data.tellg();
-            // add_edge(u, v);
-            // compute number of nodes (|V|) and number of edges (|E|)
-            // num_nodes = max(num_nodes, max(u, v) + 1);
-            num_edges++;
         }
 
         // start reading edge information from file
