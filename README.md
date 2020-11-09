@@ -27,6 +27,7 @@ We aim to classify graphs by exploiting the relation between the width and core 
 | **0.17** | November 8, 2020 | [a6ea20a](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/a6ea20adcb272671e686c4213d24c67f7b480e71) | Added worst case series to integrated chart |
 | **0.18** | November 9, 2020 | [6fdee51](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/6fdee514c62f267c4de96281d53c000e49bda94d) | Set interval of plotting |
 | **0.19** | November 9, 2020 | [cf56ce7](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/cf56ce7eb259e17e0d12f331d26d6201dc1dae50) | Refactored worst and random |
+| **0.20** | November 9, 2020 | [c47f8f2](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/c47f8f29b03b512d7ed8cfe6ffb4163aba7cfb5f) | First version of src/walk.cpp |
 
 ## C++ Version
 We recommend to use C++ 20 when you run the codes.
