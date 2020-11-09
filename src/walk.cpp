@@ -43,12 +43,12 @@ struct graph {
     // on the assumption that the biggest number in https://snap.stanford.edu/data/ is 1,806,067,135 of com-Friendster.
     // We consider int type suitable for this situation.
     int num_nodes = 0; // This value may be different from the official number of nodes.
+    int true_num_nodes = 0;
     int num_edges = 0;
     vector<vector<int>> adj;
     vector<pair<int, int>> edges;
     vector<int> parent;
     typedef pair<int, int> node; // (deg, vertex)
-    vector<node> nodes;
 
     void add_edge(int u, int v)
     {
@@ -96,16 +96,15 @@ struct graph {
         for (vector<int> nbh : adj) {
             sort(nbh.begin(), nbh.end()); // sort endpoint indices in case edges are not sorted in the file as we expect
             nbh.erase(unique(nbh.begin(), nbh.end()), nbh.end()); // classic way of erasing duplicates;
+            if (nbh.size())
+                true_num_nodes++;
         }
+        cout << true_num_nodes << endl;
 
         parent.resize(num_nodes);
         for (int u = 0; u < num_nodes; ++u) {
             parent[u] = u;
-            nodes.push_back(node(adj[u].size(), u));
         }
-        // obtain a time-based seed:
-        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-        shuffle(nodes.begin(), nodes.end(), default_random_engine(seed));
     }
 
     int root(int v)
@@ -168,7 +167,7 @@ struct graph {
         int true_num_nodes = num_nodes;
         int remove_cnt = 0;
         vector<bool> retrieved;
-        int next_min = true_num_nodes;
+        int nodes_left;
 
         for (int u = 0; u < num_nodes; ++u) {
             parent[u] = u;
@@ -191,9 +190,20 @@ struct graph {
 
             vector<int> nbh = neighbor(u); // get all the neighbours
             int true_deg = (int)nbh.size();
+            // add its neighbors to the push as known nodes
+            for (int nb : nbh)
+                if (!retrieved[nb]) {
+                    retrieved[nb] = true;
+                    Q.push(node(adj[nb].size(), nb));
+                }
 
-            if (true_deg > max_tree_width)
+            if (true_deg > max_tree_width) {
+                Q.push({ true_deg, u });
                 continue;
+            }
+            // if (true_deg > max_tree_width) {
+            //     cout << read_edges:
+            // }
             contract(u);
         }
         export_info(max_tree_width, remove_cnt, true_num_nodes, output);
@@ -228,11 +238,11 @@ struct graph {
 void copy_master(graph& g, graph& master)
 {
     g.num_nodes = master.num_nodes; // This value may be different from the official number of nodes.
+    g.true_num_nodes = master.true_num_nodes;
     g.num_edges = master.num_edges;
     g.adj = master.adj;
     g.edges = master.edges;
     g.parent = master.parent;
-    g.nodes = master.nodes;
 }
 
 int main(int argc, char* argv[])

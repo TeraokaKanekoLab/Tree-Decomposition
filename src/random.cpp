@@ -43,6 +43,7 @@ struct graph {
     // on the assumption that the biggest number in https://snap.stanford.edu/data/ is 1,806,067,135 of com-Friendster.
     // We consider int type suitable for this situation.
     int num_nodes = 0; // This value may be different from the official number of nodes.
+    int true_num_nodes = 0;
     int num_edges = 0;
     vector<vector<int>> adj;
     vector<pair<int, int>> edges;
@@ -96,6 +97,8 @@ struct graph {
         for (vector<int> nbh : adj) {
             sort(nbh.begin(), nbh.end()); // sort endpoint indices in case edges are not sorted in the file as we expect
             nbh.erase(unique(nbh.begin(), nbh.end()), nbh.end()); // classic way of erasing duplicates;
+            if (nbh.size())
+                true_num_nodes++;
         }
 
         parent.resize(num_nodes);
@@ -163,7 +166,6 @@ struct graph {
     void decompose(int max_tree_width, ofstream& output)
     {
         int tree_width = 0;
-        int true_num_nodes = num_nodes;
         int remove_cnt = 0;
 
         for (node nd : nodes) {
@@ -176,18 +178,15 @@ struct graph {
             if (true_deg > max_tree_width)
                 continue;
             // print_neighbor(u, nbh);
-            if (true_deg == 0)
-                true_num_nodes--;
-            else
+            if (true_deg)
                 remove_cnt++;
             contract(u);
         }
-        export_info(max_tree_width, remove_cnt, true_num_nodes, output);
+        export_info(max_tree_width, remove_cnt, output);
     }
 
-    void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output)
+    void export_info(int tree_width, int remove_cnt, ofstream& output)
     {
-        cout << "num_nodes: " << true_num_nodes << endl;
         cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)" << endl;
         output << tree_width << " " << remove_cnt << endl;
     }
@@ -214,6 +213,7 @@ struct graph {
 void copy_master(graph& g, graph& master)
 {
     g.num_nodes = master.num_nodes; // This value may be different from the official number of nodes.
+    g.true_num_nodes = master.true_num_nodes;
     g.num_edges = master.num_edges;
     g.adj = master.adj;
     g.edges = master.edges;

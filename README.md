@@ -25,7 +25,8 @@ We aim to classify graphs by exploiting the relation between the width and core 
 | **0.15** | November 3, 2020 | [538f71d](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/538f71d56d87532708dbbc8ac34634b129f77f65) | changed representation: from # of removed nodes to % of removed nodes |
 | **0.16** | November 6, 2020 | [5cd58da](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/538f71d56d87532708dbbc8ac34634b129f77f65) | modified filename rules |
 | **0.17** | November 8, 2020 | [a6ea20a](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/a6ea20adcb272671e686c4213d24c67f7b480e71) | Added worst case series to integrated chart |
-| **0.17** | November 9, 2020 | [6fdee51](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/6fdee514c62f267c4de96281d53c000e49bda94d) | Set interval of plotting |
+| **0.18** | November 9, 2020 | [6fdee51](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/6fdee514c62f267c4de96281d53c000e49bda94d) | Set interval of plotting |
+| **0.19** | November 9, 2020 | [cf56ce7](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/cf56ce7eb259e17e0d12f331d26d6201dc1dae50) | Refactored worst and random |
 
 ## C++ Version
 We recommend to use C++ 20 when you run the codes.
