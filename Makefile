@@ -28,6 +28,11 @@ worst:
 	./worst $(addprefix graph/,$(G)) $(W)
 	python3 src/create_chart.py $(addprefix output/worst-,$(G))
 
+walk:
+	g++ src/walk.cpp -o walk --std=c++17
+	./walk $(addprefix graph/,$(G)) $(W)
+	python3 src/create_chart.py $(addprefix output/walk-,$(G))
+
 deg:
 	g++ src/count_degree.cpp -o count_degree --std=c++17
 	./count_degree $(addprefix graph/,$(G))
