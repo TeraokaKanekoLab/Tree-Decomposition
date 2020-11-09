@@ -24,10 +24,12 @@ Copyright © 2020 Cirus Thenter. All rights reserved?
 #include <fstream>
 #include <iostream>
 #include <queue>
+#include <random>
 #include <string>
 #include <vector>
 
 #define MAX_TREE_WIDTH 100
+#define INTERVAL 10
 
 using namespace std;
 
@@ -100,6 +102,11 @@ struct graph {
             parent[u] = u;
             nodes.push_back(node(adj[u].size(), u));
         }
+        // obtain a time-based seed:
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        shuffle(nodes.begin(), nodes.end(), default_random_engine(seed));
+        for (int u = 0; u < num_nodes; ++u)
+            cout << nodes[u].second << ": " << nodes[u].first << endl;
     }
 
     int root(int v)
@@ -126,11 +133,9 @@ struct graph {
                 nbh.push_back(v);
             } else {
                 normalize(adj[v]);
-                for (auto w : adj[v]) {
-                    if (parent[w] == w) {
+                for (auto w : adj[v])
+                    if (parent[w] == w)
                         nbh.push_back(w);
-                    }
-                }
             }
         }
         normalize(nbh);
@@ -242,9 +247,13 @@ int main(int argc, char* argv[])
     graph g;
     for (int width = 1; width <= max_width;) {
         copy_master(g, master);
-        width = g.decompose(width, output); // returns 0 if all the nodes are removed
+        g.decompose(width, output); // returns 0 if all the nodes are removed
         if (!width)
             break;
+        if (width < 10)
+            width++;
+        else
+            width += width / 10;
     }
     output.close();
 
