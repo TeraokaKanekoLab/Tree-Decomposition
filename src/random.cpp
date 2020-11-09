@@ -160,12 +160,11 @@ struct graph {
         }
     }
 
-    int decompose(int max_tree_width, ofstream& output)
+    void decompose(int max_tree_width, ofstream& output)
     {
         int tree_width = 0;
         int true_num_nodes = num_nodes;
         int remove_cnt = 0;
-        int next_min = true_num_nodes;
 
         for (node nd : nodes) {
             int deg = nd.first;
@@ -174,10 +173,8 @@ struct graph {
             vector<int> nbh = neighbor(u); // get all the neighbours
             int true_deg = (int)nbh.size();
 
-            if (true_deg > max_tree_width) {
-                next_min = min(next_min, true_deg);
+            if (true_deg > max_tree_width)
                 continue;
-            }
             // print_neighbor(u, nbh);
             if (true_deg == 0)
                 true_num_nodes--;
@@ -186,10 +183,6 @@ struct graph {
             contract(u);
         }
         export_info(max_tree_width, remove_cnt, true_num_nodes, output);
-        if (remove_cnt != true_num_nodes)
-            return next_min;
-        else
-            return 0;
     }
 
     void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output)
@@ -247,8 +240,6 @@ int main(int argc, char* argv[])
     for (int width = 1; width <= max_width;) {
         copy_master(g, master);
         g.decompose(width, output); // returns 0 if all the nodes are removed
-        if (!width)
-            break;
         if (width < 10)
             width++;
         else

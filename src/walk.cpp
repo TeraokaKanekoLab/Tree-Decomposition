@@ -25,12 +25,18 @@ Copyright © 2020 Cirus Thenter. All rights reserved?
 #include <fstream>
 #include <iostream>
 #include <queue>
+#include <random>
 #include <string>
 #include <vector>
 
 #define MAX_TREE_WIDTH 100
+#define INTERVAL 10
 
 using namespace std;
+
+string file_name;
+string filename;
+string path;
 
 struct graph {
     // We expect the number of nodes and that of edges are both under INT_MAX = 2,147,483,647
@@ -40,33 +46,18 @@ struct graph {
     int num_edges = 0;
     vector<vector<int>> adj;
     vector<pair<int, int>> edges;
-    string filename;
-    string path;
+    vector<int> parent;
+    typedef pair<int, int> node; // (deg, vertex)
+    vector<node> nodes;
 
     void add_edge(int u, int v)
     {
         edges.push_back({ u, v });
     }
 
-    void make_graph()
-    {
-        adj.resize(num_nodes);
-        for (pair<int, int> e : edges) {
-            adj[e.first].push_back(e.second);
-            adj[e.second].push_back(e.first);
-        }
-        for (vector<int> nbh : adj) {
-            sort(nbh.begin(), nbh.end()); // sort endpoint indices in case edges are not sorted in the file as we expect
-            nbh.erase(unique(nbh.begin(), nbh.end()), nbh.end()); // classic way of erasing duplicates;
-        }
-    }
-
-    void read_edges(string file_name)
+    void read_edges()
     {
         ifstream graph_data(file_name);
-        int idx = file_name.find("graph/");
-        filename = file_name.substr(idx + 6);
-        path = file_name.substr(0, idx);
 
         if (!graph_data.good()) {
             cout << filename << ": file not found" << endl;
@@ -95,7 +86,28 @@ struct graph {
         graph_data.close();
     }
 
-    vector<int> parent;
+    void make_graph()
+    {
+        adj.resize(num_nodes);
+        for (pair<int, int> e : edges) {
+            adj[e.first].push_back(e.second);
+            adj[e.second].push_back(e.first);
+        }
+        for (vector<int> nbh : adj) {
+            sort(nbh.begin(), nbh.end()); // sort endpoint indices in case edges are not sorted in the file as we expect
+            nbh.erase(unique(nbh.begin(), nbh.end()), nbh.end()); // classic way of erasing duplicates;
+        }
+
+        parent.resize(num_nodes);
+        for (int u = 0; u < num_nodes; ++u) {
+            parent[u] = u;
+            nodes.push_back(node(adj[u].size(), u));
+        }
+        // obtain a time-based seed:
+        unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+        shuffle(nodes.begin(), nodes.end(), default_random_engine(seed));
+    }
+
     int root(int v)
     { // union-find data structure
         if (parent[v] == v || parent[v] == -1)
@@ -120,11 +132,9 @@ struct graph {
                 nbh.push_back(v);
             } else {
                 normalize(adj[v]);
-                for (auto w : adj[v]) {
-                    if (parent[w] == w) {
+                for (auto w : adj[v])
+                    if (parent[w] == w)
                         nbh.push_back(w);
-                    }
-                }
             }
         }
         normalize(nbh);
@@ -150,20 +160,18 @@ struct graph {
         }
     }
 
-    void decompose(int max_tree_width)
+    void decompose(int max_tree_width, ofstream& output)
     {
-        typedef pair<int, int> node; // (deg, vertex)
         int tree_width = 0;
         parent.resize(num_nodes);
         priority_queue<node, vector<node>, greater<node>> Q;
         int true_num_nodes = num_nodes;
         int remove_cnt = 0;
-        ofstream output(path + "output/" + to_string(max_tree_width) + "-" + filename);
         vector<bool> retrieved;
+        int next_min = true_num_nodes;
 
         for (int u = 0; u < num_nodes; ++u) {
             parent[u] = u;
-            Q.push(node(adj[u].size(), u));
             retrieved.push_back(false);
         }
 
@@ -184,35 +192,16 @@ struct graph {
             vector<int> nbh = neighbor(u); // get all the neighbours
             int true_deg = (int)nbh.size();
 
-            if (true_deg > deg) { // if true degree is larger than the degree
-                Q.push({ true_deg, u });
+            if (true_deg > max_tree_width)
                 continue;
-            }
-            // print_neighbor(u, nbh);
-            update_width(true_deg, tree_width, true_num_nodes, remove_cnt, output);
             contract(u);
         }
-        export_info(tree_width, remove_cnt, true_num_nodes, output);
-        output.close();
-    }
-
-    void update_width(int& true_deg, int& tree_width, int& true_num_nodes, int& remove_cnt, ofstream& output)
-    {
-        if (true_deg > tree_width) {
-            if (tree_width == 0) {
-                true_num_nodes = num_nodes - remove_cnt;
-                cout << "true num_nodes: " << true_num_nodes << endl;
-                output << true_num_nodes << endl;
-                remove_cnt = 0; // reset the count; we don't need nodes that have 0 edge
-            } else
-                export_info(tree_width, remove_cnt, true_num_nodes, output);
-            tree_width = true_deg;
-        }
-        remove_cnt++;
+        export_info(max_tree_width, remove_cnt, true_num_nodes, output);
     }
 
     void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output)
     {
+        cout << "num_nodes: " << true_num_nodes << endl;
         cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)" << endl;
         output << tree_width << " " << remove_cnt << endl;
     }
@@ -236,25 +225,41 @@ struct graph {
     }
 };
 
+void copy_master(graph& g, graph& master)
+{
+    g.num_nodes = master.num_nodes; // This value may be different from the official number of nodes.
+    g.num_edges = master.num_edges;
+    g.adj = master.adj;
+    g.edges = master.edges;
+    g.parent = master.parent;
+    g.nodes = master.nodes;
+}
+
 int main(int argc, char* argv[])
 {
     if (argc != 3) {
         cout << "usage: " << argv[0] << " <filename> <tree width>" << endl;
         exit(-1);
     }
-
+    file_name = argv[1];
+    int idx = file_name.find("graph/");
+    filename = file_name.substr(idx + 6);
+    path = file_name.substr(0, idx);
+    int max_width = stoi(argv[2]);
+    ofstream output(path + "output/" + to_string(max_width) + "-random-" + filename);
+    graph master;
+    master.read_edges();
+    master.make_graph();
     graph g;
-    g.read_edges(argv[1]);
-    g.make_graph();
-
-    auto start = chrono::high_resolution_clock::now();
-    g.decompose(stoi(argv[2]));
-    auto stop = chrono::high_resolution_clock::now();
-    auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
-
-    // To get the value of duration use the count()
-    // member function on the duration object
-    cout << double(duration.count()) / 1000000 << " s" << endl;
+    for (int width = 1; width <= max_width;) {
+        copy_master(g, master);
+        g.decompose(width, output); // returns 0 if all the nodes are removed
+        if (width < 10)
+            width++;
+        else
+            width += width / 10;
+    }
+    output.close();
 
     return 0;
 }
