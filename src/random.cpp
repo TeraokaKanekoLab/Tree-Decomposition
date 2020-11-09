@@ -245,7 +245,7 @@ int main(int argc, char* argv[])
         if (width >= max_width)
             width = max_width;
         copy_master(g, master);
-        g.decompose(width, output); // returns 0 if all the nodes are removed
+        g.decompose(width, output);
     }
     output.close();
 

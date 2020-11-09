@@ -196,24 +196,21 @@ struct graph {
                 if (!retrieved[nb]) {
                     retrieved[nb] = true;
                     Q.push(node(adj[nb].size(), nb));
+                    nodes_left--;
                 }
 
-            if (true_deg > max_tree_width) {
-                Q.push({ true_deg, u });
-                continue;
-            }
-            if (true_deg > max_tree_width) {
-                cout << "nodes_left: " << nodes_left << endl;
+            if (true_deg > max_tree_width && nodes_left == 0)
                 break;
-            }
             contract(u);
+            remove_cnt++;
+            // cout << nodes_left << endl;
         }
+        cout << "nodes_left: " << nodes_left << endl;
         export_info(max_tree_width, remove_cnt, true_num_nodes, output);
     }
 
     void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output)
     {
-        cout << "num_nodes: " << true_num_nodes << endl;
         cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)" << endl;
         output << tree_width << " " << remove_cnt << endl;
     }
@@ -263,13 +260,15 @@ int main(int argc, char* argv[])
     master.read_edges();
     master.make_graph();
     graph g;
-    for (int width = 1; width <= max_width;) {
-        copy_master(g, master);
-        g.decompose(width, output); // returns 0 if all the nodes are removed
+    for (int width = 0; width < max_width;) {
         if (width < 10)
             width++;
         else
             width += width / 10;
+        if (width >= max_width)
+            width = max_width;
+        copy_master(g, master);
+        g.decompose(width, output);
     }
     output.close();
 
