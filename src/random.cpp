@@ -237,13 +237,15 @@ int main(int argc, char* argv[])
     master.read_edges();
     master.make_graph();
     graph g;
-    for (int width = 1; width <= max_width;) {
-        copy_master(g, master);
-        g.decompose(width, output); // returns 0 if all the nodes are removed
+    for (int width = 0; width < max_width;) {
         if (width < 10)
             width++;
         else
             width += width / 10;
+        if (width >= max_width)
+            width = max_width;
+        copy_master(g, master);
+        g.decompose(width, output); // returns 0 if all the nodes are removed
     }
     output.close();
 

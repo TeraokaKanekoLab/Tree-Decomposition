@@ -164,10 +164,9 @@ struct graph {
         int tree_width = 0;
         parent.resize(num_nodes);
         priority_queue<node, vector<node>, greater<node>> Q;
-        int true_num_nodes = num_nodes;
         int remove_cnt = 0;
         vector<bool> retrieved;
-        int nodes_left;
+        int nodes_left = true_num_nodes;
 
         for (int u = 0; u < num_nodes; ++u) {
             parent[u] = u;
@@ -178,9 +177,11 @@ struct graph {
         int nd = edges[0].first;
         retrieved[nd] = true;
         Q.push(node(adj[nd].size(), nd));
+        nodes_left--;
         for (int nb : adj[nd]) {
             retrieved[nb] = true;
             Q.push(node(adj[nb].size(), nb));
+            nodes_left--;
         }
 
         while (!Q.empty()) {
@@ -201,9 +202,10 @@ struct graph {
                 Q.push({ true_deg, u });
                 continue;
             }
-            // if (true_deg > max_tree_width) {
-            //     cout << read_edges:
-            // }
+            if (true_deg > max_tree_width) {
+                cout << "nodes_left: " << nodes_left << endl;
+                break;
+            }
             contract(u);
         }
         export_info(max_tree_width, remove_cnt, true_num_nodes, output);
@@ -256,7 +258,7 @@ int main(int argc, char* argv[])
     filename = file_name.substr(idx + 6);
     path = file_name.substr(0, idx);
     int max_width = stoi(argv[2]);
-    ofstream output(path + "output/" + to_string(max_width) + "-random-" + filename);
+    ofstream output(path + "output/" + to_string(max_width) + "-walk-" + filename);
     graph master;
     master.read_edges();
     master.make_graph();
