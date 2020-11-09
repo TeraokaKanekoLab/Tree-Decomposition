@@ -203,7 +203,7 @@ struct graph {
                 break;
             contract(u);
             remove_cnt++;
-            // cout << nodes_left << endl;
+            cout << nodes_left << endl;
         }
         cout << "nodes_left: " << nodes_left << endl;
         export_info(max_tree_width, remove_cnt, true_num_nodes, output);

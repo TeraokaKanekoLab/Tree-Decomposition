@@ -6,5 +6,7 @@ graph/soc-flickr-und.edges.txt
 */.DS_Store
 a.out
 min-deg-heu
-without_pq
+random
+worst
+walk
 .vscode
