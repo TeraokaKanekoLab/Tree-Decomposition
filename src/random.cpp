@@ -106,8 +106,6 @@ struct graph {
         // obtain a time-based seed:
         unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
         shuffle(nodes.begin(), nodes.end(), default_random_engine(seed));
-        for (int u = 0; u < num_nodes; ++u)
-            cout << nodes[u].second << ": " << nodes[u].first << endl;
     }
 
     int root(int v)
