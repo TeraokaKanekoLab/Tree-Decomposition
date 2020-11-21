@@ -40,7 +40,7 @@ def read_file():
         num_nodes2.append(num_node)
         percentages2.append(num_node/num_nodes * 100)
 
-    filepath = "output/" + arg_width+"-worst"+"-"+filename+".txt"
+    filepath = "output/" + arg_width+"-desce"+"-"+filename+".txt"
     f = open(filepath, "r")
     lines = f.readlines()
     widths3 = []
@@ -74,7 +74,7 @@ def read_file():
 def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_axis4, path, filename):
     plt.plot(x_axis1, y_axis1,  c="b",  label="optimal")
     plt.plot(x_axis2, y_axis2, c="g",  label="random")
-    plt.plot(x_axis3, y_axis3, c="r",  label="worst")
+    plt.plot(x_axis3, y_axis3, c="r",  label="desce")
     plt.plot(x_axis4, y_axis4, c="k",  label="degree")
     width = sys.argv[2]
     saved_name = path + "charts/integrated-" + width + "-" + filename + ".pdf"

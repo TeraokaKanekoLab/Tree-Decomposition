@@ -7,8 +7,8 @@ make:
 	./min-deg-heu $(addprefix graph/,$(G)) $(W)
 	g++ src/random.cpp -o random --std=c++17
 	./random $(addprefix graph/,$(G)) $(W)
-	g++ src/worst.cpp -o worst --std=c++17
-	./worst $(addprefix graph/,$(G)) $(W)
+	g++ src/desce.cpp -o desce --std=c++17
+	./desce $(addprefix graph/,$(G)) $(W)
 	g++ src/count_degree.cpp -o count_degree --std=c++17
 	./count_degree $(addprefix graph/,$(G))
 	python3 src/create_integrated.py $(addprefix output/,$(G)) $(W)
@@ -23,10 +23,10 @@ random:
 	./random $(addprefix graph/,$(G)) $(W)
 	python3 src/create_chart.py $(addprefix output/random-,$(G))
 
-worst:
-	g++ src/worst.cpp -o worst --std=c++17
-	./worst $(addprefix graph/,$(G)) $(W)
-	python3 src/create_chart.py $(addprefix output/worst-,$(G))
+desce:
+	g++ src/desce.cpp -o desce --std=c++17
+	./desce $(addprefix graph/,$(G)) $(W)
+	python3 src/create_chart.py $(addprefix output/desce-,$(G))
 
 walk:
 	g++ src/walk.cpp -o walk --std=c++17
