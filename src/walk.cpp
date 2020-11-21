@@ -191,16 +191,21 @@ struct graph {
 
             vector<int> nbh = neighbor(u); // get all the neighbours
             int true_deg = (int)nbh.size();
+            int num_remove = 0;
             // add its neighbors to the push as known nodes
             for (int nb : nbh)
                 if (!retrieved[nb]) {
                     retrieved[nb] = true;
                     Q.push(node(adj[nb].size(), nb));
-                    nodes_left--;
+                    num_remove++;
                 }
-
-            if (true_deg > max_tree_width && nodes_left == 0)
-                break;
+            nodes_left -= num_remove;
+            if (true_deg > max_tree_width) {
+                if (deg == true_deg && num_remove == 0)
+                    break;
+                Q.push(node(true_deg, u));
+                continue;
+            }
             contract(u);
             remove_cnt++;
             // cout << nodes_left << endl;
