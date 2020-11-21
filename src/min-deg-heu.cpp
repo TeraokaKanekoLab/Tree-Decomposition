@@ -39,6 +39,7 @@ struct graph {
     int num_nodes = 0; // This value may be different from the official number of nodes.
     int num_edges = 0;
     vector<vector<int>> adj;
+    vector<int> init_deg;
     vector<pair<int, int>> edges;
     string filename;
     string path;
@@ -58,6 +59,7 @@ struct graph {
         for (vector<int> nbh : adj) {
             sort(nbh.begin(), nbh.end()); // sort endpoint indices in case edges are not sorted in the file as we expect
             nbh.erase(unique(nbh.begin(), nbh.end()), nbh.end()); // classic way of erasing duplicates;
+            init_deg.push_back(nbh.size());
         }
     }
 
@@ -159,6 +161,7 @@ struct graph {
         int true_num_nodes = num_nodes;
         int remove_cnt = 0;
         ofstream output(path + "output/" + to_string(max_tree_width) + "-" + filename);
+        ofstream degwidth(path + "degwidth/" + to_string(max_tree_width) + "-" + filename);
 
         for (int u = 0; u < num_nodes; ++u) {
             parent[u] = u;
@@ -178,14 +181,14 @@ struct graph {
                 continue;
             }
             // print_neighbor(u, nbh);
-            update_width(true_deg, tree_width, true_num_nodes, remove_cnt, output);
+            update_width(u, true_deg, tree_width, true_num_nodes, remove_cnt, output, degwidth);
             contract(u);
         }
-        export_info(tree_width, remove_cnt, true_num_nodes, output);
+        export_info(tree_width, remove_cnt, true_num_nodes, output, degwidth);
         output.close();
     }
 
-    void update_width(int& true_deg, int& tree_width, int& true_num_nodes, int& remove_cnt, ofstream& output)
+    void update_width(int u, int& true_deg, int& tree_width, int& true_num_nodes, int& remove_cnt, ofstream& output, ofstream& degwidth)
     {
         if (true_deg > tree_width) {
             if (tree_width == 0) {
@@ -194,13 +197,14 @@ struct graph {
                 output << true_num_nodes << endl;
                 remove_cnt = 0; // reset the count; we don't need nodes that have 0 edge
             } else
-                export_info(tree_width, remove_cnt, true_num_nodes, output);
+                export_info(tree_width, remove_cnt, true_num_nodes, output, degwidth);
             tree_width = true_deg;
         }
         remove_cnt++;
+        degwidth << init_deg[u] << " " << true_deg << endl;
     }
 
-    void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output)
+    void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output, ofstream& degwidth)
     {
         cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)" << endl;
         output << tree_width << " " << remove_cnt << endl;
