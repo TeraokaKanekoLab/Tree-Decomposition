@@ -7,6 +7,8 @@ make:
 	./min-deg-heu $(addprefix graph/,$(G)) $(W)
 	g++ src/random.cpp -o random --std=c++17
 	./random $(addprefix graph/,$(G)) $(W)
+	g++ src/asce.cpp -o asce --std=c++17
+	./asce $(addprefix graph/,$(G)) $(W)
 	g++ src/desce.cpp -o desce --std=c++17
 	./desce $(addprefix graph/,$(G)) $(W)
 	g++ src/count_degree.cpp -o count_degree --std=c++17
@@ -22,6 +24,11 @@ random:
 	g++ src/random.cpp -o random --std=c++17
 	./random $(addprefix graph/,$(G)) $(W)
 	python3 src/create_chart.py $(addprefix output/random-,$(G))
+
+asce:
+	g++ src/asce.cpp -o desce --std=c++17
+	./ace $(addprefix graph/,$(G)) $(W)
+	python3 src/create_chart.py $(addprefix output/asce-,$(G))
 
 desce:
 	g++ src/desce.cpp -o desce --std=c++17

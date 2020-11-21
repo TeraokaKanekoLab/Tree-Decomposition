@@ -52,6 +52,18 @@ def read_file():
         num_nodes3.append(num_node)
         percentages3.append(num_node/num_nodes * 100)
 
+    filepath = "output/" + arg_width+"-asce"+"-"+filename+".txt"
+    f = open(filepath, "r")
+    lines = f.readlines()
+    widths4 = []
+    num_nodes4 = []
+    percentages4 = []
+    for line in lines:
+        width, num_node = map(int, line.split())
+        widths4.append(width)
+        num_nodes4.append(num_node)
+        percentages4.append(num_node/num_nodes * 100)
+
     filepath = "degree/"+filename+".txt"
     f = open(filepath, "r")
     lines = f.readlines()
@@ -68,14 +80,15 @@ def read_file():
         num_nodes_deg.append(num_node)
         current_ne += num_node
         percentages_deg.append(current_ne/num_nodes * 100)
-    return widths1, percentages1, widths2, percentages2, widths3, percentages3, widths_deg, percentages_deg, path, filename
+    return widths1, percentages1, widths2, percentages2, widths3, percentages3, widths4, percentages4, widths_deg, percentages_deg, path, filename
 
 
-def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_axis4, path, filename):
+def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_axis4, x_axis5, y_axis5, path, filename):
     plt.plot(x_axis1, y_axis1,  c="b",  label="optimal")
     plt.plot(x_axis2, y_axis2, c="g",  label="random")
-    plt.plot(x_axis3, y_axis3, c="r",  label="desce")
-    plt.plot(x_axis4, y_axis4, c="k",  label="degree")
+    plt.plot(x_axis3, y_axis3, c="r",  label="descending")
+    plt.plot(x_axis4, y_axis4, c="c",  label="ascending")
+    plt.plot(x_axis5, y_axis5, c="k",  label="degree")
     width = sys.argv[2]
     saved_name = path + "charts/integrated-" + width + "-" + filename + ".pdf"
     print(saved_name)
@@ -89,6 +102,6 @@ def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_
 
 
 if __name__ == '__main__':
-    widths1, percentages1, widths2, percentages2, widths3, percentages3, widths_deg, percentages_deg, path, filename = read_file()
-    draw_chart(widths1, percentages1, widths2, percentages2, widths3,
-               percentages3, widths_deg, percentages_deg, path, filename)
+    widths1, percentages1, widths2, percentages2, widths3, percentages3, wwidths4, percentages4, widths_deg, percentages_deg, path, filename = read_file()
+    draw_chart(widths1, percentages1, widths2, percentages2, widths3, percentages3,
+               wwidths4, percentages4, widths_deg, percentages_deg, path, filename)

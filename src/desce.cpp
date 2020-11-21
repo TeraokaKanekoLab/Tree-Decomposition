@@ -235,7 +235,7 @@ int main(int argc, char* argv[])
     filename = file_name.substr(idx + 6);
     path = file_name.substr(0, idx);
     int max_width = stoi(argv[2]);
-    ofstream output(path + "output/" + to_string(max_width) + "-worst-" + filename);
+    ofstream output(path + "output/" + to_string(max_width) + "-desce-" + filename);
     graph master;
     master.read_edges();
     master.make_graph();
