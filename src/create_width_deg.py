@@ -18,10 +18,18 @@ def read_file():
     lines = f.readlines()
     width = int(sys.argv[2])
     nparray = np.zeros((width+1, width+1), dtype=int)
+    array = []
+    for i in range(width + 1):
+        array.append([0 for _ in range(width+1)])
     for line in lines:
         deg, width = map(int, line.split())
         nparray[deg][width] += 1
+        array[deg][width] += 1
     print(nparray)
+    for a in array:
+        for b in a:
+            print(b, end=',')
+        print()
     return nparray, path, filename
 
 

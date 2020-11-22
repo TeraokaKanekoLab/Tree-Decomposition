@@ -162,6 +162,11 @@ struct graph {
         int remove_cnt = 0;
         ofstream output(path + "output/" + to_string(max_tree_width) + "-" + filename);
         ofstream degwidth(path + "degwidth/" + to_string(max_tree_width) + "-" + filename);
+        chrono::steady_clock::time_point start = chrono::high_resolution_clock::now();
+        chrono::steady_clock::time_point end = chrono::high_resolution_clock::now();
+        // To get the value of duration use the count()
+        // member function on the duration object
+        // cout << double(duration.count()) / 1000000 << " s" << endl;
 
         for (int u = 0; u < num_nodes; ++u) {
             parent[u] = u;
@@ -181,33 +186,51 @@ struct graph {
                 continue;
             }
             // print_neighbor(u, nbh);
-            update_width(u, true_deg, tree_width, true_num_nodes, remove_cnt, output, degwidth);
+            update_width(u, true_deg, tree_width, true_num_nodes, remove_cnt, output, degwidth, start, end);
             contract(u);
         }
-        export_info(tree_width, remove_cnt, true_num_nodes, output, degwidth);
+        end = chrono::high_resolution_clock::now();
+        auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
+        export_info(tree_width, remove_cnt, true_num_nodes, output, degwidth, duration);
         output.close();
     }
 
-    void update_width(int u, int& true_deg, int& tree_width, int& true_num_nodes, int& remove_cnt, ofstream& output, ofstream& degwidth)
+    void update_width(
+        int u,
+        int& true_deg,
+        int& tree_width,
+        int& true_num_nodes,
+        int& remove_cnt,
+        ofstream& output,
+        ofstream& degwidth,
+        chrono::steady_clock::time_point& start,
+        chrono::steady_clock::time_point& end)
     {
         if (true_deg > tree_width) {
+            // when we come here, the last chrono::steady_clock::time_point& end
+            // is the end of the execution with the tree_width
+            auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
             if (tree_width == 0) {
                 true_num_nodes = num_nodes - remove_cnt;
                 cout << "true num_nodes: " << true_num_nodes << endl;
                 output << true_num_nodes << endl;
                 remove_cnt = 0; // reset the count; we don't need nodes that have 0 edge
-            } else
-                export_info(tree_width, remove_cnt, true_num_nodes, output, degwidth);
+            } else {
+                export_info(tree_width, remove_cnt, true_num_nodes, output, degwidth, duration);
+            }
             tree_width = true_deg;
+            start = end;
         }
         remove_cnt++;
         degwidth << init_deg[u] << " " << true_deg << endl;
+        end = chrono::high_resolution_clock::now();
     }
 
-    void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output, ofstream& degwidth)
+    void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output, ofstream& degwidth, chrono::microseconds duration)
     {
-        cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)" << endl;
-        output << tree_width << " " << remove_cnt << endl;
+        cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)"
+             << " " << double(duration.count()) / 100000 << endl;
+        output << tree_width << " " << remove_cnt << " " << double(duration.count()) / 100000 << endl;
     }
 
     void print_info()
@@ -240,14 +263,7 @@ int main(int argc, char* argv[])
     g.read_edges(argv[1]);
     g.make_graph();
 
-    auto start = chrono::high_resolution_clock::now();
     g.decompose(stoi(argv[2]));
-    auto stop = chrono::high_resolution_clock::now();
-    auto duration = chrono::duration_cast<chrono::microseconds>(stop - start);
-
-    // To get the value of duration use the count()
-    // member function on the duration object
-    cout << double(duration.count()) / 1000000 << " s" << endl;
 
     return 0;
 }

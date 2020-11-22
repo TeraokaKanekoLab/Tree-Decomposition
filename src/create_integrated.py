@@ -23,7 +23,7 @@ def read_file():
     num_nodes = int(lines[0])
     for i in range(1, length):
         line = lines[i]
-        width1, num_node = map(int, line.split())
+        width1, num_node, time = map(int, line.split())
         widths1.append(width1)
         num_nodes1.append(num_node)
         percentages1.append(num_node/num_nodes * 100)
