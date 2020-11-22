@@ -162,8 +162,8 @@ struct graph {
         int remove_cnt = 0;
         ofstream output(path + "output/" + to_string(max_tree_width) + "-" + filename);
         ofstream degwidth(path + "degwidth/" + to_string(max_tree_width) + "-" + filename);
-        auto start = chrono::high_resolution_clock::now();
-        auto end = chrono::high_resolution_clock::now();
+        chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+        chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
         // To get the value of duration use the count()
         // member function on the duration object
         // cout << double(duration.count()) / 1000000 << " s" << endl;
@@ -189,7 +189,7 @@ struct graph {
             update_width(u, true_deg, tree_width, true_num_nodes, remove_cnt, output, degwidth, start, end);
             contract(u);
         }
-        end = chrono::high_resolution_clock::now();
+        end = std::chrono::steady_clock::now();
         auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
         export_info(tree_width, remove_cnt, true_num_nodes, output, degwidth, duration);
         output.close();
@@ -223,7 +223,7 @@ struct graph {
         }
         remove_cnt++;
         degwidth << init_deg[u] << " " << true_deg << endl;
-        end = chrono::high_resolution_clock::now();
+        end = std::chrono::steady_clock::now();
     }
 
     void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output, ofstream& degwidth, chrono::microseconds duration)
