@@ -162,8 +162,8 @@ struct graph {
         int remove_cnt = 0;
         ofstream output(path + "output/" + to_string(max_tree_width) + "-" + filename);
         ofstream degwidth(path + "degwidth/" + to_string(max_tree_width) + "-" + filename);
-        chrono::steady_clock::time_point start = chrono::high_resolution_clock::now();
-        chrono::steady_clock::time_point end = chrono::high_resolution_clock::now();
+        auto start = chrono::high_resolution_clock::now();
+        auto end = chrono::high_resolution_clock::now();
         // To get the value of duration use the count()
         // member function on the duration object
         // cout << double(duration.count()) / 1000000 << " s" << endl;
