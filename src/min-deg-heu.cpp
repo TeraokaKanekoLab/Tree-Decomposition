@@ -229,8 +229,8 @@ struct graph {
     void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output, ofstream& degwidth, chrono::microseconds duration)
     {
         cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)"
-             << " " << double(duration.count()) / 100000 << endl;
-        output << tree_width << " " << remove_cnt << " " << double(duration.count()) / 100000 << endl;
+             << " " << double(duration.count()) / 1000000 << endl;
+        output << tree_width << " " << remove_cnt << " " << double(duration.count()) / 1000000 << endl;
     }
 
     void print_info()
