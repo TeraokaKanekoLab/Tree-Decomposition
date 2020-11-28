@@ -309,7 +309,7 @@ int main(int argc, char* argv[])
     int max_deg_node = master.max_degree_node();
     each_node(master, g, max_width, max_deg_node);
     for (int i = 0; i < 10; ++i) {
-        cout << "random: " << master.random_node() << endl;
+        int rand = master.random_node();
         each_node(master, g, max_width, max_deg_node);
     }
 
