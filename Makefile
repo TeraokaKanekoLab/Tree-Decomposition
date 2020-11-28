@@ -13,7 +13,10 @@ make:
 	./desce $(addprefix graph/,$(G)) $(W)
 	g++ src/count_degree.cpp -o count_degree --std=c++17
 	./count_degree $(addprefix graph/,$(G))
+	g++ src/walk.cpp -o walk --std=c++17
+	./walk $(addprefix graph/,$(G)) $(W)
 	python3 src/create_integrated.py $(addprefix output/,$(G)) $(W)
+	python3 src/create_deg-width.py $(addprefix output/,$(G)) $(W)
 
 pq:
 	g++ src/min-deg-heu.cpp -o min-deg-heu --std=c++17

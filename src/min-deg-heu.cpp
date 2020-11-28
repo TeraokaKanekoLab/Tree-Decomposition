@@ -222,7 +222,7 @@ struct graph {
             start = end;
         }
         remove_cnt++;
-        degwidth << init_deg[u] << " " << true_deg << endl;
+        degwidth << init_deg[u] << " " << true_deg << " " << u << endl;
         end = std::chrono::steady_clock::now();
     }
 
