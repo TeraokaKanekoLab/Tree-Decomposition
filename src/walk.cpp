@@ -193,22 +193,22 @@ struct graph {
             int true_deg = (int)nbh.size();
             int num_remove = 0;
             // add its neighbors to the push as known nodes
+            nodes_left -= num_remove;
+            if (true_deg > max_tree_width) {
+                Q.push(node(true_deg, u));
+            } else {
+                contract(u);
+                remove_cnt++;
+                // cout << nodes_left << endl;
+            }
             for (int nb : nbh)
                 if (!retrieved[nb]) {
                     retrieved[nb] = true;
                     Q.push(node(adj[nb].size(), nb));
                     num_remove++;
                 }
-            nodes_left -= num_remove;
-            if (true_deg > max_tree_width) {
-                if (deg == true_deg && num_remove == 0)
-                    break;
-                Q.push(node(true_deg, u));
-                continue;
-            }
-            contract(u);
-            remove_cnt++;
-            // cout << nodes_left << endl;
+            if (true_deg > max_tree_width && deg == true_deg && num_remove == 0)
+                break;
         }
         cout << "nodes_left: " << nodes_left << endl;
         export_info(max_tree_width, remove_cnt, true_num_nodes, output);
