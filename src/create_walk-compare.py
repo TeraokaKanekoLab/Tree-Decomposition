@@ -5,56 +5,48 @@ import matplotlib.pyplot as plt
 colors = ["b", "g", "r", "c", "m", "y", "k",
           "tab:orange", "tab:purple", "tab:brown", "tab:pink"]
 
+graphs = ["185162", "411915", "207639", "503555",
+          "240625", "507226", "36434", "548091", "380685", "479091", "406454"]
 
-def read_file():
+
+def read_file(graph, filename, arg_width):
     if len(sys.argv) != 3:
         print("usage: python3", sys.argv[0], "<filename> <width>")
         exit()
 
-    filepath = sys.argv[1]
-    arg_width = sys.argv[2]
-    idx = filepath.find("output/")
-    path = filepath[:idx]
-    filename = filepath[idx + 7:filepath.find(".txt")]
-    filepath = "output/"+arg_width+"-"+filename+".txt"
+    filepath = "walks/"+arg_width+"-"+graph+"-"+filename+".txt"
+    print(filepath)
     f = open(filepath, "r")
     lines = f.readlines()
     widths = []
-    nums_nodes = []
-    times = []
+    num_nodes = []
     length = len(lines)
     num_nodes = int(lines[0])
     for i in range(1, length):
         line = lines[i]
         width = int(line.split()[0])
         num_node = int(line.split()[1])
-        time = float(line.split()[2])
         widths.append(width)
-        times.append(time)
-        if i == 1:
-            n = num_node
-        else:
-            n = num_node - nums_nodes[-1]
-        msg = "width: " + str(width) + ", time: " + str(time) + ", num_node: " + \
-            str(n)
+        num_nodes.append(num_node)
+        msg = "width: " + str(width) + ", num_node: " + str(num_node)
         print(msg)
-        nums_nodes.append(num_node)
-    return widths, times, filename, path
-
-
-def draw_chart(x_axis, y_axis, filename, path):
-    plt.scatter(x_axis, y_axis,  c="b",  label="optimal", s=1)
-    width = sys.argv[2]
-    saved_name = path + "charts/time/integrated-" + width + "-" + filename + ".pdf"
-    print(saved_name)
-    plt.xlim(0, int(width))
-    plt.ylim(bottom=0)
-    plt.xlabel("width")
-    plt.ylabel("time consumed from (n-1)th to nth decomposition [s]")
-    plt.title("time consumption over width: " + filename)
-    plt.savefig(saved_name)
+    return widths, num_nodes
 
 
 if __name__ == '__main__':
-    widths, times, filename, path = read_file()
-    draw_chart(widths, times, filename, path)
+    filepath = sys.argv[1]
+    arg_width = sys.argv[2]
+    idx = filepath.find("output/")
+    path = filepath[:idx]
+    filename = filepath[idx + 7:filepath.find(".txt")]
+    plt.xlim(0, int(arg_width))
+    plt.xlabel("width")
+    plt.ylabel("% of nodes over width")
+    plt.title("walk: " + filename)
+    plt.ylim(bottom=0)
+    for graph, color in zip(graphs, colors):
+        x_axis, y_axis = read_file(graph, filename, arg_width)
+        plt.scatter(x_axis, y_axis,  c=color,  label=graph, s=1)
+    saved_name = path + "walks/charts/" + arg_width + "-" + filename + ".pdf"
+    plt.savefig(saved_name)
+    print(saved_name)
