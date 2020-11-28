@@ -45,6 +45,8 @@ if __name__ == '__main__':
     plt.ylim(bottom=0)
     for graph, color in zip(graphs, colors):
         x_axis, y_axis = read_file(graph, filename, arg_width)
+        print(x_axis[5])
+        print(y_axis[5])
         plt.scatter(x_axis, y_axis,  c=color,  label=graph, s=1)
     saved_name = path + "walks/charts/" + arg_width + "-" + filename + ".pdf"
     plt.savefig(saved_name)
