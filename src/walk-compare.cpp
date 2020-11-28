@@ -310,7 +310,7 @@ int main(int argc, char* argv[])
     each_node(master, g, max_width, max_deg_node);
     for (int i = 0; i < 10; ++i) {
         int rand = master.random_node();
-        each_node(master, g, max_width, max_deg_node);
+        each_node(master, g, max_width, rand);
     }
 
     return 0;
