@@ -27,8 +27,6 @@ def read_file(graph, filename, arg_width):
         num_node = int(line.split()[1])
         widths.append(width)
         num_nodes.append(num_node)
-        msg = "width: " + str(width) + ", num_node: " + str(num_node)
-        print(msg)
     return widths, num_nodes
 
 
@@ -45,8 +43,8 @@ if __name__ == '__main__':
     plt.ylim(bottom=0)
     for graph, color in zip(graphs, colors):
         x_axis, y_axis = read_file(graph, filename, arg_width)
-        print(x_axis[5])
-        print(y_axis[5])
+        print(x_axis)
+        print(y_axis)
         plt.scatter(x_axis, y_axis,  c=color,  label=graph, s=1)
     saved_name = path + "walks/charts/" + arg_width + "-" + filename + ".pdf"
     plt.savefig(saved_name)
