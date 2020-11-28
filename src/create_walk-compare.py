@@ -21,7 +21,6 @@ def read_file(graph, filename, arg_width):
     widths = []
     num_nodes = []
     length = len(lines)
-    num_nodes = int(lines[0])
     for i in range(1, length):
         line = lines[i]
         width = int(line.split()[0])
