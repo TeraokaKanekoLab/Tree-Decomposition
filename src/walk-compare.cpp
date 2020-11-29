@@ -278,9 +278,10 @@ void copy_master(graph& g, graph& master)
     g.parent = master.parent;
 }
 
-void each_node(graph g, int max_width, int start_node)
+void each_node(graph& master, int max_width, int start_node)
 {
     ofstream output(path + "walks/" + to_string(max_width) + "-" + to_string(start_node) + "-" + filename);
+    graph g;
     for (int width = 0; width < max_width;) {
         if (width < 10)
             width++;
@@ -288,6 +289,7 @@ void each_node(graph g, int max_width, int start_node)
             width += width / 10;
         if (width >= max_width)
             width = max_width;
+        copy_master(g, master);
         g.decompose(width, output, start_node);
     }
     output.close();
