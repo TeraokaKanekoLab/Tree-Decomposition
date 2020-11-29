@@ -270,6 +270,9 @@ void copy_master(graph& g, graph& master)
     g.num_nodes = master.num_nodes; // This value may be different from the official number of nodes.
     g.true_num_nodes = master.true_num_nodes;
     g.num_edges = master.num_edges;
+    g.adj.clear();
+    g.edges.clear();
+    g.parent.clear();
     g.adj = master.adj;
     g.edges = master.edges;
     g.parent = master.parent;

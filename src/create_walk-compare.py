@@ -38,14 +38,15 @@ if __name__ == '__main__':
     filename = filepath[idx + 7:filepath.find(".txt")]
     plt.xlim(0, int(arg_width))
     plt.xlabel("width")
-    plt.ylabel("% of nodes over width")
+    plt.ylabel("# of nodes over width")
     plt.title("walk: " + filename)
-    plt.ylim(bottom=0)
     for graph, color in zip(graphs, colors):
         x_axis, y_axis = read_file(graph, filename, arg_width)
         print(x_axis)
         print(y_axis)
-        plt.scatter(x_axis, y_axis,  c=color,  label=graph, s=1)
+        print(graph)
+        print(color)
+        plt.plot(x_axis, y_axis,  c=color,  label=graph)
     saved_name = path + "walks/charts/" + arg_width + "-" + filename + ".pdf"
     plt.savefig(saved_name)
     print(saved_name)
