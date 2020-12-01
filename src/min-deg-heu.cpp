@@ -88,8 +88,14 @@ struct graph {
                 degreeq.push(node(deg, i));
             }
         }
-        chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-        chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
+        auto start = std::chrono::steady_clock::now();
+        auto end = std::chrono::steady_clock::now();
+        auto d2_start = std::chrono::steady_clock::now();
+        auto d2_end = std::chrono::steady_clock::now();
+        auto d2_duration = chrono::duration_cast<chrono::microseconds>(chrono::milliseconds(0));
+        auto n_start = std::chrono::steady_clock::now();
+        auto n_end = std::chrono::steady_clock::now();
+        auto n_duration = chrono::duration_cast<chrono::microseconds>(chrono::milliseconds(0));
         while (!degreeq.empty()) {
             int deg = degreeq.top().first;
             int nd = degreeq.top().second;
@@ -99,8 +105,10 @@ struct graph {
             if (deg > crnt_deg) {
                 end = std::chrono::steady_clock::now();
                 auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
-                export_info(crnt_deg, remove_cnt, true_num_nodes, output, duration);
+                export_info(crnt_deg, remove_cnt, true_num_nodes, output, duration, n_duration, d2_duration);
                 crnt_deg = deg;
+                n_duration = chrono::duration_cast<chrono::microseconds>(chrono::milliseconds(0));
+                d2_duration = chrono::duration_cast<chrono::microseconds>(chrono::milliseconds(0));
                 start = std::chrono::steady_clock::now();
             }
             if (deg > max_tree_width)
@@ -108,6 +116,7 @@ struct graph {
             vector<int> nbrs;
             for (int nbr : neighbors_of[nd])
                 nbrs.push_back(nbr);
+            auto d2_start = std::chrono::steady_clock::now();
             for (int nbr1 : nbrs) {
                 for (int nbr2 : nbrs) {
                     if (nbr1 == nbr2)
@@ -116,19 +125,24 @@ struct graph {
                         neighbors_of[nbr1].insert(nbr2);
                 }
             }
+            auto d2_end = std::chrono::steady_clock::now();
+            d2_duration += chrono::duration_cast<chrono::microseconds>(d2_end - d2_start);
+            auto n_start = std::chrono::steady_clock::now();
             for (int nbr : nbrs) {
                 neighbors_of[nbr].erase(nd);
                 degreeq.push(node(neighbors_of[nbr].size(), nbr));
             }
+            auto n_end = std::chrono::steady_clock::now();
+            n_duration += chrono::duration_cast<chrono::microseconds>(n_end - n_start);
             neighbors_of.erase(nd);
             remove_cnt++;
         }
         output.close();
     }
-    void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output, chrono::microseconds duration)
+    void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output, chrono::microseconds duration, chrono::microseconds n_duration, chrono::microseconds d2_duration)
     {
         cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)"
-             << " " << double(duration.count()) / 1000000 << endl;
+             << " " << double(duration.count()) / 1000000 << ", n: " << double(n_duration.count()) / 1000000 << ", d2: " << double(d2_duration.count()) / 1000000 << endl;
         output << tree_width << " " << remove_cnt << " " << double(duration.count()) / 1000000 << endl;
     }
 
