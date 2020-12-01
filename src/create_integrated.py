@@ -77,6 +77,19 @@ def read_file():
         num_nodes5.append(num_node)
         percentages5.append(num_node/num_nodes * 100)
 
+    filepath = "output/" + arg_width+"-mdh-"+filename+".txt"
+    f = open(filepath, "r")
+    lines = f.readlines()
+    widths6 = []
+    num_nodes6 = []
+    percentages6 = []
+    for line in lines:
+        width = int(line.split()[0])
+        num_node = int(line.split()[1])
+        widths6.append(width)
+        num_nodes6.append(num_node)
+        percentages6.append(num_node/num_nodes * 100)
+
     filepath = "degree/"+filename+".txt"
     f = open(filepath, "r")
     lines = f.readlines()
@@ -93,16 +106,17 @@ def read_file():
         num_nodes_deg.append(num_node)
         current_ne += num_node
         percentages_deg.append(current_ne/num_nodes * 100)
-    return widths1, percentages1, widths2, percentages2, widths3, percentages3, widths4, percentages4, widths5, percentages5, widths_deg, percentages_deg, path, filename
+    return widths1, percentages1, widths2, percentages2, widths3, percentages3, widths4, percentages4, widths5, percentages5, widths6, percentages6, widths_deg, percentages_deg, path, filename
 
 
-def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_axis4, x_axis5, y_axis5, x_axis6, y_axis6, path, filename):
-    plt.plot(x_axis1, y_axis1,  c="b",  label="SBR")
-    plt.plot(x_axis2, y_axis2, c="g",  label="random")
-    plt.plot(x_axis3, y_axis3, c="r",  label="desce")
+def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_axis4, x_axis5, y_axis5, x_axis6, y_axis6, x_axis7, y_axis7, path, filename):
+    plt.plot(x_axis6, y_axis6, c="r",  label="MDH")
+    plt.plot(x_axis1, y_axis1,  c="g",  label="SBR")
+    plt.plot(x_axis3, y_axis3, c="b",  label="desce")
     plt.plot(x_axis4, y_axis4, c="c",  label="asce")
-    plt.plot(x_axis5, y_axis5, c="m",  label="walk")
-    plt.plot(x_axis6, y_axis6, c="k",  label="degree")
+    plt.plot(x_axis2, y_axis2, c="m",  label="random")
+    plt.plot(x_axis5, y_axis5, c="y",  label="walk")
+    plt.plot(x_axis7, y_axis7, c="k",  label="degree")
     width = sys.argv[2]
     saved_name = path + "charts/integrated-" + width + "-" + filename + ".pdf"
     print(saved_name)
@@ -116,6 +130,6 @@ def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_
 
 
 if __name__ == '__main__':
-    widths1, percentages1, widths2, percentages2, widths3, percentages3, widths4, percentages4, widths5, percentages5, widths_deg, percentages_deg, path, filename = read_file()
-    draw_chart(widths1, percentages1, widths2, percentages2, widths3, percentages3, widths4,
-               percentages4, widths5, percentages5, widths_deg, percentages_deg, path, filename)
+    widths1, percentages1, widths2, percentages2, widths3, percentages3, widths4, percentages4, widths5, percentages5, widths6, percentages6, widths_deg, percentages_deg, path, filename = read_file()
+    draw_chart(widths1, percentages1, widths2, percentages2, widths3, percentages3, widths4, percentages4,
+               widths5, percentages5, widths6, percentages6, widths_deg, percentages_deg, path, filename)

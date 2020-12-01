@@ -73,13 +73,14 @@ struct graph {
     void decompose(int max_tree_width)
     {
         typedef pair<int, int> node; // (deg, vertex)
-        ofstream output(path + "output/" + to_string(max_tree_width) + "-min-deg-" + filename);
+        ofstream output(path + "output/" + to_string(max_tree_width) + "-mdh-" + filename);
         int true_num_nodes = 0;
         int crnt_deg = 1;
+        int remove_cnt = 0;
         priority_queue<node, vector<node>, greater<node>> degreeq;
 
         // counts vertices with edges (exclude non-edged vertex)
-        // create hash map
+        // initialize priority queue
         for (int i = 0; i < neighbors_of.size(); ++i) {
             int deg = neighbors_of[i].size();
             if (deg) {
@@ -87,8 +88,8 @@ struct graph {
                 degreeq.push(node(deg, i));
             }
         }
-        cout << "true_num_nodes: " << true_num_nodes << endl;
-        int remove_cnt = true_num_nodes;
+        chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
+        chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
         while (!degreeq.empty()) {
             int deg = degreeq.top().first;
             int nd = degreeq.top().second;
@@ -96,8 +97,11 @@ struct graph {
             if (neighbors_of.find(nd) == neighbors_of.end() || deg != neighbors_of[nd].size())
                 continue; // outdated entry in degreeq
             if (deg > crnt_deg) {
-                export_info(crnt_deg, remove_cnt, true_num_nodes, output);
+                end = std::chrono::steady_clock::now();
+                auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
+                export_info(crnt_deg, remove_cnt, true_num_nodes, output, duration);
                 crnt_deg = deg;
+                start = std::chrono::steady_clock::now();
             }
             if (deg > max_tree_width)
                 break;
@@ -121,11 +125,11 @@ struct graph {
         }
         output.close();
     }
-    void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output)
+    void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output, chrono::microseconds duration)
     {
         cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)"
-             << endl;
-        output << tree_width << " " << remove_cnt << endl;
+             << " " << double(duration.count()) / 1000000 << endl;
+        output << tree_width << " " << remove_cnt << " " << double(duration.count()) / 1000000 << endl;
     }
 
     void
