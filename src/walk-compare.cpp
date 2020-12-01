@@ -309,7 +309,6 @@ int main(int argc, char* argv[])
     graph master;
     master.read_edges();
     master.make_graph();
-    graph g;
     int max_deg_node = master.max_degree_node();
     each_node(master, max_width, max_deg_node);
     for (int i = 0; i < 10; ++i) {

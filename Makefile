@@ -3,8 +3,8 @@ G = simple_graph.txt
 W = 2147483647
 
 make:
-	g++ src/min-deg-heu.cpp -o min-deg-heu --std=c++17
-	./min-deg-heu $(addprefix graph/,$(G)) $(W)
+	g++ src/sbr.cpp -o sbr --std=c++17
+	./sbr $(addprefix graph/,$(G)) $(W)
 	g++ src/random.cpp -o random --std=c++17
 	./random $(addprefix graph/,$(G)) $(W)
 	g++ src/asce.cpp -o asce --std=c++17
@@ -18,9 +18,13 @@ make:
 	python3 src/create_integrated.py $(addprefix output/,$(G)) $(W)
 	python3 src/create_deg-width.py $(addprefix output/,$(G)) $(W)
 
-pq:
+mdh:
 	g++ src/min-deg-heu.cpp -o min-deg-heu --std=c++17
 	./min-deg-heu $(addprefix graph/,$(G)) $(W)
+
+sbr:
+	g++ src/sbr.cpp -o sbr --std=c++17
+	./sbr $(addprefix graph/,$(G)) $(W)
 	python3 src/create_chart.py $(addprefix output/,$(G))
 
 random:

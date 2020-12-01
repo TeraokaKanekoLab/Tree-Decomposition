@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 colors = ["b", "g", "r", "c", "m", "y", "k",
           "tab:orange", "tab:purple", "tab:brown", "tab:pink"]
 
-graphs = ["185162", "411915", "207639", "503555",
-          "240625", "507226", "36434", "548091", "380685", "479091", "406454"]
+graphs = ["1381622", "2492969", "26863", "2852988",
+          "2899249", "3145563", "3144803", "3294444", "3958248", "401845", "9766"]
 
 
 def read_file(graph, filename, arg_width):
@@ -36,7 +36,7 @@ if __name__ == '__main__':
     idx = filepath.find("output/")
     path = filepath[:idx]
     filename = filepath[idx + 7:filepath.find(".txt")]
-    plt.xlim(0, int(arg_width))
+    plt.xlim(0, 20)
     plt.xlabel("width")
     plt.ylabel("# of nodes over width")
     plt.title("walk: " + filename)

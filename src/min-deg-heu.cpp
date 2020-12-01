@@ -1,31 +1,11 @@
-/*
-min-deg-heu.cpp
-
-Created by Cirus Thenter on 2020/08/27.
-Copyright © 2020 Cirus Thenter. All rights reserved?
-
-# how to run this program
-% g++ min-deg-heu.cpp -o min-deg-heu
-% ./min-deg-heu <graph data file>
-
-
-# gaph data format
-<# of nodes> <# of edges>
-<endpoint 1> <endpoint 2>
-<endpoint 3> <endpoint 4>
-.
-.
-.
-
-<endpoint n> needs to be int (edge No.)
-*/
-
 #include <algorithm>
 #include <chrono>
 #include <fstream>
 #include <iostream>
 #include <queue>
 #include <string>
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
 
 #define MAX_TREE_WIDTH 100
@@ -38,11 +18,10 @@ struct graph {
     // We consider int type suitable for this situation.
     int num_nodes = 0; // This value may be different from the official number of nodes.
     int num_edges = 0;
-    vector<vector<int>> adj;
-    vector<int> init_deg;
     vector<pair<int, int>> edges;
     string filename;
     string path;
+    unordered_map<int, unordered_set<int>> neighbors_of;
 
     void add_edge(int u, int v)
     {
@@ -51,15 +30,9 @@ struct graph {
 
     void make_graph()
     {
-        adj.resize(num_nodes);
         for (pair<int, int> e : edges) {
-            adj[e.first].push_back(e.second);
-            adj[e.second].push_back(e.first);
-        }
-        for (vector<int> nbh : adj) {
-            sort(nbh.begin(), nbh.end()); // sort endpoint indices in case edges are not sorted in the file as we expect
-            nbh.erase(unique(nbh.begin(), nbh.end()), nbh.end()); // classic way of erasing duplicates;
-            init_deg.push_back(nbh.size());
+            neighbors_of[e.first].insert(e.second);
+            neighbors_of[e.second].insert(e.first);
         }
     }
 
@@ -97,149 +70,66 @@ struct graph {
         graph_data.close();
     }
 
-    vector<int> parent;
-    int root(int v)
-    { // union-find data structure
-        if (parent[v] == v || parent[v] == -1)
-            return v;
-        return parent[v] = root(parent[v]);
-    }
-
-    void normalize(vector<int>& S)
-    {
-        for (auto& v : S)
-            v = root(v);
-        sort(S.begin(), S.end());
-        S.erase(unique(S.begin(), S.end()), S.end());
-    }
-
-    vector<int> neighbor(int u)
-    {
-        vector<int> nbh;
-        normalize(adj[u]);
-        for (auto v : adj[u]) {
-            if (parent[v] == v) {
-                nbh.push_back(v);
-            } else {
-                normalize(adj[v]);
-                for (auto w : adj[v]) {
-                    if (parent[w] == w) {
-                        nbh.push_back(w);
-                    }
-                }
-            }
-        }
-        normalize(nbh);
-        return nbh;
-    }
-
-    void contract(int u)
-    {
-        vector<int> live, dead;
-        for (auto v : adj[u]) {
-            if (parent[v] == v)
-                live.push_back(v);
-            else
-                dead.push_back(v);
-        }
-        parent[u] = -1;
-        adj[u].swap(live);
-        for (auto v : dead) {
-            normalize(adj[v]);
-            adj[u].insert(adj[u].end(), adj[v].begin(), adj[v].end());
-            adj[v].clear();
-            parent[v] = u;
-        }
-    }
-
     void decompose(int max_tree_width)
     {
         typedef pair<int, int> node; // (deg, vertex)
-        int tree_width = 0;
-        parent.resize(num_nodes);
-        priority_queue<node, vector<node>, greater<node>> Q;
-        int true_num_nodes = num_nodes;
-        int remove_cnt = 0;
-        ofstream output(path + "output/" + to_string(max_tree_width) + "-" + filename);
-        ofstream degwidth(path + "degwidth/" + to_string(max_tree_width) + "-" + filename);
-        chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
-        chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
-        // To get the value of duration use the count()
-        // member function on the duration object
-        // cout << double(duration.count()) / 1000000 << " s" << endl;
+        ofstream output(path + "output/" + to_string(max_tree_width) + "-min-deg-" + filename);
+        int true_num_nodes = 0;
+        int crnt_deg = 1;
+        priority_queue<node, vector<node>, greater<node>> degreeq;
 
-        for (int u = 0; u < num_nodes; ++u) {
-            parent[u] = u;
-            Q.push(node(adj[u].size(), u));
-        }
-
-        while (!Q.empty() && tree_width < max_tree_width) {
-            int deg = Q.top().first;
-            int u = Q.top().second;
-            Q.pop();
-
-            vector<int> nbh = neighbor(u); // get all the neighbours
-            int true_deg = (int)nbh.size();
-
-            if (true_deg > deg) { // if true degree is larger than the degree
-                Q.push({ true_deg, u });
-                continue;
+        // counts vertices with edges (exclude non-edged vertex)
+        // create hash map
+        for (int i = 0; i < neighbors_of.size(); ++i) {
+            int deg = neighbors_of[i].size();
+            if (deg) {
+                true_num_nodes++;
+                degreeq.push(node(deg, i));
             }
-            // print_neighbor(u, nbh);
-            update_width(u, true_deg, tree_width, true_num_nodes, remove_cnt, output, degwidth, start, end);
-            contract(u);
         }
-        end = std::chrono::steady_clock::now();
-        auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
-        export_info(tree_width, remove_cnt, true_num_nodes, output, degwidth, duration);
+        cout << "true_num_nodes: " << true_num_nodes << endl;
+        int remove_cnt = true_num_nodes;
+        while (!degreeq.empty()) {
+            int deg = degreeq.top().first;
+            int nd = degreeq.top().second;
+            degreeq.pop();
+            if (neighbors_of.find(nd) == neighbors_of.end() || deg != neighbors_of[nd].size())
+                continue; // outdated entry in degreeq
+            if (deg > crnt_deg) {
+                export_info(crnt_deg, remove_cnt, true_num_nodes, output);
+                crnt_deg = deg;
+            }
+            if (deg > max_tree_width)
+                break;
+            vector<int> nbrs;
+            for (int nbr : neighbors_of[nd])
+                nbrs.push_back(nbr);
+            for (int nbr1 : nbrs) {
+                for (int nbr2 : nbrs) {
+                    if (nbr1 == nbr2)
+                        continue;
+                    if (neighbors_of[nbr1].find(nbr2) == neighbors_of[nbr1].end())
+                        neighbors_of[nbr1].insert(nbr2);
+                }
+            }
+            for (int nbr : nbrs) {
+                neighbors_of[nbr].erase(nd);
+                degreeq.push(node(neighbors_of[nbr].size(), nbr));
+            }
+            neighbors_of.erase(nd);
+            remove_cnt++;
+        }
         output.close();
     }
-
-    void update_width(
-        int u,
-        int& true_deg,
-        int& tree_width,
-        int& true_num_nodes,
-        int& remove_cnt,
-        ofstream& output,
-        ofstream& degwidth,
-        chrono::steady_clock::time_point& start,
-        chrono::steady_clock::time_point& end)
-    {
-        if (true_deg > tree_width) {
-            // when we come here, the last chrono::steady_clock::time_point& end
-            // is the end of the execution with the tree_width
-            auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
-            if (tree_width == 0) {
-                true_num_nodes = num_nodes - remove_cnt;
-                cout << "true num_nodes: " << true_num_nodes << endl;
-                output << true_num_nodes << endl;
-                remove_cnt = 0; // reset the count; we don't need nodes that have 0 edge
-            } else {
-                export_info(tree_width, remove_cnt, true_num_nodes, output, degwidth, duration);
-            }
-            tree_width = true_deg;
-            start = end;
-        }
-        remove_cnt++;
-        degwidth << init_deg[u] << " " << true_deg << " " << u << endl;
-        end = std::chrono::steady_clock::now();
-    }
-
-    void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output, ofstream& degwidth, chrono::microseconds duration)
+    void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output)
     {
         cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)"
-             << " " << double(duration.count()) / 1000000 << endl;
-        output << tree_width << " " << remove_cnt << " " << double(duration.count()) / 1000000 << endl;
+             << endl;
+        output << tree_width << " " << remove_cnt << endl;
     }
 
-    void print_info()
-    {
-        cout << "nodes: " << num_nodes << ", edges: " << num_edges << endl;
-        return;
-    }
-
-    void print_neighbor(int u, vector<int> nbh)
+    void
+    print_neighbor(int u, vector<int> nbh)
     {
         cout << u << ": [";
         for (int i = 0; i < nbh.size(); ++i) {
