@@ -143,7 +143,7 @@ struct graph {
     {
         cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)"
              << " " << double(duration.count()) / 1000000 << ", n: " << double(n_duration.count()) / 1000000 << ", d2: " << double(d2_duration.count()) / 1000000 << endl;
-        output << tree_width << " " << remove_cnt << " " << double(duration.count()) / 1000000 << endl;
+        output << tree_width << " " << remove_cnt << " " << double(duration.count()) / 1000000 << " " << double(n_duration.count()) / 1000000 << " " << double(d2_duration.count()) / 1000000 << endl;
     }
 
     void
