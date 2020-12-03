@@ -110,8 +110,8 @@ def read_file():
 
 
 def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_axis4, x_axis5, y_axis5, x_axis6, y_axis6, x_axis7, y_axis7, path, filename):
-    plt.plot(x_axis6, y_axis6, c="r",  label="MDH")
     plt.plot(x_axis1, y_axis1,  c="g",  label="SBR")
+    plt.plot(x_axis6, y_axis6, c="r",  label="MDH")
     plt.plot(x_axis3, y_axis3, c="b",  label="desce")
     plt.plot(x_axis4, y_axis4, c="c",  label="asce")
     plt.plot(x_axis2, y_axis2, c="m",  label="random")
