@@ -1,32 +1,12 @@
-/*
-min-deg-heu.cpp
-
-Created by Cirus Thenter on 2020/08/27.
-Copyright © 2020 Cirus Thenter. All rights reserved?
-
-# how to run this program
-% g++ min-deg-heu.cpp -o min-deg-heu
-% ./min-deg-heu <graph data file>
-
-
-# gaph data format
-<# of nodes> <# of edges>
-<endpoint 1> <endpoint 2>
-<endpoint 3> <endpoint 4>
-.
-.
-.
-
-<endpoint n> needs to be int (edge No.)
-*/
-
 #include <algorithm>
 #include <chrono>
 #include <fstream>
 #include <iostream>
 #include <queue>
 #include <random>
+#include <stdlib.h>
 #include <string>
+#include <time.h>
 #include <vector>
 
 #define MAX_TREE_WIDTH 100
@@ -49,6 +29,30 @@ struct graph {
     vector<pair<int, int>> edges;
     vector<int> parent;
     typedef pair<int, int> node; // (deg, vertex)
+
+    int max_degree_node()
+    {
+        int index = 0;
+        int max_deg = 0;
+        for (int i = 0; i < adj.size(); ++i) {
+            int deg = adj[i].size();
+            if (deg > max_deg) {
+                index = i;
+                max_deg = deg;
+            }
+        }
+        return index;
+    }
+
+    int random_node()
+    {
+        while (true) {
+            int index = rand();
+            index %= num_nodes;
+            if (adj[index].size() > 0)
+                return index;
+        }
+    }
 
     void add_edge(int u, int v)
     {
@@ -159,7 +163,7 @@ struct graph {
         }
     }
 
-    void decompose(int max_tree_width, ofstream& output)
+    void decompose(int max_tree_width, ofstream& output, int start_node)
     {
         int tree_width = 0;
         parent.resize(num_nodes);
@@ -174,7 +178,7 @@ struct graph {
         }
 
         // start with the first node of the first edge.
-        int nd = edges[0].first;
+        int nd = start_node;
         retrieved[nd] = true;
         Q.push(node(adj[nd].size(), nd));
         nodes_left--;
@@ -244,9 +248,29 @@ void copy_master(graph& g, graph& master)
     g.num_nodes = master.num_nodes; // This value may be different from the official number of nodes.
     g.true_num_nodes = master.true_num_nodes;
     g.num_edges = master.num_edges;
+    g.adj.clear();
+    g.edges.clear();
+    g.parent.clear();
     g.adj = master.adj;
     g.edges = master.edges;
     g.parent = master.parent;
+}
+
+void each_node(graph& master, int max_width, int start_node)
+{
+    ofstream output(path + "walks/" + to_string(max_width) + "-" + to_string(start_node) + "-" + filename);
+    graph g;
+    for (int width = 0; width < max_width;) {
+        if (width < 10)
+            width++;
+        else
+            width += width / 10;
+        if (width >= max_width)
+            width = max_width;
+        copy_master(g, master);
+        g.decompose(width, output, start_node);
+    }
+    output.close();
 }
 
 int main(int argc, char* argv[])
@@ -260,22 +284,15 @@ int main(int argc, char* argv[])
     filename = file_name.substr(idx + 6);
     path = file_name.substr(0, idx);
     int max_width = stoi(argv[2]);
-    ofstream output(path + "output/" + to_string(max_width) + "-walk-" + filename);
     graph master;
     master.read_edges();
     master.make_graph();
-    graph g;
-    for (int width = 0; width < max_width;) {
-        if (width < 10)
-            width++;
-        else
-            width += width / 10;
-        if (width >= max_width)
-            width = max_width;
-        copy_master(g, master);
-        g.decompose(width, output);
+    int max_deg_node = master.max_degree_node();
+    each_node(master, max_width, max_deg_node);
+    for (int i = 0; i < 10; ++i) {
+        int rand = master.random_node();
+        each_node(master, max_width, rand);
     }
-    output.close();
 
     return 0;
 }

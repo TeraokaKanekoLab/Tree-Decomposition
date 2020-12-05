@@ -19,8 +19,8 @@ make:
 	python3 src/create_deg-width.py $(addprefix output/,$(G)) $(W)
 
 mdh:
-	g++ src/min-deg-heu.cpp -o min-deg-heu --std=c++17
-	./min-deg-heu $(addprefix graph/,$(G)) $(W)
+	g++ src/mdh.cpp -o mdh --std=c++17
+	./mdh $(addprefix graph/,$(G)) $(W)
 
 sbr:
 	g++ src/sbr.cpp -o sbr --std=c++17

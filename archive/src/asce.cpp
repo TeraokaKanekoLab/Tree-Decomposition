@@ -1,25 +1,3 @@
-/*
-min-deg-heu.cpp
-
-Created by Cirus Thenter on 2020/08/27.
-Copyright © 2020 Cirus Thenter. All rights reserved?
-
-# how to run this program
-% g++ min-deg-heu.cpp -o min-deg-heu
-% ./min-deg-heu <graph data file>
-
-
-# gaph data format
-<# of nodes> <# of edges>
-<endpoint 1> <endpoint 2>
-<endpoint 3> <endpoint 4>
-.
-.
-.
-
-<endpoint n> needs to be int (edge No.)
-*/
-
 #include <algorithm>
 #include <fstream>
 #include <iostream>

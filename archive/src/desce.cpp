@@ -1,40 +1,15 @@
-/*
-min-deg-heu.cpp
-
-Created by Cirus Thenter on 2020/08/27.
-Copyright © 2020 Cirus Thenter. All rights reserved?
-
-# how to run this program
-% g++ min-deg-heu.cpp -o min-deg-heu
-% ./min-deg-heu <graph data file>
-
-
-# gaph data format
-<# of nodes> <# of edges>
-<endpoint 1> <endpoint 2>
-<endpoint 3> <endpoint 4>
-.
-.
-.
-
-<endpoint n> needs to be int (edge No.)
-*/
-
 #include <algorithm>
-#include <chrono>
 #include <fstream>
 #include <iostream>
 #include <queue>
-#include <random>
-#include <stdlib.h>
 #include <string>
-#include <time.h>
 #include <vector>
 
 #define MAX_TREE_WIDTH 100
-#define INTERVAL 10
 
 using namespace std;
+
+typedef pair<int, int> node; // (deg, vertex)
 
 string file_name;
 string filename;
@@ -50,31 +25,7 @@ struct graph {
     vector<vector<int>> adj;
     vector<pair<int, int>> edges;
     vector<int> parent;
-    typedef pair<int, int> node; // (deg, vertex)
-
-    int max_degree_node()
-    {
-        int index = 0;
-        int max_deg = 0;
-        for (int i = 0; i < adj.size(); ++i) {
-            int deg = adj[i].size();
-            if (deg > max_deg) {
-                index = i;
-                max_deg = deg;
-            }
-        }
-        return index;
-    }
-
-    int random_node()
-    {
-        while (true) {
-            int index = rand();
-            index %= num_nodes;
-            if (adj[index].size() > 0)
-                return index;
-        }
-    }
+    vector<node> nodes;
 
     void add_edge(int u, int v)
     {
@@ -125,13 +76,19 @@ struct graph {
             if (nbh.size())
                 true_num_nodes++;
         }
-        cout << true_num_nodes << endl;
 
         parent.resize(num_nodes);
         for (int u = 0; u < num_nodes; ++u) {
             parent[u] = u;
+            nodes.push_back(node(adj[u].size(), u));
         }
+        sort(nodes.begin(), nodes.end(), greater());
     }
+
+    struct greater {
+        template <class T>
+        bool operator()(T const& a, T const& b) const { return a > b; }
+    };
 
     int root(int v)
     { // union-find data structure
@@ -157,9 +114,11 @@ struct graph {
                 nbh.push_back(v);
             } else {
                 normalize(adj[v]);
-                for (auto w : adj[v])
-                    if (parent[w] == w)
+                for (auto w : adj[v]) {
+                    if (parent[w] == w) {
                         nbh.push_back(w);
+                    }
+                }
             }
         }
         normalize(nbh);
@@ -185,62 +144,29 @@ struct graph {
         }
     }
 
-    void decompose(int max_tree_width, ofstream& output, int start_node)
+    void decompose(int max_tree_width, ofstream& output)
     {
         int tree_width = 0;
-        parent.resize(num_nodes);
-        priority_queue<node, vector<node>, greater<node>> Q;
         int remove_cnt = 0;
-        vector<bool> retrieved;
-        int nodes_left = true_num_nodes;
 
-        for (int u = 0; u < num_nodes; ++u) {
-            parent[u] = u;
-            retrieved.push_back(false);
-        }
-
-        // start with the first node of the first edge.
-        int nd = start_node;
-        retrieved[nd] = true;
-        Q.push(node(adj[nd].size(), nd));
-        nodes_left--;
-        for (int nb : adj[nd]) {
-            retrieved[nb] = true;
-            Q.push(node(adj[nb].size(), nb));
-            nodes_left--;
-        }
-
-        while (!Q.empty()) {
-            int deg = Q.top().first;
-            int u = Q.top().second;
-            Q.pop();
+        for (node nd : nodes) {
+            int deg = nd.first;
+            int u = nd.second;
 
             vector<int> nbh = neighbor(u); // get all the neighbours
             int true_deg = (int)nbh.size();
-            int num_remove = 0;
-            // add its neighbors to the push as known nodes
-            nodes_left -= num_remove;
-            if (true_deg > max_tree_width) {
-                Q.push(node(true_deg, u));
-            } else {
-                contract(u);
+
+            if (true_deg > max_tree_width)
+                continue;
+            // print_neighbor(u, nbh);
+            if (true_deg)
                 remove_cnt++;
-                // cout << nodes_left << endl;
-            }
-            for (int nb : nbh)
-                if (!retrieved[nb]) {
-                    retrieved[nb] = true;
-                    Q.push(node(adj[nb].size(), nb));
-                    num_remove++;
-                }
-            if (true_deg > max_tree_width && deg == true_deg && num_remove == 0)
-                break;
+            contract(u);
         }
-        cout << "nodes_left: " << nodes_left << endl;
-        export_info(max_tree_width, remove_cnt, true_num_nodes, output);
+        export_info(max_tree_width, remove_cnt, output);
     }
 
-    void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output)
+    void export_info(int tree_width, int remove_cnt, ofstream& output)
     {
         cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)" << endl;
         output << tree_width << " " << remove_cnt << endl;
@@ -270,29 +196,10 @@ void copy_master(graph& g, graph& master)
     g.num_nodes = master.num_nodes; // This value may be different from the official number of nodes.
     g.true_num_nodes = master.true_num_nodes;
     g.num_edges = master.num_edges;
-    g.adj.clear();
-    g.edges.clear();
-    g.parent.clear();
     g.adj = master.adj;
     g.edges = master.edges;
     g.parent = master.parent;
-}
-
-void each_node(graph& master, int max_width, int start_node)
-{
-    ofstream output(path + "walks/" + to_string(max_width) + "-" + to_string(start_node) + "-" + filename);
-    graph g;
-    for (int width = 0; width < max_width;) {
-        if (width < 10)
-            width++;
-        else
-            width += width / 10;
-        if (width >= max_width)
-            width = max_width;
-        copy_master(g, master);
-        g.decompose(width, output, start_node);
-    }
-    output.close();
+    g.nodes = master.nodes;
 }
 
 int main(int argc, char* argv[])
@@ -306,15 +213,22 @@ int main(int argc, char* argv[])
     filename = file_name.substr(idx + 6);
     path = file_name.substr(0, idx);
     int max_width = stoi(argv[2]);
+    ofstream output(path + "output/" + to_string(max_width) + "-desce-" + filename);
     graph master;
     master.read_edges();
     master.make_graph();
-    int max_deg_node = master.max_degree_node();
-    each_node(master, max_width, max_deg_node);
-    for (int i = 0; i < 10; ++i) {
-        int rand = master.random_node();
-        each_node(master, max_width, rand);
+    graph g;
+    for (int width = 0; width < max_width;) {
+        if (width < 10)
+            width++;
+        else
+            width += width / 10;
+        if (width >= max_width)
+            width = max_width;
+        copy_master(g, master);
+        g.decompose(width, output);
     }
+    output.close();
 
     return 0;
 }

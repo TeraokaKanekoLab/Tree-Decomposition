@@ -14,7 +14,7 @@ def read_file(graph, filename, arg_width):
         print("usage: python3", sys.argv[0], "<filename> <width>")
         exit()
 
-    filepath = "walks/"+arg_width+"-"+graph+"-"+filename+".txt"
+    filepath = "walks/"+arg_width+"-"+graph+"-"+filename+".gr"
     print(filepath)
     f = open(filepath, "r")
     lines = f.readlines()
@@ -35,7 +35,7 @@ if __name__ == '__main__':
     arg_width = sys.argv[2]
     idx = filepath.find("output/")
     path = filepath[:idx]
-    filename = filepath[idx + 7:filepath.find(".txt")]
+    filename = filepath[idx + 7:filepath.find(".gr")]
     plt.xlim(0, 20)
     plt.xlabel("width")
     plt.ylabel("# of nodes over width")

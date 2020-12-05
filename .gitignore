@@ -1,12 +1,7 @@
-graph/com-lj.ungraph.txt
-graph/com-amazon.ungraph.txt
-graph/com-orkut.ungraph.txt
-graph/soc-flickr-und.edges.txt
+graph/com-lj.gr
+graph/com-amazon.gr
+graph/com-orkut.gr
+graph/soc-flickr.gr
 .DS_Store
 */.DS_Store
-a.out
-min-deg-heu
-random
-worst
-walk
 .vscode
