@@ -29,6 +29,7 @@ We aim to classify graphs by exploiting the relation between the width and core 
 | **0.19** | November 9, 2020 | [cf56ce7](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/cf56ce7eb259e17e0d12f331d26d6201dc1dae50) | Refactored worst and random |
 | **0.20** | November 9, 2020 | [c47f8f2](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/c47f8f29b03b512d7ed8cfe6ffb4163aba7cfb5f) | First version of src/walk.cpp |
 | **0.21** | November 21, 2020 | [84cf670](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/84cf670745ac0af40331aeeab2fd6a494d354ed6) | First version of src/walk.cpp |
+| **1.0** | December 6, 2020 | [ebdfc13](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/ebdfc1356c2511e8cbc2de0a04f1abbbfaf248b1) | **Theme fixed!** |
 
 ## C++ Version
 We recommend to use C++ 20 when you run the codes.
@@ -36,45 +37,6 @@ We recommend to use C++ 20 when you run the codes.
 ## Git Clone to Your Local Machine
 ```
 git clone https://github.com/TeraokaKanekoLab/Tree-Decomposition.git
-```
-
-## How to Run the Program
-### The Most Simple Way to Use
-Let's say we have a graph data called `simple_graph.txt` in directory `graph`, we create a chart just by running the following command.
-
-```
-make G=simple_graph.txt W=100
-```
-
-Check `charts/` directory and we find `integrated-simple_graph.pdf`. Make sure that the extension of the graph file is `.txt`.
-
-### Compute with Priority Queue
-```
-make pq G=simple_graph.txt W=100
-```
-
-### Compute without Priority Queue
-```
-make random G=simple_graph.txt W=100
-```
-
-### Compute Degree Distribution
-```
-make deg G=simple_graph.txt 
-```
-
-### Compile and Execute
-
-```
-g++ src/min-deg-heu.cpp -o min-deg-heu
-./min-deg-heu <graph data file>
-```
-
-If you want to try with a simple graph as an example, this might help.
-
-```
-g++ src/min-deg-heu.cpp -o min-deg-heu
-./min-deg-heu graph/simple_graph.txt
 ```
 
 ### Graph Data File Format
@@ -91,7 +53,7 @@ The graph data files need to follow the rule below. `<endpoint n>` needs to be i
 Let's say there is a graph like this.
 ![](https://i.ibb.co/g6F8pfv/images-dragged.jpg)
 
-The following data (`graph/simple_graph.txt`) represents this simple graph with 9 nodes and 12 edges, which are <0, 1>, ..., <6, 8>.
+The following data (`graph/simple_graph.gr`) represents this simple graph with 9 nodes and 12 edges, which are <0, 1>, ..., <6, 8>.
 
 ```
 0 1

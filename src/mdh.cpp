@@ -1,18 +1,8 @@
-#include "graph.h"
+#include "mdh.h"
 
-class mdh_graph : public Graph {
-    unordered_map<int, unordered_set<int>> neighbors_of;
-
+class mdh_graph : public mdh {
 public:
-    void make_graph()
-    {
-        for (pair<int, int> e : edges) {
-            neighbors_of[e.first].insert(e.second);
-            neighbors_of[e.second].insert(e.first);
-        }
-    }
-
-    void mdh_decompose(int max_tree_width)
+    void decompose(int max_tree_width)
     {
         typedef pair<int, int> node; // (deg, vertex)
         string output_name = "output/mdh-" + to_string(max_tree_width) + "-" + filename + ".output";
@@ -63,6 +53,7 @@ public:
                 neighbors_of[nbr].erase(nd);
                 degreeq.push(node(neighbors_of[nbr].size(), nbr));
             }
+            node_stack.push(make_pair(nd, nbrs));
             neighbors_of.erase(nd);
             remove_cnt++;
         }
@@ -82,7 +73,7 @@ int main(int argc, char* argv[])
     mdh_graph g;
     g.read_edges();
     g.make_graph();
-    g.mdh_decompose(stoi(argv[2]));
+    g.decompose(stoi(argv[2]));
 
     return 0;
 }

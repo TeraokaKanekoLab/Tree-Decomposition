@@ -10,6 +10,7 @@ public:
     int num_nodes = 0; // This value may be different from the official number of nodes.
     int true_num_nodes = 0;
     vector<pair<int, int>> edges;
+    stack<pair<int, vector<int>>> node_stack;
 
 public:
     void add_edge(int u, int v)

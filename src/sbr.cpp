@@ -42,6 +42,7 @@ public:
             }
             remove_cnt++;
             end = std::chrono::steady_clock::now();
+            node_stack.push(make_pair(u, nbh));
             contract(u);
         }
         end = std::chrono::steady_clock::now();
