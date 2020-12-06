@@ -7,7 +7,6 @@ public:
         int tree_width = 1;
         parent.resize(num_nodes);
         priority_queue<node, vector<node>, greater<node>> Q;
-        int remove_cnt = 0;
         vector<bool> retrieved;
 
         for (int u = 0; u < num_nodes; ++u) {
@@ -29,8 +28,8 @@ public:
             int u = Q.top().second;
             Q.pop();
 
-            vector<int> nbh = neighbor(u); // get all the neighbours
-            int true_deg = (int)nbh.size();
+            vector<int> nbrs = neighbor(u); // get all the neighbours
+            int true_deg = (int)nbrs.size() - count(nbrs.begin(), nbrs.end(), u);
             int num_remove = 0;
             // add its neighbors to the push as known nodes
             if (true_deg > max_tree_width) {
@@ -39,7 +38,7 @@ public:
                 contract(u);
                 remove_cnt++;
             }
-            for (int nb : nbh)
+            for (int nb : nbrs)
                 if (!retrieved[nb]) {
                     retrieved[nb] = true;
                     Q.push(node(adj[nb].size(), nb));
@@ -81,7 +80,7 @@ int main(int argc, char* argv[])
     }
     filename = argv[1];
     int max_width = stoi(argv[2]);
-    string output_name = "output/lmdh-" + to_string(max_width) + "-" + filename + ".output";
+    string output_name = "output/lmdh_sbr-" + to_string(max_width) + "-" + filename + ".output";
     ofstream output(output_name);
     lmdh_graph master;
     master.read_edges();

@@ -10,7 +10,7 @@ def read_file():
 
     filename = sys.argv[1]
     arg_width = sys.argv[2]
-    filepath = "output/sbr-"+arg_width+"-"+filename+".output"
+    filepath = "output/mdh-"+arg_width+"-"+filename+".output"
     f = open(filepath, "r")
     lines = f.readlines()
     widths1 = []
@@ -26,7 +26,7 @@ def read_file():
         num_nodes1.append(num_node)
         percentages1.append(num_node/num_nodes * 100)
 
-    filepath = "output/mdh-" + arg_width+"-"+filename+".output"
+    filepath = "output/sbr-" + arg_width+"-"+filename+".output"
     f = open(filepath, "r")
     lines = f.readlines()
     widths2 = []
@@ -46,13 +46,35 @@ def read_file():
         width, num_node = map(int, line.split())
         widths3.append(width)
         percentages3.append(num_node/num_nodes * 100)
-    return widths1, percentages1, widths2, percentages2, widths3, percentages3, filename
+
+    filepath = "output/lmdh_naive-" + arg_width + "-" + filename+".output"
+    f = open(filepath, "r")
+    lines = f.readlines()
+    widths4 = []
+    percentages4 = []
+    for line in lines:
+        width, num_node = map(int, line.split())
+        widths4.append(width)
+        percentages4.append(num_node/num_nodes * 100)
+
+    filepath = "output/lmdh_sbr-" + arg_width + "-" + filename+".output"
+    f = open(filepath, "r")
+    lines = f.readlines()
+    widths5 = []
+    percentages5 = []
+    for line in lines:
+        width, num_node = map(int, line.split())
+        widths5.append(width)
+        percentages5.append(num_node/num_nodes * 100)
+    return widths1, percentages1, widths2, percentages2, widths3, percentages3, widths4, percentages4, widths5, percentages5, filename
 
 
-def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, filename):
-    plt.plot(x_axis2, y_axis2, c="r",  label="MDH")
-    plt.plot(x_axis1, y_axis1,  c="g",  label="SBR")
+def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_axis4, x_axis5, y_axis5, filename):
+    plt.plot(x_axis1, y_axis1, c="r",  label="MDH")
+    plt.plot(x_axis2, y_axis2,  c="g",  label="SBR")
     plt.plot(x_axis3, y_axis3, c="b",  label="LMDH")
+    plt.plot(x_axis4, y_axis4, c="c",  label="LMDH naive")
+    plt.plot(x_axis5, y_axis5, c="m",  label="LMDH SBR")
     width = sys.argv[2]
     saved_name = "charts/" + width + "-" + filename + ".pdf"
     print(saved_name)
@@ -66,6 +88,6 @@ def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, filename):
 
 
 if __name__ == '__main__':
-    widths1, percentages1, widths2, percentages2, widths3, percentages3, filename = read_file()
-    draw_chart(widths1, percentages1, widths2, percentages2,
-               widths3, percentages3,  filename)
+    widths1, percentages1, widths2, percentages2, widths3, percentages3, widths4, percentages4, widths5, percentages5, filename = read_file()
+    draw_chart(widths1, percentages1, widths2, percentages2, widths3,
+               percentages3, widths4, percentages4, widths5, percentages5, filename)

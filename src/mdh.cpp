@@ -4,12 +4,9 @@ class mdh_graph : public mdh {
 public:
     void decompose(int max_tree_width)
     {
-        typedef pair<int, int> node; // (deg, vertex)
         string output_name = "output/mdh-" + to_string(max_tree_width) + "-" + filename + ".output";
         ofstream output(output_name);
-        int true_num_nodes = 0;
         int crnt_deg = 1;
-        int remove_cnt = 0;
         priority_queue<node, vector<node>, greater<node>> degreeq;
 
         // counts vertices with edges (exclude non-edged vertex)
@@ -21,6 +18,7 @@ public:
                 degreeq.push(node(deg, i));
             }
         }
+        output << true_num_nodes << endl;
         auto start = std::chrono::steady_clock::now();
         auto end = std::chrono::steady_clock::now();
         while (!degreeq.empty()) {
@@ -41,14 +39,7 @@ public:
             vector<int> nbrs;
             for (int nbr : neighbors_of[nd])
                 nbrs.push_back(nbr);
-            for (int nbr1 : nbrs) {
-                for (int nbr2 : nbrs) {
-                    if (nbr1 == nbr2)
-                        continue;
-                    if (neighbors_of[nbr1].find(nbr2) == neighbors_of[nbr1].end())
-                        neighbors_of[nbr1].insert(nbr2);
-                }
-            }
+            clique(nbrs);
             for (int nbr : nbrs) {
                 neighbors_of[nbr].erase(nd);
                 degreeq.push(node(neighbors_of[nbr].size(), nbr));

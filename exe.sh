@@ -22,6 +22,22 @@ lmdh() {
     rm ./lmdh
 }
 
+lmdh_sbr() {
+    echo "g++ src/lmdh_sbr.cpp -o ./lmdh_sbr --std=c++17"
+    g++ src/lmdh_sbr.cpp -o ./lmdh_sbr --std=c++17
+    echo "./lmdh_sbr $1 $2"
+    ./lmdh_sbr $1 $2
+    rm ./lmdh_sbr
+}
+
+lmdh_naive() {
+    echo "g++ src/lmdh_naive.cpp -o ./lmdh_naive --std=c++17"
+    g++ src/lmdh_naive.cpp -o ./lmdh_naive --std=c++17
+    echo "./lmdh_naive $1 $2"
+    ./lmdh_naive $1 $2
+    rm ./lmdh_naive
+}
+
 chart() {
     echo "python3 src/chart.py $1 $2"
     python3 src/chart.py $1 $2
@@ -39,6 +55,12 @@ case $1 in
 "lmdh")
     lmdh $2 $3
     ;;
+"lmdh_sbr")
+    lmdh_sbr $2 $3
+    ;;
+"lmdh_naive")
+    lmdh_naive $2 $3
+    ;;
 "chart")
     chart $2 $3
     ;;
@@ -46,6 +68,7 @@ case $1 in
     mdh $2 $3
     sbr $2 $3
     lmdh $2 $3
+    lmdh_naive $2 $3
     chart $2 $3
     ;;
 esac

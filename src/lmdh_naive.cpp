@@ -26,16 +26,9 @@ public:
 
             // create neighbor array
             vector<int> nbrs;
-            int min_deg = deg;
-            int min_deg_nb = nd;
-            for (int nbr : neighbors_of[nd]) {
+            for (int nbr : neighbors_of[nd])
                 nbrs.push_back(nbr);
-                if (neighbors_of[nbr].size() < min_deg) {
-                    min_deg = neighbors_of[nbr].size();
-                    min_deg_nb = nbr;
-                }
-            }
-            if (deg > max_tree_width || min_deg_nb != nd) {
+            if (deg > max_tree_width) {
                 degreeq.push(node(deg, nd));
                 for (int nbr : nbrs) {
                     if (!retrieved[nbr]) {
@@ -92,7 +85,7 @@ int main(int argc, char* argv[])
     }
     filename = argv[1];
     int max_width = stoi(argv[2]);
-    string output_name = "output/lmdh-" + to_string(max_width) + "-" + filename + ".output";
+    string output_name = "output/lmdh_naive-" + to_string(max_width) + "-" + filename + ".output";
     ofstream output(output_name);
     lmdh_graph master;
     master.read_edges();

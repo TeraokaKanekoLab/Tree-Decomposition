@@ -11,4 +11,16 @@ public:
             neighbors_of[e.second].insert(e.first);
         }
     }
+
+    void clique(vector<int>& nbrs)
+    {
+        for (int nbr1 : nbrs) {
+            for (int nbr2 : nbrs) {
+                if (nbr1 == nbr2)
+                    continue;
+                if (neighbors_of[nbr1].find(nbr2) == neighbors_of[nbr1].end())
+                    neighbors_of[nbr1].insert(nbr2);
+            }
+        }
+    }
 };

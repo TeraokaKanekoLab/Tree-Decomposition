@@ -4,7 +4,6 @@ struct sbr : public Graph {
 public:
     vector<vector<int>> adj;
     vector<int> parent;
-    typedef pair<int, int> node; // (deg, vertex)
 
     void make_graph()
     {

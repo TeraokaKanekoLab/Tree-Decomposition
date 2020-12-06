@@ -7,7 +7,6 @@ public:
         int tree_width = 1;
         parent.resize(num_nodes);
         priority_queue<node, vector<node>, greater<node>> Q;
-        int remove_cnt = 0;
         string output_name = "output/sbr-" + to_string(max_tree_width) + "-" + filename + ".output";
         ofstream output(output_name);
         chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
@@ -24,14 +23,14 @@ public:
             Q.pop();
             if (deg == 0)
                 continue;
-            vector<int> nbh = neighbor(u); // get all the neighbours
-            int true_deg = (int)nbh.size();
+            vector<int> nbrs = neighbor(u); // get all the neighbours
+            int true_deg = (int)nbrs.size() - count(nbrs.begin(), nbrs.end(), u);
 
             if (true_deg > deg) { // if true degree is larger than the degree
                 Q.push({ true_deg, u });
                 continue;
             }
-            // print_neighbor(u, nbh);
+            // print_neighbor(u, nbrs);
             if (true_deg > tree_width) {
                 // when we come here, the last chrono::steady_clock::time_point& end
                 // is the end of the execution with the tree_width
@@ -42,7 +41,7 @@ public:
             }
             remove_cnt++;
             end = std::chrono::steady_clock::now();
-            node_stack.push(make_pair(u, nbh));
+            node_stack.push(make_pair(u, nbrs));
             contract(u);
         }
         end = std::chrono::steady_clock::now();

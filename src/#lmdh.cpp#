@@ -15,6 +15,10 @@ public:
         int nd = edges[0].first;
         retrieved[nd] = true;
         degreeq.push(node(neighbors_of[nd].size(), nd));
+        for (int nb : neighbors_of[nd]) {
+            retrieved[nb] = true;
+            degreeq.push(node(neighbors_of[nb].size(), nb));
+        }
 
         while (!degreeq.empty()) {
             int deg = degreeq.top().first;
@@ -26,39 +30,29 @@ public:
 
             // create neighbor array
             vector<int> nbrs;
-            int min_deg = deg;
-            int min_deg_nb = nd;
-            for (int nbr : neighbors_of[nd]) {
+            for (int nbr : neighbors_of[nd])
                 nbrs.push_back(nbr);
-                if (neighbors_of[nbr].size() < min_deg) {
-                    min_deg = neighbors_of[nbr].size();
-                    min_deg_nb = nbr;
-                }
-            }
-            if (deg > max_tree_width || min_deg_nb != nd) {
+            if (deg > max_tree_width) {
                 degreeq.push(node(deg, nd));
-                for (int nbr : nbrs) {
-                    if (!retrieved[nbr]) {
-                        retrieved[nbr] = true;
-                        degreeq.push(node(neighbors_of[nbr].size(), nbr));
-                        should_stop = false;
-                    }
-                }
             } else {
                 clique(nbrs);
                 should_stop = false;
                 for (int nbr : nbrs) {
                     neighbors_of[nbr].erase(nd);
-                    retrieved[nbr] = true;
                     degreeq.push(node(neighbors_of[nbr].size(), nbr));
                 }
                 node_stack.push(make_pair(nd, nbrs));
                 neighbors_of.erase(nd);
                 remove_cnt++;
             }
-            if (should_stop) {
+            for (int nbr : nbrs)
+                if (!retrieved[nbr]) {
+                    retrieved[nbr] = true;
+                    degreeq.push(node(neighbors_of[nbr].size(), nbr));
+                    should_stop = false;
+                }
+            if (should_stop)
                 break;
-            }
         }
         export_info(max_tree_width, remove_cnt, true_num_nodes, output);
     }
@@ -96,15 +90,16 @@ int main(int argc, char* argv[])
     ofstream output(output_name);
     lmdh_graph master;
     master.read_edges();
-    for (int width = 0; width < max_width;) {
-        if (width < 10)
-            width++;
-        else
-            width += width / 10;
-        if (width >= max_width)
-            width = max_width;
-        step(master, width, output);
-    }
+    // for (int width = 0; width < max_width;) {
+    //     if (width < 10)
+    //         width++;
+    //     else
+    //         width += width / 10;
+    //     if (width >= max_width)
+    //         width = max_width;
+    //     step(master, width, output);
+    // }
+    step(master, 5, output);
     output.close();
     cout << "result written to " << output_name << endl;
 

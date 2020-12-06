@@ -9,8 +9,10 @@ public:
     // We consider int type suitable for this situation.
     int num_nodes = 0; // This value may be different from the official number of nodes.
     int true_num_nodes = 0;
+    int remove_cnt = 0;
     vector<pair<int, int>> edges;
     stack<pair<int, vector<int>>> node_stack;
+    typedef pair<int, int> node; // (deg, vertex)
 
 public:
     void add_edge(int u, int v)
