@@ -69,6 +69,7 @@ case $1 in
     sbr $2 $3
     lmdh $2 $3
     lmdh_naive $2 $3
+    lmdh_sbr $2 $3
     chart $2 $3
     ;;
 esac

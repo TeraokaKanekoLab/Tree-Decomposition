@@ -35,6 +35,7 @@ public:
             if (true_deg > max_tree_width) {
                 Q.push(node(true_deg, u));
             } else {
+                // cout << "node " << u << " removed with width " << deg << endl;
                 contract(u);
                 remove_cnt++;
             }
@@ -85,15 +86,16 @@ int main(int argc, char* argv[])
     lmdh_graph master;
     master.read_edges();
     master.make_graph();
-    for (int width = 0; width < max_width;) {
-        if (width < 10)
-            width++;
-        else
-            width += width / 10;
-        if (width >= max_width)
-            width = max_width;
-        step(master, width, output);
-    }
+    // for (int width = 0; width < max_width;) {
+    //     if (width < 10)
+    //         width++;
+    //     else
+    //         width += width / 10;
+    //     if (width >= max_width)
+    //         width = max_width;
+    //     step(master, width, output);
+    // }
+    step(master, 3, output);
     output.close();
     cout << "result written to " << output_name << endl;
 
