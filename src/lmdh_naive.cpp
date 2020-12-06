@@ -45,7 +45,7 @@ public:
                     retrieved[nbr] = true;
                     degreeq.push(node(neighbors_of[nbr].size(), nbr));
                 }
-                node_stack.push(make_pair(nd, nbrs));
+                add_to_stack(nd, nbrs);
                 neighbors_of.erase(nd);
                 remove_cnt++;
             }

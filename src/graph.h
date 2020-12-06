@@ -55,4 +55,28 @@ public:
              << " " << double(duration.count()) / 1000000 << endl;
         output << tree_width << " " << remove_cnt << " " << double(duration.count()) / 1000000 << endl;
     }
+
+    void print_stack()
+    {
+        while (!node_stack.empty()) {
+            int nd = node_stack.top().first;
+            vector<int> nbrs = node_stack.top().second;
+            node_stack.pop();
+
+            cout << nd;
+            for (int nbr : nbrs) {
+                cout << " " << nbr;
+            }
+            cout << endl;
+        }
+    }
+
+    void add_to_stack(int nd, vector<int> nbrs)
+    {
+        vector<int> new_nbrs;
+        for (int nbr : nbrs)
+            if (nbr != nd)
+                new_nbrs.push_back(nbr);
+        node_stack.push(make_pair(nd, new_nbrs));
+    }
 };

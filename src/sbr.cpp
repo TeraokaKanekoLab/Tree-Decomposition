@@ -12,22 +12,22 @@ public:
         chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
         chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
 
-        for (int u = 0; u < num_nodes; ++u) {
-            parent[u] = u;
-            Q.push(node(adj[u].size(), u));
+        for (int nd = 0; nd < num_nodes; ++nd) {
+            parent[nd] = nd;
+            Q.push(node(adj[nd].size(), nd));
         }
 
         while (!Q.empty() && tree_width < max_tree_width) {
             int deg = Q.top().first;
-            int u = Q.top().second;
+            int nd = Q.top().second;
             Q.pop();
             if (deg == 0)
                 continue;
-            vector<int> nbrs = neighbor(u); // get all the neighbours
-            int true_deg = (int)nbrs.size() - count(nbrs.begin(), nbrs.end(), u);
+            vector<int> nbrs = neighbor(nd); // get all the neighbours
+            int true_deg = (int)nbrs.size() - count(nbrs.begin(), nbrs.end(), nd);
 
             if (true_deg > deg) { // if true degree is larger than the degree
-                Q.push({ true_deg, u });
+                Q.push({ true_deg, nd });
                 continue;
             }
             // print_neighbor(u, nbrs);
@@ -41,8 +41,8 @@ public:
             }
             remove_cnt++;
             end = std::chrono::steady_clock::now();
-            node_stack.push(make_pair(u, nbrs));
-            contract(u);
+            add_to_stack(nd, nbrs);
+            contract(nd);
         }
         end = std::chrono::steady_clock::now();
         auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
@@ -65,6 +65,7 @@ int main(int argc, char* argv[])
     g.make_graph();
 
     g.decompose(stoi(argv[2]));
+    g.print_stack();
 
     return 0;
 }
