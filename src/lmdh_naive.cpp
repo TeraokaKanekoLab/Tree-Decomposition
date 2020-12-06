@@ -70,12 +70,6 @@ void copy_master(lmdh_graph& g, lmdh_graph& master)
     g.edges = master.edges;
     g.make_graph();
 }
-void step(lmdh_graph& master, int width, ofstream& output)
-{
-    lmdh_graph g;
-    copy_master(g, master);
-    g.decompose(width, output);
-}
 
 int main(int argc, char* argv[])
 {
@@ -85,7 +79,8 @@ int main(int argc, char* argv[])
     }
     filename = argv[1];
     int max_width = stoi(argv[2]);
-    string output_name = "output/lmdh_naive-" + to_string(max_width) + "-" + filename + ".output";
+    type = "lmdh_naive";
+    string output_name = "output/" + type + to_string(max_width) + "-" + filename + ".output ";
     ofstream output(output_name);
     lmdh_graph master;
     master.read_edges();
@@ -96,7 +91,13 @@ int main(int argc, char* argv[])
             width += width / 10;
         if (width >= max_width)
             width = max_width;
-        step(master, width, output);
+        lmdh_graph g;
+        copy_master(g, master);
+        g.decompose(width, output);
+        if (width == max_width) {
+            g.max_tree_width = max_width;
+            g.print_stack();
+        }
     }
     output.close();
     cout << "result written to " << output_name << endl;

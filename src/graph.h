@@ -1,6 +1,7 @@
 #include "header.h"
 
 string filename;
+string type;
 
 class Graph {
 public:
@@ -13,6 +14,7 @@ public:
     vector<pair<int, int>> edges;
     stack<pair<int, vector<int>>> node_stack;
     typedef pair<int, int> node; // (deg, vertex)
+    int max_tree_width = 0;
 
 public:
     void add_edge(int u, int v)
@@ -58,16 +60,46 @@ public:
 
     void print_stack()
     {
+        string output_name = "tree/" + type + "-" + to_string(max_tree_width) + "-" + filename + ".tree";
+        ofstream output(output_name);
+        vector<int> depth(num_nodes, 0);
+        if (remove_cnt == true_num_nodes) {
+            // print root node in the tree
+            int root = node_stack.top().first;
+            vector<int> root_nbrs = node_stack.top().second;
+            node_stack.pop();
+            output << root << endl;
+            sort(root_nbrs.begin(), root_nbrs.end());
+            for (int nbr : root_nbrs)
+                output << nbr << " ";
+            output << endl;
+            output << "root" << endl;
+        } else {
+            output << "core" << endl;
+            output << endl;
+            output << endl;
+        }
+
         while (!node_stack.empty()) {
             int nd = node_stack.top().first;
             vector<int> nbrs = node_stack.top().second;
             node_stack.pop();
 
-            cout << nd;
+            // ouput <nd> <nbr 1> <nbr 2> ... <nbr n> <parent>
+            output << nd << endl;
+            int parent = 0;
+            int max_depth = -1;
+            sort(nbrs.begin(), nbrs.end());
             for (int nbr : nbrs) {
-                cout << " " << nbr;
+                output << nbr << " ";
+                if (depth[nbr] > max_depth) {
+                    max_depth = depth[nbr];
+                    parent = nbr;
+                }
             }
-            cout << endl;
+            depth[nd] = max_depth + 1;
+            output << endl;
+            output << parent << endl;
         }
     }
 

@@ -45,6 +45,13 @@ chart() {
     open $filename
 }
 
+tree() {
+    echo "python3 src/chart.py $1 $2 $3"
+    python3 src/tree.py $1 $2 $3
+    filename="tree/figures/"$1"-"$3"-"$2".pdf"
+    open $filename
+}
+
 case $1 in
 "mdh")
     mdh $2 $3
@@ -54,15 +61,21 @@ case $1 in
     ;;
 "lmdh")
     lmdh $2 $3
+    tree lmdh $2 $3
     ;;
 "lmdh_sbr")
     lmdh_sbr $2 $3
+    # tree lmdh_sbr $2 $3
     ;;
 "lmdh_naive")
     lmdh_naive $2 $3
+    tree lmdh_naive $2 $3
     ;;
 "chart")
     chart $2 $3
+    ;;
+"tree")
+    tree $2 $3 $4
     ;;
 "all")
     mdh $2 $3

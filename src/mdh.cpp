@@ -2,7 +2,7 @@
 
 class mdh_graph : public mdh {
 public:
-    void decompose(int max_tree_width)
+    void decompose()
     {
         string output_name = "output/mdh-" + to_string(max_tree_width) + "-" + filename + ".output";
         ofstream output(output_name);
@@ -60,11 +60,14 @@ int main(int argc, char* argv[])
         exit(-1);
     }
 
+    type = "mdh";
     filename = argv[1];
     mdh_graph g;
+    g.max_tree_width = stoi(argv[2]);
     g.read_edges();
     g.make_graph();
-    g.decompose(stoi(argv[2]));
+    g.decompose();
+    // g.print_stack();
 
     return 0;
 }

@@ -2,7 +2,7 @@
 
 class sbr_graph : public sbr {
 public:
-    void decompose(int max_tree_width)
+    void decompose()
     {
         int tree_width = 1;
         parent.resize(num_nodes);
@@ -61,11 +61,12 @@ int main(int argc, char* argv[])
 
     sbr_graph g;
     filename = argv[1];
+    type = "sbr";
+    g.max_tree_width = stoi(argv[2]);
     g.read_edges();
     g.make_graph();
-
-    g.decompose(stoi(argv[2]));
-    g.print_stack();
+    g.decompose();
+    // g.print_stack();
 
     return 0;
 }

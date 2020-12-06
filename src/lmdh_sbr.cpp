@@ -38,6 +38,7 @@ public:
                 // cout << "node " << u << " removed with width " << true_deg << endl;
                 contract(u);
                 remove_cnt++;
+                add_to_stack(u, nbrs);
             }
             for (int nb : nbrs)
                 if (!retrieved[nb]) {
@@ -66,12 +67,6 @@ void copy_master(lmdh_graph& g, lmdh_graph& master)
     g.edges = master.edges;
     g.parent = master.parent;
 }
-void step(lmdh_graph master, int width, ofstream& output)
-{
-    lmdh_graph g;
-    copy_master(g, master);
-    g.decompose(width, output);
-}
 
 int main(int argc, char* argv[])
 {
@@ -81,7 +76,8 @@ int main(int argc, char* argv[])
     }
     filename = argv[1];
     int max_width = stoi(argv[2]);
-    string output_name = "output/lmdh_sbr-" + to_string(max_width) + "-" + filename + ".output";
+    type = "lmdh_sbr";
+    string output_name = "output/" + type + "-" + to_string(max_width) + "-" + filename + ".output ";
     ofstream output(output_name);
     lmdh_graph master;
     master.read_edges();
@@ -93,7 +89,13 @@ int main(int argc, char* argv[])
             width += width / 10;
         if (width >= max_width)
             width = max_width;
-        step(master, width, output);
+        lmdh_graph g;
+        copy_master(g, master);
+        g.decompose(width, output);
+        if (width == max_width) {
+            g.max_tree_width = max_width;
+            g.print_stack();
+        }
     }
     // step(master, 3, output);
     output.close();
