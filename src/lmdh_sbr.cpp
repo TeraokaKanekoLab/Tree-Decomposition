@@ -35,7 +35,7 @@ public:
             if (true_deg > max_tree_width) {
                 Q.push(node(true_deg, u));
             } else {
-                cout << "node " << u << " removed with width " << true_deg << endl;
+                // cout << "node " << u << " removed with width " << true_deg << endl;
                 contract(u);
                 remove_cnt++;
             }
