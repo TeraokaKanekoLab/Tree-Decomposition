@@ -87,7 +87,7 @@ int main(int argc, char* argv[])
     filename = argv[1];
     int max_width = stoi(argv[2]);
     type = "lmdh";
-    string output_name = "output/" + type + to_string(max_width) + "-" + filename + ".output ";
+    string output_name = "output/" + type + "-" + to_string(max_width) + "-" + filename + ".output";
     ofstream output(output_name);
     lmdh_graph master;
     master.read_edges();
