@@ -18,27 +18,23 @@ public:
         int nd = edges[0].first;
         retrieved[nd] = true;
         Q.push(node(adj[nd].size(), nd));
-        for (int nb : adj[nd]) {
-            retrieved[nb] = true;
-            Q.push(node(adj[nb].size(), nb));
-        }
 
         while (!Q.empty()) {
             int deg = Q.top().first;
-            int u = Q.top().second;
+            int nd = Q.top().second;
             Q.pop();
 
-            vector<int> nbrs = neighbor(u); // get all the neighbours
-            int true_deg = (int)nbrs.size() - count(nbrs.begin(), nbrs.end(), u);
+            vector<int> nbrs = neighbor(nd); // get all the neighbours
+            int true_deg = (int)nbrs.size() - count(nbrs.begin(), nbrs.end(), nd);
             int num_remove = 0;
             // add its neighbors to the push as known nodes
             if (true_deg > max_tree_width) {
-                Q.push(node(true_deg, u));
+                Q.push(node(true_deg, nd));
             } else {
                 // cout << "node " << u << " removed with width " << true_deg << endl;
-                contract(u);
+                contract(nd);
                 remove_cnt++;
-                add_to_stack(u, nbrs);
+                add_to_stack(nd, nbrs);
             }
             for (int nb : nbrs)
                 if (!retrieved[nb]) {
@@ -50,6 +46,11 @@ public:
                 break;
         }
         export_info(max_tree_width, remove_cnt, true_num_nodes, output);
+        int ret_cnt = 0;
+        for (bool is_ret : retrieved)
+            if (is_ret)
+                ret_cnt++;
+        cout << "retrived nodes: " << ret_cnt << endl;
     }
 
     void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output)
@@ -62,10 +63,11 @@ public:
 void copy_master(lmdh_graph& g, lmdh_graph& master)
 {
     g.num_nodes = master.num_nodes; // This value may be different from the official number of nodes.
-    g.true_num_nodes = master.true_num_nodes;
-    g.adj = master.adj;
+    // g.true_num_nodes = master.true_num_nodes;
+    // g.adj = master.adj;
     g.edges = master.edges;
-    g.parent = master.parent;
+    // g.parent = master.parent;
+    g.make_graph();
 }
 
 int main(int argc, char* argv[])
@@ -97,7 +99,11 @@ int main(int argc, char* argv[])
             g.print_stack();
         }
     }
-    // step(master, 3, output);
+
+    // master.decompose(max_width, output);
+    // master.max_tree_width = max_width;
+    // master.print_stack();
+
     output.close();
     cout << "result written to " << output_name << endl;
 

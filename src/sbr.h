@@ -18,7 +18,7 @@ public:
             if (nbh.size())
                 true_num_nodes++;
         }
-        cout << true_num_nodes << endl;
+        // cout << true_num_nodes << endl;
 
         parent.resize(num_nodes);
         for (int u = 0; u < num_nodes; ++u) {

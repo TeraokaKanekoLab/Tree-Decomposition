@@ -48,6 +48,11 @@ public:
             neighbors_of.erase(nd);
             remove_cnt++;
         }
+        if (remove_cnt == true_num_nodes) {
+            end = std::chrono::steady_clock::now();
+            auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
+            export_info(crnt_deg, remove_cnt, true_num_nodes, output, duration);
+        }
         output.close();
         cout << "result written to " << output_name << endl;
     }

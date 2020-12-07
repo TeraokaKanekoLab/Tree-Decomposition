@@ -52,6 +52,13 @@ tree() {
     open $filename
 }
 
+graph() {
+    echo "python3 src/graph_draw.py $1 $2"
+    python3 src/graph_draw.py $1 $2
+    filename="graph/figures/"$2".pdf"
+    open $filename
+}
+
 case $1 in
 "mdh")
     mdh $2 $3
@@ -61,7 +68,7 @@ case $1 in
     ;;
 "lmdh")
     lmdh $2 $3
-    tree lmdh $2 $3
+    # tree lmdh $2 $3
     ;;
 "lmdh_sbr")
     lmdh_sbr $2 $3
@@ -69,13 +76,16 @@ case $1 in
     ;;
 "lmdh_naive")
     lmdh_naive $2 $3
-    tree lmdh_naive $2 $3
+    # tree lmdh_naive $2 $3
     ;;
 "chart")
     chart $2 $3
     ;;
 "tree")
     tree $2 $3 $4
+    ;;
+"graph")
+    graph $2 $3
     ;;
 "all")
     mdh $2 $3

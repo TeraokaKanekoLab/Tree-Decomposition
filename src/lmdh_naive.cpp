@@ -54,6 +54,11 @@ public:
             }
         }
         export_info(max_tree_width, remove_cnt, true_num_nodes, output);
+        int ret_cnt = 0;
+        for (bool is_ret : retrieved)
+            if (is_ret)
+                ret_cnt++;
+        cout << "retrived nodes: " << ret_cnt << endl;
     }
 
     void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output)
@@ -99,6 +104,12 @@ int main(int argc, char* argv[])
             g.print_stack();
         }
     }
+
+    // master.make_graph();
+    // master.decompose(max_width, output);
+    // master.max_tree_width = max_width;
+    // master.print_stack();
+
     output.close();
     cout << "result written to " << output_name << endl;
 
