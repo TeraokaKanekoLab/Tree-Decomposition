@@ -2,6 +2,7 @@ graph/com-lj.gr
 graph/com-amazon.gr
 graph/com-orkut.gr
 graph/soc-flickr.gr
+tree/*.tree
 .DS_Store
 */.DS_Store
 .vscode
