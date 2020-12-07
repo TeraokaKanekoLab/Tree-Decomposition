@@ -7,16 +7,16 @@ public:
         int tree_width = 1;
         parent.resize(num_nodes);
         priority_queue<node, vector<node>, greater<node>> Q;
-        vector<bool> retrieved;
+        vector<bool> visited;
 
         for (int u = 0; u < num_nodes; ++u) {
             parent[u] = u;
-            retrieved.push_back(false);
+            visited.push_back(false);
         }
 
         // start with the first node of the first edge.
         int nd = edges[0].first;
-        retrieved[nd] = true;
+        visited[nd] = true;
         Q.push(node(adj[nd].size(), nd));
 
         while (!Q.empty()) {
@@ -37,8 +37,8 @@ public:
                 add_to_stack(nd, nbrs);
             }
             for (int nb : nbrs)
-                if (!retrieved[nb]) {
-                    retrieved[nb] = true;
+                if (!visited[nb]) {
+                    visited[nb] = true;
                     Q.push(node(adj[nb].size(), nb));
                     num_remove++;
                 }
@@ -47,10 +47,10 @@ public:
         }
         export_info(max_tree_width, remove_cnt, true_num_nodes, output);
         int ret_cnt = 0;
-        for (bool is_ret : retrieved)
+        for (bool is_ret : visited)
             if (is_ret)
                 ret_cnt++;
-        cout << "retrived nodes: " << ret_cnt << endl;
+        cout << "visited nodes: " << ret_cnt << endl;
     }
 
     void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output)
