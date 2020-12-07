@@ -6,14 +6,14 @@ public:
     {
         int tree_width = 1;
         priority_queue<node, vector<node>, greater<node>> degreeq;
-        vector<bool> retrieved(num_nodes, false);
+        vector<bool> visited(num_nodes, false);
         for (auto nd : neighbors_of)
             if (nd.second.size())
                 true_num_nodes++;
 
         // start with the first node of the first edge.
         int nd = edges[0].first;
-        retrieved[nd] = true;
+        visited[nd] = true;
         degreeq.push(node(neighbors_of[nd].size(), nd));
 
         while (!degreeq.empty()) {
@@ -38,8 +38,8 @@ public:
             if (deg > max_tree_width || min_deg_nb != nd) {
                 degreeq.push(node(deg, nd));
                 for (int nbr : nbrs) {
-                    if (!retrieved[nbr]) {
-                        retrieved[nbr] = true;
+                    if (!visited[nbr]) {
+                        visited[nbr] = true;
                         degreeq.push(node(neighbors_of[nbr].size(), nbr));
                         should_stop = false;
                     }
@@ -49,7 +49,7 @@ public:
                 should_stop = false;
                 for (int nbr : nbrs) {
                     neighbors_of[nbr].erase(nd);
-                    retrieved[nbr] = true;
+                    visited[nbr] = true;
                     degreeq.push(node(neighbors_of[nbr].size(), nbr));
                 }
                 add_to_stack(nd, nbrs);
@@ -60,6 +60,11 @@ public:
                 break;
             }
         }
+        int ret_cnt = 0;
+        for (bool is_ret : visited)
+            if (is_ret)
+                ret_cnt++;
+        cout << "visited nodes: " << ret_cnt << endl;
         export_info(max_tree_width, remove_cnt, true_num_nodes, output);
     }
 
