@@ -85,12 +85,11 @@ public:
                     parent = nbr;
                 }
             depth[nd] = max_depth + 1;
-            if (depth[nd] == 0)
+            if (max_depth == -1)
                 num_core_child++;
-            else {
-                parents[nd] = parent;
+            parents[nd] = parent;
+            if (parent >= 0)
                 child_cnt[parent]++;
-            }
         }
 
         depth_of_tree = 0;
