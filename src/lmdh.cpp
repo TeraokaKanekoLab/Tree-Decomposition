@@ -66,6 +66,7 @@ public:
                 ret_cnt++;
         cout << "visited nodes: " << ret_cnt << endl;
         export_info(max_tree_width, remove_cnt, true_num_nodes, output);
+        make_tree();
     }
 
     void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output)

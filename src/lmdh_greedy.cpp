@@ -21,8 +21,21 @@ public:
             int nd = degreeq.top().second;
             bool should_stop = true;
             degreeq.pop();
-            if (neighbors_of.find(nd) == neighbors_of.end() || deg != neighbors_of[nd].size())
+            if (neighbors_of.find(nd) == neighbors_of.end())
                 continue; // outdated entry in degreeq
+            else if (deg != neighbors_of[nd].size()) {
+                vector<int> nbrs;
+                for (int nbr : neighbors_of[nd])
+                    nbrs.push_back(nbr);
+                for (int nbr : nbrs) {
+                    if (!visited[nbr]) {
+                        visited[nbr] = true;
+                        degreeq.push(node(neighbors_of[nbr].size(), nbr));
+                        should_stop = false;
+                    }
+                }
+                continue;
+            }
 
             // create neighbor array
             vector<int> nbrs;
@@ -85,7 +98,7 @@ int main(int argc, char* argv[])
     }
     filename = argv[1];
     int max_width = stoi(argv[2]);
-    type = "lmdh_naive";
+    type = "lmdh_greedy";
     string output_name = "output/" + type + "-" + to_string(max_width) + "-" + filename + ".output";
     ofstream output(output_name);
     lmdh_graph master;
@@ -102,7 +115,7 @@ int main(int argc, char* argv[])
         g.decompose(width, output);
         if (width == max_width) {
             g.max_tree_width = max_width;
-            // g.print_stack();
+            g.print_stack();
         }
     }
 

@@ -49,6 +49,7 @@ public:
         export_info(tree_width, remove_cnt, true_num_nodes, output, duration);
         output.close();
         cout << "result written to " << output_name << endl;
+        make_tree();
     }
 };
 

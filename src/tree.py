@@ -1,5 +1,5 @@
 import sys
-from graphviz import Digraph
+from graphviz import Graph
 
 
 def read_file():
@@ -29,7 +29,7 @@ def read_file():
 
 
 def draw_tree(edges):
-    G = Digraph(format="pdf")
+    G = Graph(format="pdf")
     G.attr("node", shape="box")
     filepath = "tree/figures/" + type + "-"+arg_width+"-"+filename
     print(filepath + ".pdf")

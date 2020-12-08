@@ -66,15 +66,26 @@ def read_file():
         width, num_node = map(int, line.split())
         widths5.append(width)
         percentages5.append(num_node/num_nodes * 100)
-    return widths1, percentages1, widths2, percentages2, widths3, percentages3, widths4, percentages4, widths5, percentages5, filename
+
+    filepath = "output/lmdh_greedy-" + arg_width + "-" + filename+".output"
+    f = open(filepath, "r")
+    lines = f.readlines()
+    widths6 = []
+    percentages6 = []
+    for line in lines:
+        width, num_node = map(int, line.split())
+        widths6.append(width)
+        percentages6.append(num_node/num_nodes * 100)
+    return widths1, percentages1, widths2, percentages2, widths3, percentages3, widths4, percentages4, widths5, percentages5, widths6, percentages6, filename
 
 
-def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_axis4, x_axis5, y_axis5, filename):
+def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_axis4, x_axis5, y_axis5, x_axis6, y_axis6, filename):
     plt.plot(x_axis1, y_axis1, c="r",  label="MDH")
     plt.plot(x_axis2, y_axis2,  c="g",  label="SBR")
     plt.plot(x_axis3, y_axis3, c="b",  label="LMDH")
     plt.plot(x_axis4, y_axis4, c="c",  label="LMDH naive")
-    plt.plot(x_axis5, y_axis5, c="m",  label="LMDH SBR")
+    # plt.plot(x_axis5, y_axis5, c="m",  label="LMDH SBR")
+    plt.plot(x_axis6, y_axis6, c="y",  label="LMDH greedy")
     width = sys.argv[2]
     saved_name = "charts/" + width + "-" + filename + ".pdf"
     print(saved_name)
@@ -83,11 +94,11 @@ def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_
     plt.xlabel("width")
     plt.ylabel("% of removed nodes")
     plt.title("% of removed nodes over width: " + filename)
-    plt.legend(loc="lower left", fontsize=14)  # (7)凡例表示
+    plt.legend(loc="lower right", fontsize=14)  # (7)凡例表示
     plt.savefig(saved_name)
 
 
 if __name__ == '__main__':
-    widths1, percentages1, widths2, percentages2, widths3, percentages3, widths4, percentages4, widths5, percentages5, filename = read_file()
+    widths1, percentages1, widths2, percentages2, widths3, percentages3, widths4, percentages4, widths5, percentages5, widths6, percentages6, filename = read_file()
     draw_chart(widths1, percentages1, widths2, percentages2, widths3,
-               percentages3, widths4, percentages4, widths5, percentages5, filename)
+               percentages3, widths4, percentages4, widths5, percentages5, widths6, percentages6, filename)

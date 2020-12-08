@@ -1,9 +1,9 @@
 #include <algorithm>
 #include <chrono>
+#include <deque>
 #include <fstream>
 #include <iostream>
 #include <queue>
-#include <stack>
 #include <string>
 #include <unordered_map>
 #include <unordered_set>

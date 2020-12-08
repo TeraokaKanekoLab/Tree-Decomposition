@@ -38,6 +38,14 @@ lmdh_naive() {
     rm ./lmdh_naive
 }
 
+lmdh_greedy() {
+    echo "g++ src/lmdh_greedy.cpp -o ./lmdh_greedy --std=c++17"
+    g++ src/lmdh_greedy.cpp -o ./lmdh_greedy --std=c++17
+    echo "./lmdh_greedy $1 $2"
+    ./lmdh_greedy $1 $2
+    rm ./lmdh_greedy
+}
+
 chart() {
     echo "python3 src/chart.py $1 $2"
     python3 src/chart.py $1 $2
@@ -62,6 +70,7 @@ graph() {
 case $1 in
 "mdh")
     mdh $2 $3
+    # tree mdh $2 $3
     ;;
 "sbr")
     sbr $2 $3
@@ -76,7 +85,11 @@ case $1 in
     ;;
 "lmdh_naive")
     lmdh_naive $2 $3
-    # tree lmdh_naive $2 $3
+    tree lmdh_naive $2 $3
+    ;;
+"lmdh_greedy")
+    lmdh_greedy $2 $3
+    # tree lmdh_greedy $2 $3
     ;;
 "chart")
     chart $2 $3

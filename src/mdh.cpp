@@ -44,7 +44,7 @@ public:
                 neighbors_of[nbr].erase(nd);
                 degreeq.push(node(neighbors_of[nbr].size(), nbr));
             }
-            node_stack.push(make_pair(nd, nbrs));
+            add_to_stack(nd, nbrs);
             neighbors_of.erase(nd);
             remove_cnt++;
         }
@@ -55,6 +55,7 @@ public:
         }
         output.close();
         cout << "result written to " << output_name << endl;
+        make_tree();
     }
 };
 
@@ -72,7 +73,7 @@ int main(int argc, char* argv[])
     g.read_edges();
     g.make_graph();
     g.decompose();
-    // g.print_stack();
+    g.print_stack();
 
     return 0;
 }

@@ -12,9 +12,12 @@ public:
     int true_num_nodes = 0;
     int remove_cnt = 0;
     vector<pair<int, int>> edges;
-    stack<pair<int, vector<int>>> node_stack;
+    deque<pair<int, vector<int>>> node_stack;
     typedef pair<int, int> node; // (deg, vertex)
     int max_tree_width = 0;
+    vector<int> depth;
+    vector<vector<int>> neighbors;
+    vector<int> parents;
 
 public:
     void add_edge(int u, int v)
@@ -58,48 +61,67 @@ public:
         output << tree_width << " " << remove_cnt << " " << double(duration.count()) / 1000000 << endl;
     }
 
-    void print_stack()
+    void make_tree()
     {
-        string output_name = "tree/" + type + "-" + to_string(max_tree_width) + "-" + filename + ".tree";
-        ofstream output(output_name);
-        vector<int> depth(num_nodes, 0);
-        if (remove_cnt == true_num_nodes) {
-            // print root node in the tree
-            int root = node_stack.top().first;
-            vector<int> root_nbrs = node_stack.top().second;
-            node_stack.pop();
-            output << root << endl;
-            sort(root_nbrs.begin(), root_nbrs.end());
-            for (int nbr : root_nbrs)
-                output << nbr << " ";
-            output << endl;
-            output << "root" << endl;
-        } else {
-            output << "core" << endl;
-            output << endl;
-            output << endl;
-        }
+        // initialize
+        depth.resize(num_nodes, -1);
+        neighbors.resize(num_nodes, std::vector<int>());
+        parents.resize(num_nodes, -1);
 
-        while (!node_stack.empty()) {
-            int nd = node_stack.top().first;
-            vector<int> nbrs = node_stack.top().second;
-            node_stack.pop();
+        for (int i = 0; i < node_stack.size(); ++i) {
+            int nd = node_stack[i].first;
+            vector<int> nbrs = node_stack[i].second;
 
             // ouput <nd> <nbr 1> <nbr 2> ... <nbr n> <parent>
-            output << nd << endl;
-            int parent = 0;
+            int parent = -1; // the parent is itselft at first
             int max_depth = -1;
             sort(nbrs.begin(), nbrs.end());
             for (int nbr : nbrs) {
-                output << nbr << " ";
+                neighbors[nd].push_back(nbr);
                 if (depth[nbr] > max_depth) {
                     max_depth = depth[nbr];
                     parent = nbr;
                 }
             }
             depth[nd] = max_depth + 1;
+            parents[nd] = parent;
+        }
+    }
+
+    void print_stack()
+    {
+        string output_name = "tree/" + type + "-" + to_string(max_tree_width) + "-" + filename + ".tree";
+        ofstream output(output_name);
+        int start = 0;
+        // decide whether there is a core or not
+        if (remove_cnt == true_num_nodes) {
+            // print root node in the tree
+            int root = node_stack[0].first;
+            vector<int> root_nbrs = node_stack[0].second;
+            output << root << endl;
+            sort(root_nbrs.begin(), root_nbrs.end());
+            for (int nbr : root_nbrs)
+                output << nbr << " ";
             output << endl;
-            output << parent << endl;
+            output << "root" << endl;
+            start = 1;
+        } else {
+            output << "core" << endl;
+            output << endl;
+            output << "root" << endl;
+        }
+
+        for (int i = start; i < node_stack.size(); ++i) {
+            int nd = node_stack[i].first;
+            vector<int> nbrs = node_stack[i].second;
+
+            // ouput <nd> <nbr 1> <nbr 2> ... <nbr n> <parent>
+            output << nd << endl;
+            for (int nbr : nbrs) {
+                output << nbr << " ";
+            }
+            output << endl;
+            output << parents[nd] << endl;
         }
     }
 
@@ -109,6 +131,6 @@ public:
         for (int nbr : nbrs)
             if (nbr != nd)
                 new_nbrs.push_back(nbr);
-        node_stack.push(make_pair(nd, new_nbrs));
+        node_stack.push_front(make_pair(nd, new_nbrs));
     }
 };

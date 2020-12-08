@@ -51,6 +51,7 @@ public:
             if (is_ret)
                 ret_cnt++;
         cout << "visited nodes: " << ret_cnt << endl;
+        make_tree();
     }
 
     void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output)
@@ -63,10 +64,8 @@ public:
 void copy_master(lmdh_graph& g, lmdh_graph& master)
 {
     g.num_nodes = master.num_nodes; // This value may be different from the official number of nodes.
-    // g.true_num_nodes = master.true_num_nodes;
     // g.adj = master.adj;
     g.edges = master.edges;
-    // g.parent = master.parent;
     g.make_graph();
 }
 
@@ -96,7 +95,7 @@ int main(int argc, char* argv[])
         g.decompose(width, output);
         if (width == max_width) {
             g.max_tree_width = max_width;
-            g.print_stack();
+            // g.print_stack();
         }
     }
 
