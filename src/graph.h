@@ -16,7 +16,6 @@ public:
     typedef pair<int, int> node; // (deg, vertex)
     int max_tree_width = 0;
     vector<int> depth;
-    vector<vector<int>> neighbors;
     vector<int> parents;
     int depth_of_tree = 0;
     int leaf_cnt = 0;
@@ -68,7 +67,6 @@ public:
     {
         // initialize
         depth.resize(num_nodes, -1);
-        neighbors.resize(num_nodes, std::vector<int>());
         parents.resize(num_nodes, -1);
         vector<int> child_cnt(num_nodes, 0);
         int num_core_child = 0;
@@ -81,13 +79,11 @@ public:
             int parent = -1; // the parent is itselft at first
             int max_depth = -1;
             sort(nbrs.begin(), nbrs.end());
-            for (int nbr : nbrs) {
-                neighbors[nd].push_back(nbr);
+            for (int nbr : nbrs)
                 if (depth[nbr] > max_depth) {
                     max_depth = depth[nbr];
                     parent = nbr;
                 }
-            }
             depth[nd] = max_depth + 1;
             if (max_depth == -1)
                 num_core_child++;
