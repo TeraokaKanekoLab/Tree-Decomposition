@@ -55,9 +55,9 @@ chart() {
     python3 src/depth.py $1 $2
     filename="charts/depth/"$2"-"$1".pdf"
     open $filename
-    echo "python3 src/branch.py $1 $2"
-    python3 src/branch.py $1 $2
-    filename="charts/branch/"$2"-"$1".pdf"
+    echo "python3 src/child.py $1 $2"
+    python3 src/child.py $1 $2
+    filename="charts/child/"$2"-"$1".pdf"
     open $filename
     echo "python3 src/leaf.py $1 $2"
     python3 src/leaf.py $1 $2

@@ -21,7 +21,6 @@ public:
     int depth_of_tree = 0;
     int leaf_cnt = 0;
     int total_child_cnt = 0;
-    int branch_cnt = 0;
 
 public:
     void add_edge(int u, int v)
@@ -62,7 +61,7 @@ public:
     {
         cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)"
              << " " << double(duration.count()) / 1000000 << endl;
-        output << tree_width << " " << remove_cnt << " " << double(duration.count()) / 1000000 << " " << depth_of_tree << " " << (double)leaf_cnt / remove_cnt << " " << (double)branch_cnt / remove_cnt << " " << (double)remove_cnt / num_visited * 100 << endl;
+        output << tree_width << " " << remove_cnt << " " << double(duration.count()) / 1000000 << " " << depth_of_tree << " " << (double)leaf_cnt / remove_cnt << " " << (double)total_child_cnt / (remove_cnt - leaf_cnt) << " " << (double)remove_cnt / num_visited * 100 << endl;
     }
 
     void make_tree()
@@ -72,6 +71,7 @@ public:
         neighbors.resize(num_nodes, std::vector<int>());
         parents.resize(num_nodes, -1);
         vector<int> child_cnt(num_nodes, 0);
+        int num_core_child = 0;
 
         for (int i = 0; i < node_stack.size(); ++i) {
             int nd = node_stack[i].first;
@@ -89,6 +89,8 @@ public:
                 }
             }
             depth[nd] = max_depth + 1;
+            if (max_depth == -1)
+                num_core_child++;
             parents[nd] = parent;
             child_cnt[parent]++;
         }
@@ -96,7 +98,6 @@ public:
         depth_of_tree = 0;
         leaf_cnt = 0;
         total_child_cnt = 0;
-        branch_cnt = 0;
         for (int i = 0; i < node_stack.size(); ++i) {
             int nd = node_stack[i].first;
             vector<int> nbrs = node_stack[i].second;
@@ -105,7 +106,6 @@ public:
             if (child_cnt[nd] == 0)
                 leaf_cnt++;
             total_child_cnt += child_cnt[nd];
-            branch_cnt += max(0, child_cnt[nd] - 1);
         }
     }
 
