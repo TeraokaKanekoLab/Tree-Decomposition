@@ -30,7 +30,8 @@ public:
             if (deg > crnt_deg) {
                 end = std::chrono::steady_clock::now();
                 auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
-                export_info(crnt_deg, remove_cnt, true_num_nodes, output, duration);
+                make_tree();
+                export_info(crnt_deg, remove_cnt, true_num_nodes, output, duration, true_num_nodes);
                 crnt_deg = deg;
                 start = std::chrono::steady_clock::now();
             }
@@ -51,11 +52,11 @@ public:
         if (remove_cnt == true_num_nodes) {
             end = std::chrono::steady_clock::now();
             auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
-            export_info(crnt_deg, remove_cnt, true_num_nodes, output, duration);
+            make_tree();
+            export_info(crnt_deg, remove_cnt, true_num_nodes, output, duration, true_num_nodes);
         }
         output.close();
         cout << "result written to " << output_name << endl;
-        make_tree();
     }
 };
 

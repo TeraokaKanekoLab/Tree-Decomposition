@@ -11,6 +11,7 @@ public:
             if (nd.second.size())
                 true_num_nodes++;
 
+        auto start = std::chrono::steady_clock::now();
         // start with the first node of the first edge.
         int nd = edges[0].first;
         visited[nd] = true;
@@ -60,19 +61,14 @@ public:
                 break;
             }
         }
+        auto end = std::chrono::steady_clock::now();
+        auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
+        make_tree();
         int ret_cnt = 0;
         for (bool is_ret : visited)
             if (is_ret)
                 ret_cnt++;
-        cout << "visited nodes: " << ret_cnt << endl;
-        export_info(max_tree_width, remove_cnt, true_num_nodes, output);
-        make_tree();
-    }
-
-    void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output)
-    {
-        cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)" << endl;
-        output << tree_width << " " << remove_cnt << endl;
+        export_info(max_tree_width, remove_cnt, true_num_nodes, output, duration, ret_cnt);
     }
 };
 

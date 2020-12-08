@@ -47,14 +47,30 @@ lmdh_greedy() {
 }
 
 chart() {
-    echo "python3 src/chart.py $1 $2"
-    python3 src/chart.py $1 $2
-    filename="charts/"$2"-"$1".pdf"
+    echo "python3 src/removed_nodes.py $1 $2"
+    python3 src/removed_nodes.py $1 $2
+    filename="charts/removed_nodes/"$2"-"$1".pdf"
+    open $filename
+    echo "python3 src/depth.py $1 $2"
+    python3 src/depth.py $1 $2
+    filename="charts/depth/"$2"-"$1".pdf"
+    open $filename
+    echo "python3 src/branch.py $1 $2"
+    python3 src/branch.py $1 $2
+    filename="charts/branch/"$2"-"$1".pdf"
+    open $filename
+    echo "python3 src/leaf.py $1 $2"
+    python3 src/leaf.py $1 $2
+    filename="charts/leaf/"$2"-"$1".pdf"
+    open $filename
+    echo "python3 src/percent.py $1 $2"
+    python3 src/percent.py $1 $2
+    filename="charts/percent/"$2"-"$1".pdf"
     open $filename
 }
 
 tree() {
-    echo "python3 src/chart.py $1 $2 $3"
+    echo "python3 src/removed_nodes.py $1 $2 $3"
     python3 src/tree.py $1 $2 $3
     filename="tree/figures/"$1"-"$3"-"$2".pdf"
     open $filename
@@ -79,10 +95,6 @@ case $1 in
     lmdh $2 $3
     # tree lmdh $2 $3
     ;;
-"lmdh_sbr")
-    lmdh_sbr $2 $3
-    # tree lmdh_sbr $2 $3
-    ;;
 "lmdh_naive")
     lmdh_naive $2 $3
     tree lmdh_naive $2 $3
@@ -105,7 +117,6 @@ case $1 in
     sbr $2 $3
     lmdh $2 $3
     lmdh_naive $2 $3
-    lmdh_sbr $2 $3
     chart $2 $3
     ;;
 esac
