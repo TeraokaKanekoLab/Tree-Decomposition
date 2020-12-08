@@ -85,7 +85,7 @@ public:
                     parent = nbr;
                 }
             depth[nd] = max_depth + 1;
-            if (max_depth == 0)
+            if (depth[nd] == 0)
                 num_core_child++;
             else {
                 parents[nd] = parent;
