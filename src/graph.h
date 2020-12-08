@@ -87,8 +87,10 @@ public:
             depth[nd] = max_depth + 1;
             if (max_depth == -1)
                 num_core_child++;
-            parents[nd] = parent;
-            child_cnt[parent]++;
+            else {
+                parents[nd] = parent;
+                child_cnt[parent]++;
+            }
         }
 
         depth_of_tree = 0;
@@ -96,7 +98,6 @@ public:
         total_child_cnt = 0;
         for (int i = 0; i < node_stack.size(); ++i) {
             int nd = node_stack[i].first;
-            vector<int> nbrs = node_stack[i].second;
             if (depth[nd] > depth_of_tree)
                 depth_of_tree = depth[nd];
             if (child_cnt[nd] == 0)
