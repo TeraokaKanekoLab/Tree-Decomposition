@@ -67,6 +67,10 @@ chart() {
     python3 src/percent.py $1 $2
     filename="charts/percent/"$2"-"$1".pdf"
     open $filename
+    echo "python3 src/strahler.py $1 $2"
+    python3 src/strahler.py $1 $2
+    filename="charts/strahler/"$2"-"$1".pdf"
+    open $filename
 }
 
 tree() {
@@ -90,6 +94,7 @@ case $1 in
     ;;
 "sbr")
     sbr $2 $3
+    # tree sbr $2 $3
     ;;
 "lmdh")
     lmdh $2 $3

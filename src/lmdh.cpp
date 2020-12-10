@@ -112,6 +112,7 @@ int main(int argc, char* argv[])
         //     g.print_stack();
         // }
     }
+    // master.decompose(max_width, output);
     output.close();
     cout << "result written to " << output_name << endl;
 

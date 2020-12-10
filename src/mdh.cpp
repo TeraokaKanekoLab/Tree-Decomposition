@@ -74,7 +74,7 @@ int main(int argc, char* argv[])
     g.read_edges();
     g.make_graph();
     g.decompose();
-    g.print_stack();
+    // g.print_stack();
 
     return 0;
 }

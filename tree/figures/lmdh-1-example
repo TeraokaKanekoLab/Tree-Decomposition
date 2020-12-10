@@ -1,0 +1,4 @@
+graph {
+	node [shape=box]
+	core -- "1 2"
+}

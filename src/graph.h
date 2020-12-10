@@ -65,7 +65,7 @@ public:
     {
         cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)"
              << " " << double(duration.count()) / 1000000 << endl;
-        output << tree_width << " " << remove_cnt << " " << double(duration.count()) / 1000000 << " " << depth_of_tree << " " << (double)leaf_cnt / remove_cnt << " " << (double)total_child_cnt / (remove_cnt - leaf_cnt) << " " << (double)remove_cnt / num_visited * 100 << endl;
+        output << tree_width << " " << remove_cnt << " " << double(duration.count()) / 1000000 << " " << depth_of_tree << " " << (double)leaf_cnt / remove_cnt << " " << (double)total_child_cnt / (remove_cnt - leaf_cnt) << " " << (double)remove_cnt / num_visited * 100 << " " << strahler_of_root << endl;
     }
 
     void make_tree()
@@ -73,6 +73,7 @@ public:
         // initialize
         depth.resize(num_nodes, -1);
         parents.resize(num_nodes, -1);
+        children.clear();
         children.resize(num_nodes, vector<int>());
         children_of_core.clear();
         vector<int> child_cnt(num_nodes, 0);
@@ -81,12 +82,10 @@ public:
         for (int i = 0; i < node_stack.size(); ++i) {
             int nd = node_stack[i].first;
             vector<int> nbrs = node_stack[i].second;
-
             // ouput <nd> <nbr 1> <nbr 2> ... <nbr n> <parent>
             int parent = -1; // the parent is itselft at first
             int max_depth = -1;
             sort(nbrs.begin(), nbrs.end());
-            children[nd] = nbrs;
             for (int nbr : nbrs)
                 if (depth[nbr] > max_depth) {
                     max_depth = depth[nbr];
@@ -96,8 +95,13 @@ public:
             if (max_depth == -1)
                 num_core_child++;
             parents[nd] = parent;
-            if (parent >= 0)
+            if (parent >= 0) {
                 child_cnt[parent]++;
+                children[parent].push_back(nd);
+            } else if (parent < 0) {
+                // then nd is a child of core
+                children_of_core.push_back(nd);
+            }
         }
 
         depth_of_tree = 0;
@@ -110,10 +114,6 @@ public:
             if (child_cnt[nd] == 0)
                 leaf_cnt++;
             total_child_cnt += child_cnt[nd];
-            if (parents[nd] < 0) {
-                // then nd is a child of core
-                children_of_core.push_back(nd);
-            }
         }
         if (remove_cnt == true_num_nodes) {
             // no core
@@ -182,19 +182,14 @@ public:
     void compute_strahler()
     {
         strahler_nums.resize(num_nodes, 1); // strahler number of leaf is 1
-        cout << "root node: " << root_node << endl;
-        cout << (true_num_nodes == remove_cnt) << endl;
-        cout << "true_num_nodes: " << true_num_nodes << endl;
-        cout << "remove_cnt: " << remove_cnt << endl;
-        if (root_node < 0) {
+        if (root_node > 0) {
             strahler_of_root = strahler(root_node);
         } else {
             int max = 0;
             bool should_add_one = false;
+
             for (int child : children_of_core) {
-                cout << "child: " << child << endl;
                 int child_strahler = strahler(child);
-                cout << "strahler: " << child_strahler << endl;
                 if (child_strahler > max) {
                     max = child_strahler;
                     should_add_one = false;
@@ -209,16 +204,16 @@ public:
             else
                 strahler_of_root = max;
         }
-        cout << "strahler of root: " << strahler_of_root << endl;
+        // cout << "strahler of root: " << strahler_of_root << endl;
     }
 
     int strahler(int nd)
     {
-        // cout << "node: " << nd << endl;
         int max = 0;
         bool should_add_one = false;
+
         for (int child : children[nd]) {
-            int child_strahler = strahler(nd);
+            int child_strahler = strahler(child);
             if (child_strahler > max) {
                 max = child_strahler;
                 should_add_one = false;
