@@ -70,7 +70,6 @@ void copy_master(lmdh_graph& g, lmdh_graph& master)
 {
     g.num_nodes = master.num_nodes; // This value may be different from the official number of nodes.
     g.true_num_nodes = master.true_num_nodes;
-    g.edges = master.edges;
     g.make_graph();
 }
 

@@ -2,6 +2,7 @@
 
 string filename;
 string type;
+vector<pair<int, int>> edges;
 
 class Graph {
 public:
@@ -11,7 +12,6 @@ public:
     int num_nodes = 0; // This value may be different from the official number of nodes.
     int true_num_nodes = 0;
     int remove_cnt = 0;
-    vector<pair<int, int>> edges;
     deque<pair<int, vector<int>>> node_stack;
     typedef pair<int, int> node; // (deg, vertex)
     int max_tree_width = 0;
