@@ -17,9 +17,14 @@ public:
     int max_tree_width = 0;
     vector<int> depth;
     vector<int> parents;
+    vector<vector<int>> children;
+    vector<int> children_of_core;
+    int root_node = -1;
     int depth_of_tree = 0;
     int leaf_cnt = 0;
     int total_child_cnt = 0;
+    vector<int> strahler_nums;
+    int strahler_of_root = 0;
 
 public:
     void add_edge(int u, int v)
@@ -68,6 +73,8 @@ public:
         // initialize
         depth.resize(num_nodes, -1);
         parents.resize(num_nodes, -1);
+        children.resize(num_nodes, vector<int>());
+        children_of_core.clear();
         vector<int> child_cnt(num_nodes, 0);
         int num_core_child = 0;
 
@@ -79,6 +86,7 @@ public:
             int parent = -1; // the parent is itselft at first
             int max_depth = -1;
             sort(nbrs.begin(), nbrs.end());
+            children[nd] = nbrs;
             for (int nbr : nbrs)
                 if (depth[nbr] > max_depth) {
                     max_depth = depth[nbr];
@@ -102,7 +110,16 @@ public:
             if (child_cnt[nd] == 0)
                 leaf_cnt++;
             total_child_cnt += child_cnt[nd];
+            if (parents[nd] < 0) {
+                // then nd is a child of core
+                children_of_core.push_back(nd);
+            }
         }
+        if (remove_cnt == true_num_nodes) {
+            // no core
+            root_node = node_stack[0].first;
+        }
+        compute_strahler();
     }
 
     void print_stack()
@@ -149,5 +166,71 @@ public:
             if (nbr != nd)
                 new_nbrs.push_back(nbr);
         node_stack.push_front(make_pair(nd, new_nbrs));
+    }
+
+    void print_priority_queue(priority_queue<node, vector<node>, greater<node>> degreeq)
+    {
+        while (!degreeq.empty()) {
+            int deg = degreeq.top().first;
+            int nd = degreeq.top().second;
+            degreeq.pop();
+            cout << "(" << nd << ", " << deg << ") ";
+        }
+        cout << endl;
+    }
+
+    void compute_strahler()
+    {
+        strahler_nums.resize(num_nodes, 1); // strahler number of leaf is 1
+        cout << "root node: " << root_node << endl;
+        cout << (true_num_nodes == remove_cnt) << endl;
+        cout << "true_num_nodes: " << true_num_nodes << endl;
+        cout << "remove_cnt: " << remove_cnt << endl;
+        if (root_node < 0) {
+            strahler_of_root = strahler(root_node);
+        } else {
+            int max = 0;
+            bool should_add_one = false;
+            for (int child : children_of_core) {
+                cout << "child: " << child << endl;
+                int child_strahler = strahler(child);
+                cout << "strahler: " << child_strahler << endl;
+                if (child_strahler > max) {
+                    max = child_strahler;
+                    should_add_one = false;
+                } else if (child_strahler == max) {
+                    should_add_one = true;
+                }
+            }
+            if (should_add_one)
+                strahler_of_root = max + 1;
+            else if (max == 0)
+                strahler_of_root = 1;
+            else
+                strahler_of_root = max;
+        }
+        cout << "strahler of root: " << strahler_of_root << endl;
+    }
+
+    int strahler(int nd)
+    {
+        // cout << "node: " << nd << endl;
+        int max = 0;
+        bool should_add_one = false;
+        for (int child : children[nd]) {
+            int child_strahler = strahler(nd);
+            if (child_strahler > max) {
+                max = child_strahler;
+                should_add_one = false;
+            } else if (child_strahler == max) {
+                should_add_one = true;
+            }
+        }
+        if (should_add_one)
+            return max + 1;
+        else if (max == 0)
+            return 1;
+        else
+            return max;
     }
 };

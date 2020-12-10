@@ -97,10 +97,10 @@ int main(int argc, char* argv[])
         lmdh_graph g;
         copy_master(g, master);
         g.decompose(width, output);
-        if (width == max_width) {
-            g.max_tree_width = max_width;
-            g.print_stack();
-        }
+        // if (width == max_width) {
+        //     g.max_tree_width = max_width;
+        //     g.print_stack();
+        // }
     }
 
     // master.make_graph();

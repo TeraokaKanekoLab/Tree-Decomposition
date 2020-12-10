@@ -16,14 +16,17 @@ public:
         int nd = edges[0].first;
         visited[nd] = true;
         degreeq.push(node(neighbors_of[nd].size(), nd));
+        // print_priority_queue(degreeq);
 
         while (!degreeq.empty()) {
             int deg = degreeq.top().first;
             int nd = degreeq.top().second;
             bool should_stop = true;
             degreeq.pop();
-            if (neighbors_of.find(nd) == neighbors_of.end() || deg != neighbors_of[nd].size())
+            if (neighbors_of.find(nd) == neighbors_of.end() || deg != neighbors_of[nd].size()) {
+                // print_priority_queue(degreeq);
                 continue; // outdated entry in degreeq
+            }
 
             // create neighbor array
             vector<int> nbrs;
@@ -57,6 +60,7 @@ public:
                 neighbors_of.erase(nd);
                 remove_cnt++;
             }
+            // print_priority_queue(degreeq);
             if (should_stop) {
                 break;
             }
@@ -103,10 +107,10 @@ int main(int argc, char* argv[])
         lmdh_graph g;
         copy_master(g, master);
         g.decompose(width, output);
-        if (width == max_width) {
-            g.max_tree_width = width;
-            // g.print_stack();
-        }
+        // if (width == max_width) {
+        //     g.max_tree_width = width;
+        //     g.print_stack();
+        // }
     }
     output.close();
     cout << "result written to " << output_name << endl;

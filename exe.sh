@@ -97,7 +97,7 @@ case $1 in
     ;;
 "lmdh_naive")
     lmdh_naive $2 $3
-    tree lmdh_naive $2 $3
+    # tree lmdh_naive $2 $3
     ;;
 "lmdh_greedy")
     lmdh_greedy $2 $3
