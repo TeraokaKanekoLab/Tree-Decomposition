@@ -30,6 +30,12 @@ We aim to classify graphs by exploiting the relation between the width and core 
 | **0.20** | November 9, 2020 | [c47f8f2](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/c47f8f29b03b512d7ed8cfe6ffb4163aba7cfb5f) | First version of src/walk.cpp |
 | **0.21** | November 21, 2020 | [84cf670](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/84cf670745ac0af40331aeeab2fd6a494d354ed6) | First version of src/walk.cpp |
 | **1.0** | December 6, 2020 | [ebdfc13](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/ebdfc1356c2511e8cbc2de0a04f1abbbfaf248b1) | **Theme fixed!** |
+| **1.1** | December 10, 2020 | [43fea4b](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/43fea4baf85e13764217f3eef46e875cd997bad0) | Implemented strahler number |
+
+## How to Run the Program
+```
+sh exe.sh all simple_graph 3
+```
 
 ## C++ Version
 We recommend to use C++ 20 when you run the codes.
