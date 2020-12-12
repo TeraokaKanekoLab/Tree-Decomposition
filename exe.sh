@@ -23,12 +23,12 @@ dmdh() {
 }
 
 
-whattheheckingheck() {
-    echo "g++ src/whattheheckingheck.cpp -o ./whattheheckingheck --std=c++17"
-    g++ src/whattheheckingheck.cpp -o ./whattheheckingheck --std=c++17
-    echo "./whattheheckingheck $1 $2"
-    ./whattheheckingheck $1 $2
-    rm ./whattheheckingheck
+lmdh() {
+    echo "g++ src/lmdh.cpp -o ./lmdh --std=c++17"
+    g++ src/lmdh.cpp -o ./lmdh --std=c++17
+    echo "./lmdh $1 $2"
+    ./lmdh $1 $2
+    rm ./lmdh
 }
 
 chart() {
@@ -89,9 +89,9 @@ case $1 in
     dmdh $2 $3
     # tree dmdh $2 $3
     ;;
-"whattheheckingheck")
-    whattheheckingheck $2 $3
-    # tree whattheheckingheck $2 $3
+"lmdh")
+    lmdh $2 $3
+    # tree lmdh $2 $3
     ;;
 "chart")
     chart $2 $3
@@ -106,7 +106,7 @@ case $1 in
     mdh $2 $3
     sbr $2 $3
     dmdh $2 $3
-    whattheheckingheck $2 $3
+    lmdh $2 $3
     chart $2 $3
     ;;
 esac
