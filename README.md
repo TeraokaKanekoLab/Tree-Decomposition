@@ -86,6 +86,6 @@ The following data (`graph/simple_graph.gr`) represents this simple graph with 9
 1. J. Lescovec. [Stanford Large Network Dataset Collection](https://snap.stanford.edu/data).
 1. T. Maehara, T. Akiba, Y. Iwata, and K. Kawarabayashi. [Computing personalized pagerank quickly by exploiting graph structures](http://www.vldb.org/pvldb/vol7/p1023-maehara.pdf). *Proceedings of the VLDB Endowment*, 7(12):1023–1034, 2014.
 1. D. Ouyang, L. Qin, L. Chang, X. Lin, Y. Zhang, and Q. Zhu. 2018. [When Hierarchy Meets 2-Hop-Labeling: Efficient Shortest Distance Queries on Road Networks](https://dl.acm.org/doi/pdf/10.1145/3183713.3196913). In *Proceedings of the SIGMOD '18*, pages 709–724.2018.
-1. R. Rossi, N. Ahmed. [Network Repository. An Interactive Scientific Network Data Repository]http://networkrepository.com.
+1. R. Rossi, N. Ahmed. [Network Repository. An Interactive Scientific Network Data Repository](http://networkrepository.com).
 1. F. Wei. [Tedi: efficient shortest path query answering on graphs](https://dl.acm.org/doi/pdf/10.1145/1807167.1807181). In *SIGMOD*, pages 99–110, 2010.
 1. J. Xu, F. Jiao, and B. Berger. [A tree-decomposition approach to protein structure prediction](https://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=1498026). In *CSB*, pages 247–256, 2005.
