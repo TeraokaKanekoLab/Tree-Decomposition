@@ -36,7 +36,7 @@ def read_file():
         widths2.append(width)
         strahlers2.append(strahler)
 
-    filepath = "output/lmdh-" + arg_width + "-" + filename+".output"
+    filepath = "output/dmdh-" + arg_width + "-" + filename+".output"
     f = open(filepath, "r")
     lines = f.readlines()
     widths3 = []
@@ -47,7 +47,7 @@ def read_file():
         widths3.append(width)
         strahlers3.append(strahler)
 
-    filepath = "output/lmdh_naive-" + arg_width + "-" + filename+".output"
+    filepath = "output/lmdh-" + arg_width + "-" + filename+".output"
     f = open(filepath, "r")
     lines = f.readlines()
     widths4 = []
@@ -63,8 +63,8 @@ def read_file():
 def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_axis4,  filename):
     plt.plot(x_axis1, y_axis1, c="r",  label="MDH")
     plt.plot(x_axis2, y_axis2,  c="g",  label="SBR")
-    plt.plot(x_axis3, y_axis3, c="b",  label="LMDH")
-    plt.plot(x_axis4, y_axis4, c="c",  label="LMDH naive")
+    plt.plot(x_axis3, y_axis3, c="b",  label="DMDH")
+    plt.plot(x_axis4, y_axis4, c="c",  label="LMDH")
     width = sys.argv[2]
     saved_name = "charts/strahler/" + width + "-" + filename + ".pdf"
     print(saved_name)

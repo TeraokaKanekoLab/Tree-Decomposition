@@ -14,36 +14,21 @@ sbr() {
     rm ./sbr
 }
 
-lmdh() {
-    echo "g++ src/lmdh.cpp -o ./lmdh --std=c++17"
-    g++ src/lmdh.cpp -o ./lmdh --std=c++17
-    echo "./lmdh $1 $2"
-    ./lmdh $1 $2
-    rm ./lmdh
+dmdh() {
+    echo "g++ src/dmdh.cpp -o ./dmdh --std=c++17"
+    g++ src/dmdh.cpp -o ./dmdh --std=c++17
+    echo "./dmdh $1 $2"
+    ./dmdh $1 $2
+    rm ./dmdh
 }
 
-lmdh_sbr() {
-    echo "g++ src/lmdh_sbr.cpp -o ./lmdh_sbr --std=c++17"
-    g++ src/lmdh_sbr.cpp -o ./lmdh_sbr --std=c++17
-    echo "./lmdh_sbr $1 $2"
-    ./lmdh_sbr $1 $2
-    rm ./lmdh_sbr
-}
 
-lmdh_naive() {
-    echo "g++ src/lmdh_naive.cpp -o ./lmdh_naive --std=c++17"
-    g++ src/lmdh_naive.cpp -o ./lmdh_naive --std=c++17
-    echo "./lmdh_naive $1 $2"
-    ./lmdh_naive $1 $2
-    rm ./lmdh_naive
-}
-
-lmdh_greedy() {
-    echo "g++ src/lmdh_greedy.cpp -o ./lmdh_greedy --std=c++17"
-    g++ src/lmdh_greedy.cpp -o ./lmdh_greedy --std=c++17
-    echo "./lmdh_greedy $1 $2"
-    ./lmdh_greedy $1 $2
-    rm ./lmdh_greedy
+whattheheckingheck() {
+    echo "g++ src/whattheheckingheck.cpp -o ./whattheheckingheck --std=c++17"
+    g++ src/whattheheckingheck.cpp -o ./whattheheckingheck --std=c++17
+    echo "./whattheheckingheck $1 $2"
+    ./whattheheckingheck $1 $2
+    rm ./whattheheckingheck
 }
 
 chart() {
@@ -100,17 +85,13 @@ case $1 in
     sbr $2 $3
     # tree sbr $2 $3
     ;;
-"lmdh")
-    lmdh $2 $3
-    # tree lmdh $2 $3
+"dmdh")
+    dmdh $2 $3
+    # tree dmdh $2 $3
     ;;
-"lmdh_naive")
-    lmdh_naive $2 $3
-    # tree lmdh_naive $2 $3
-    ;;
-"lmdh_greedy")
-    lmdh_greedy $2 $3
-    # tree lmdh_greedy $2 $3
+"whattheheckingheck")
+    whattheheckingheck $2 $3
+    # tree whattheheckingheck $2 $3
     ;;
 "chart")
     chart $2 $3
@@ -124,8 +105,8 @@ case $1 in
 "all")
     mdh $2 $3
     sbr $2 $3
-    lmdh $2 $3
-    lmdh_naive $2 $3
+    dmdh $2 $3
+    whattheheckingheck $2 $3
     chart $2 $3
     ;;
 esac
