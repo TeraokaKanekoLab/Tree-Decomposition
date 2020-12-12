@@ -71,6 +71,10 @@ chart() {
     python3 src/strahler.py $1 $2
     filename="charts/strahler/"$2"-"$1".pdf"
     open $filename
+    echo "python3 src/time.py $1 $2"
+    python3 src/time.py $1 $2
+    filename="charts/time/"$2"-"$1".pdf"
+    open $filename
 }
 
 tree() {
