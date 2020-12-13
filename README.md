@@ -77,15 +77,14 @@ The following data (`graph/simple_graph.gr`) represents this simple graph with 9
 ```
 
 ## References
-1. Fragkiskos Malliaros, Christos Giatsidis, Apostolos Papadopoulos, Michalis Vazirgiannis. [The Core Decomposition of Networks: Theory, Algorithms and Applications](https://hal-centralesupelec.archives-ouvertes.fr/hal-01986309/file/Core_Decomposition_VLDBJ.pdf). The *VLDB Journal*, Springer, 2019.
-1. Silviu Maniu, Pierre Senellart, and Suraj Jog. [An Experimental Study of the Treewidth of Real-World Graph Data](https://drops.dagstuhl.de/opus/volltexte/2019/10314/pdf/LIPIcs-ICDT-2019-12.pdf). In 22nd International Conference on Database Theory, *ICDT* 2019, March 26-28, 2019, Lisbon, Portugal, pages 12:1–12:18, 2019.
-1. Takanori Maehara, Takuya Akiba, Yoichi Iwata, and Ken-ichi Kawarabayashi. [Computing personalized pagerank quickly by exploiting graph structures](http://www.vldb.org/pvldb/vol7/p1023-maehara.pdf). Proceedings of the VLDB Endowment, 7(12):1023–1034, 2014.
 1. T. Akiba, C. Sommer, and K. Kawarabayashi. [Shortest-path queries for complex networks: exploiting low tree-width outside the core](https://dl.acm.org/doi/pdf/10.1145/2247596.2247614). In *EDBT*, pages 144–155, 2012.
 1. A. Berry, P. Heggernes, and G. Simonet. [The minimum degree heuristic and the minimal triangulation process](https://link.springer.com/chapter/10.1007/978-3-540-39890-5_6). In *Graph-Theoretic Concepts in Computer Science*, volume 2880, pages 58–70. 2003.
 1. H. L. Bodlaender. [A linear-time algorithm for finding tree-decompositions of small treewidth](https://dl.acm.org/doi/pdf/10.1145/167088.167161). *SIAM J. Comput.*, 25(6):1305–1317, 1996.
 1. H. L. Bodlaender. [Treewidth: Characterizations, applications, and computations](https://link.springer.com/chapter/10.1007/11917496_1). In *Graph-Theoretic Concepts in Computer Science*, pages 1–14, 2006.
 1. J. Lescovec. [Stanford Large Network Dataset Collection](https://snap.stanford.edu/data).
 1. T. Maehara, T. Akiba, Y. Iwata, and K. Kawarabayashi. [Computing personalized pagerank quickly by exploiting graph structures](http://www.vldb.org/pvldb/vol7/p1023-maehara.pdf). *Proceedings of the VLDB Endowment*, 7(12):1023–1034, 2014.
+1. F. Malliaros, C. Giatsidis, A. Papadopoulos, M. Vazirgiannis. [The Core Decomposition of Networks: Theory, Algorithms and Applications](https://hal-centralesupelec.archives-ouvertes.fr/hal-01986309/file/Core_Decomposition_VLDBJ.pdf). The *VLDB Journal*, Springer, 2019.
+1. S. Maniu, P. Senellart, and S. Jog. [An Experimental Study of the Treewidth of Real-World Graph Data](https://drops.dagstuhl.de/opus/volltexte/2019/10314/pdf/LIPIcs-ICDT-2019-12.pdf). In 22nd International Conference on Database Theory, *ICDT* 2019, March 26-28, 2019, Lisbon, Portugal, pages 12:1–12:18, 2019.
 1. D. Ouyang, L. Qin, L. Chang, X. Lin, Y. Zhang, and Q. Zhu. 2018. [When Hierarchy Meets 2-Hop-Labeling: Efficient Shortest Distance Queries on Road Networks](https://dl.acm.org/doi/pdf/10.1145/3183713.3196913). In *Proceedings of the SIGMOD '18*, pages 709–724.2018.
 1. R. Rossi, N. Ahmed. [Network Repository. An Interactive Scientific Network Data Repository](http://networkrepository.com).
 1. F. Wei. [Tedi: efficient shortest path query answering on graphs](https://dl.acm.org/doi/pdf/10.1145/1807167.1807181). In *SIGMOD*, pages 99–110, 2010.
