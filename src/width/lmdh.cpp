@@ -1,6 +1,6 @@
-#include "mdh.h"
+#include "../mdh.h"
 
-class dmdh : public mdh {
+class lmdh : public mdh {
 public:
     void decompose(int max_tree_width, ofstream& output)
     {
@@ -12,34 +12,25 @@ public:
                 true_num_nodes++;
 
         auto start = std::chrono::steady_clock::now();
+
         // start with the first node of the first edge.
         int nd = edges[0].first;
         visited[nd] = true;
         degreeq.push(node(neighbors_of[nd].size(), nd));
-        // print_priority_queue(degreeq);
 
         while (!degreeq.empty()) {
             int deg = degreeq.top().first;
             int nd = degreeq.top().second;
             bool should_stop = true;
             degreeq.pop();
-            if (neighbors_of.find(nd) == neighbors_of.end() || deg != neighbors_of[nd].size()) {
-                // print_priority_queue(degreeq);
+            if (neighbors_of.find(nd) == neighbors_of.end() || deg != neighbors_of[nd].size())
                 continue; // outdated entry in degreeq
-            }
 
             // create neighbor array
             vector<int> nbrs;
-            int min_deg = deg;
-            int min_deg_nb = nd;
-            for (int nbr : neighbors_of[nd]) {
+            for (int nbr : neighbors_of[nd])
                 nbrs.push_back(nbr);
-                if (neighbors_of[nbr].size() < min_deg) {
-                    min_deg = neighbors_of[nbr].size();
-                    min_deg_nb = nbr;
-                }
-            }
-            if (deg > max_tree_width || min_deg_nb != nd) {
+            if (deg > max_tree_width) {
                 degreeq.push(node(deg, nd));
                 for (int nbr : nbrs) {
                     if (!visited[nbr]) {
@@ -60,7 +51,6 @@ public:
                 neighbors_of.erase(nd);
                 remove_cnt++;
             }
-            // print_priority_queue(degreeq);
             if (should_stop) {
                 break;
             }
@@ -76,7 +66,7 @@ public:
     }
 };
 
-void copy_master(dmdh& g, dmdh& master)
+void copy_master(lmdh& g, lmdh& master)
 {
     g.num_nodes = master.num_nodes; // This value may be different from the official number of nodes.
     g.true_num_nodes = master.true_num_nodes;
@@ -91,10 +81,10 @@ int main(int argc, char* argv[])
     }
     filename = argv[1];
     int max_width = stoi(argv[2]);
-    type = "dmdh";
+    type = "lmdh";
     string output_name = "output/" + type + "-" + to_string(max_width) + "-" + filename + ".output";
     ofstream output(output_name);
-    dmdh master;
+    lmdh master;
     master.read_edges();
     for (int width = 0; width < max_width;) {
         if (width < 10)
@@ -103,15 +93,20 @@ int main(int argc, char* argv[])
             width += width / 10;
         if (width >= max_width)
             width = max_width;
-        dmdh g;
+        lmdh g;
         copy_master(g, master);
         g.decompose(width, output);
         // if (width == max_width) {
-        //     g.max_tree_width = width;
+        //     g.max_tree_width = max_width;
         //     g.print_stack();
         // }
     }
+
+    // master.make_graph();
     // master.decompose(max_width, output);
+    // master.max_tree_width = max_width;
+    // master.print_stack();
+
     output.close();
     cout << "result written to " << output_name << endl;
 

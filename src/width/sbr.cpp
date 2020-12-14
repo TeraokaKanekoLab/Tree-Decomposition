@@ -1,4 +1,4 @@
-#include "sbr.h"
+#include "../sbr.h"
 
 class sbr_graph : public sbr {
 public:

@@ -1,77 +1,76 @@
 mdh() {
-    echo "g++ src/mdh.cpp -o ./mdh --std=c++17"
-    g++ src/mdh.cpp -o ./mdh --std=c++17
+    echo "g++ src/width/mdh.cpp -o ./mdh --std=c++17"
+    g++ src/width/mdh.cpp -o ./mdh --std=c++17
     echo "./mdh $1 $2"
     ./mdh $1 $2
     rm ./mdh
 }
 
 sbr() {
-    echo "g++ src/sbr.cpp -o ./sbr --std=c++17"
-    g++ src/sbr.cpp -o ./sbr --std=c++17
+    echo "g++ src/width/sbr.cpp -o ./sbr --std=c++17"
+    g++ src/width/sbr.cpp -o ./sbr --std=c++17
     echo "./sbr $1 $2"
     ./sbr $1 $2
     rm ./sbr
 }
 
 dmdh() {
-    echo "g++ src/dmdh.cpp -o ./dmdh --std=c++17"
-    g++ src/dmdh.cpp -o ./dmdh --std=c++17
+    echo "g++ src/width/dmdh.cpp -o ./dmdh --std=c++17"
+    g++ src/width/dmdh.cpp -o ./dmdh --std=c++17
     echo "./dmdh $1 $2"
     ./dmdh $1 $2
     rm ./dmdh
 }
 
-
 lmdh() {
-    echo "g++ src/lmdh.cpp -o ./lmdh --std=c++17"
-    g++ src/lmdh.cpp -o ./lmdh --std=c++17
+    echo "g++ src/width/lmdh.cpp -o ./lmdh --std=c++17"
+    g++ src/width/lmdh.cpp -o ./lmdh --std=c++17
     echo "./lmdh $1 $2"
     ./lmdh $1 $2
     rm ./lmdh
 }
 
 chart() {
-    echo "python3 src/removed_nodes.py $1 $2"
-    python3 src/removed_nodes.py $1 $2
+    echo "python3 src/width/removed_nodes.py $1 $2"
+    python3 src/width/removed_nodes.py $1 $2
     filename="charts/removed_nodes/"$2"-"$1".pdf"
     open $filename
-    echo "python3 src/depth.py $1 $2"
-    python3 src/depth.py $1 $2
+    echo "python3 src/width/depth.py $1 $2"
+    python3 src/width/depth.py $1 $2
     filename="charts/depth/"$2"-"$1".pdf"
     open $filename
-    echo "python3 src/child.py $1 $2"
-    python3 src/child.py $1 $2
+    echo "python3 src/width/child.py $1 $2"
+    python3 src/width/child.py $1 $2
     filename="charts/child/"$2"-"$1".pdf"
     open $filename
-    echo "python3 src/leaf.py $1 $2"
-    python3 src/leaf.py $1 $2
+    echo "python3 src/width/leaf.py $1 $2"
+    python3 src/width/leaf.py $1 $2
     filename="charts/leaf/"$2"-"$1".pdf"
     open $filename
-    echo "python3 src/percent.py $1 $2"
-    python3 src/percent.py $1 $2
+    echo "python3 src/width/percent.py $1 $2"
+    python3 src/width/percent.py $1 $2
     filename="charts/percent/"$2"-"$1".pdf"
     open $filename
-    echo "python3 src/strahler.py $1 $2"
-    python3 src/strahler.py $1 $2
+    echo "python3 src/width/strahler.py $1 $2"
+    python3 src/width/strahler.py $1 $2
     filename="charts/strahler/"$2"-"$1".pdf"
     open $filename
-    echo "python3 src/time.py $1 $2"
-    python3 src/time.py $1 $2
+    echo "python3 src/width/time.py $1 $2"
+    python3 src/width/time.py $1 $2
     filename="charts/time/"$2"-"$1".pdf"
     open $filename
 }
 
 tree() {
-    echo "python3 src/removed_nodes.py $1 $2 $3"
-    python3 src/tree.py $1 $2 $3
+    echo "python3 src/width/removed_nodes.py $1 $2 $3"
+    python3 src/width/tree.py $1 $2 $3
     filename="tree/figures/"$1"-"$3"-"$2".pdf"
     open $filename
 }
 
 graph() {
-    echo "python3 src/graph_draw.py $1 $2"
-    python3 src/graph_draw.py $1 $2
+    echo "python3 src/width/graph_draw.py $1 $2"
+    python3 src/width/graph_draw.py $1 $2
     filename="graph/figures/"$2".pdf"
     open $filename
 }

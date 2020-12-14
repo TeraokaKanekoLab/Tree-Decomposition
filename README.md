@@ -7,10 +7,8 @@ We aim to classify graphs by exploiting the relation between the width and core 
 | :-----: | :-: | :-: | :-: |
 | 0.1 | September 26, 2020 | [9937d5a](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/9937d5a5b84864d6940aa1f04f197c1cc46925f9) | Read graph data and create a correct `std::vector` |
 | 0.2 | September 27, 2020 | [b820dc5](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/b820dc59d32b19a977b60574ae9c212071448a31) | Cleaned code and started again |
-| 0.2.1 | September 27, 2020 | [f0f5563](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/f0f5563b63ae23d8ee8f05ac9e721cc586fef09d) | Read edges and compute num_nodes and num_edges |
 | 0.3 | September 27, 2020 | [0d1879e](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/0d1879eec149104f052d95b716501207b946274c) | Completed `strcut graph` |
 | 0.4 | October 16, 2020 | [600f395](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/600f395f6bbf65ea4a9f0ea1fc9e4db396ef91ae) | Show width when reducing each node |
-| 0.4.1 | October 16, 2020 | [75a7b4d](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/75a7b4d5009f667d1a721beff1fa5342cfb5da2f) | Count true # of nodes; confirmed with official data |
 | 0.5 | October 16, 2020 | [2de6338](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/2de6338050e060070e3f3355d7205318eea3a9ef) | Compute # of nodes removed and width at the time |
 | 0.6 | October 17, 2020 | [76d8af3](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/76d8af3aa179f340d622b98fb04dd0e489d6e29e) | Create output file that python can read |
 | 0.7 | October 17, 2020 | [e5d9f3d](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/e5d9f3dd3726b9595f88a161da9215519f081d68) | Added a Python file for creating charts |
@@ -31,11 +29,6 @@ We aim to classify graphs by exploiting the relation between the width and core 
 | **1.0** | December 6, 2020 | [ebdfc13](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/ebdfc1356c2511e8cbc2de0a04f1abbbfaf248b1) | **Theme fixed!** |
 | 1.1 | December 10, 2020 | [43fea4b](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/43fea4baf85e13764217f3eef46e875cd997bad0) | Implemented strahler number |
 | 1.2 | December 12, 2020 | [06b8c6e](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/06b8c6e2de598d1e710851303a85287715dc3ac0) | Changed Proposed Method Names |
-
-## How to Run the Program
-```
-sh exe.sh all simple_graph 3
-```
 
 ## C++ Version
 We recommend to use C++ 20 when you run the codes.
@@ -74,6 +67,13 @@ The following data (`graph/simple_graph.gr`) represents this simple graph with 9
 5 7
 5 8
 6 8
+```
+
+## How to Run the Program
+You might want to get a result instantly. Try this, and you get some charts tree decomposition of width 3 of `simple_graph.gr`. Note that the graph file extension needs to be `.gr`.
+
+```
+sh exe.sh all simple_graph 3
 ```
 
 ## References

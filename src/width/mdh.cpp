@@ -1,4 +1,4 @@
-#include "mdh.h"
+#include "../mdh.h"
 
 class mdh_graph : public mdh {
 public:
