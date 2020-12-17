@@ -159,6 +159,14 @@ start-chart() {
     python3 src/start/strahler.py $1 $2
     filename="charts/start/strahler/"$2"-"$1".pdf"
     open $filename
+    echo "python3 src/start/time.py $1 $2"
+    python3 src/start/time.py $1 $2
+    filename="charts/start/time/"$2"-"$1".pdf"
+    open $filename
+    echo "python3 src/start/removed_nodes.py $1 $2"
+    python3 src/start/removed_nodes.py $1 $2
+    filename="charts/start/removed_nodes/"$2"-"$1".pdf"
+    open $filename
 }
 
 case $1 in
