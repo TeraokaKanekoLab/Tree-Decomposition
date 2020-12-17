@@ -71,8 +71,8 @@ def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_
     print(saved_name)
     plt.xlim(0, int(width))
     plt.xlabel("width")
-    plt.ylabel("# of childes per parent")
-    plt.title("# of childes per parent over width: " + filename)
+    plt.ylabel("# of children per parent")
+    plt.title("# of children per parent over width: " + filename)
     plt.legend(loc="lower right", fontsize=14)  # (7)凡例表示
     plt.savefig(saved_name)
 

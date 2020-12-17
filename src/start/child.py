@@ -41,9 +41,10 @@ def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, filename):
     width = sys.argv[2]
     saved_name = "charts/start/child/" + width + "-" + filename + ".pdf"
     print(saved_name)
-    plt.xlabel("width")
-    plt.ylabel("child")
-    plt.title("child over width: " + filename)
+    plt.xlabel("origin degree")
+    plt.ylabel("# of children per parent")
+    plt.title("# of children per parent over origin degree of width " +
+              width + ": " + filename)
     plt.legend(loc="lower right", fontsize=14)  # (7)凡例表示
     plt.savefig(saved_name)
 
