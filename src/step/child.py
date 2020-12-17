@@ -70,9 +70,10 @@ def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_
     saved_name = "charts/step/child/" + width + "-" + filename + ".pdf"
     print(saved_name)
     plt.xlim(0, 1)
-    plt.xlabel("width")
-    plt.ylabel("# of childes per parent")
-    plt.title("# of childes per parent over width: " + filename)
+    plt.xlabel("remove rate")
+    plt.ylabel("# of children per parent")
+    plt.title("# of children per parent over remove rate of width " +
+              width + ": " + filename)
     plt.legend(loc="lower right", fontsize=14)  # (7)凡例表示
     plt.savefig(saved_name)
 

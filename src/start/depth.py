@@ -42,9 +42,10 @@ def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, filename):
     saved_name = "charts/start/depth/" + width + "-" + filename + ".pdf"
     print(saved_name)
     plt.ylim(bottom=0)
-    plt.xlabel("width")
+    plt.xlabel("origin degree")
     plt.ylabel("depth")
-    plt.title("depth over width: " + filename)
+    plt.title("depth over origin degree of width " +
+              width + ": " + filename)
     plt.legend(loc="lower right", fontsize=14)  # (7)凡例表示
     plt.savefig(saved_name)
 

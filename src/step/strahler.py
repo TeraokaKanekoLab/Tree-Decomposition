@@ -70,9 +70,10 @@ def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_
     print(saved_name)
     plt.xlim(0, 1)
     plt.ylim(bottom=0)
-    plt.xlabel("width")
+    plt.xlabel("remove rate")
     plt.ylabel("strahler number")
-    plt.title("strahler number over width: " + filename)
+    plt.title("strahler number over remove rate of width " +
+              width + ": " + filename)
     plt.legend(loc="lower right", fontsize=14)  # (7)凡例表示
     plt.savefig(saved_name)
 
