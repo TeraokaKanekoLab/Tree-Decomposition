@@ -1,6 +1,6 @@
 #include "graph.h"
 
-#define TRIALS 1
+#define TRIALS 100
 
 class mdh : public Graph {
 public:
