@@ -61,11 +61,29 @@ public:
         }
         graph_data.close();
     }
-    void export_info(int tree_width, int remove_cnt, int true_num_nodes, ofstream& output, chrono::microseconds duration, int num_visited)
+    void export_info(
+        ofstream& output,
+        int tree_width,
+        int remove_cnt,
+        int true_num_nodes,
+        int duration,
+        int num_visited)
     {
         cout << "width: " << tree_width << ", removed: " << remove_cnt << " (" << (double)remove_cnt / true_num_nodes * 100 << "%)"
-             << " " << double(duration.count()) / 1000000 << endl;
-        output << tree_width << " " << remove_cnt << " " << double(duration.count()) / 1000000 << " " << depth_of_tree << " " << (double)leaf_cnt / remove_cnt << " " << (double)total_child_cnt / (remove_cnt - leaf_cnt) << " " << (double)remove_cnt / num_visited * 100 << " " << strahler_of_root << endl;
+             << " " << double(duration) / 1000000 << endl;
+        output << tree_width << " " << remove_cnt << " " << double(duration) / 1000000 << " " << depth_of_tree << " " << (double)leaf_cnt / remove_cnt << " " << (double)total_child_cnt / (remove_cnt - leaf_cnt) << " " << (double)remove_cnt / num_visited * 100 << " " << strahler_of_root << endl;
+    }
+
+    void export_info_step(
+        ofstream& output,
+        int tree_width,
+        int remove_cnt,
+        int true_num_nodes,
+        int duration,
+        int num_visited)
+    {
+        cout << "remove cnt: " << remove_cnt << ", depth: " << depth_of_tree << ", leaf: " << 100 * (double)leaf_cnt / remove_cnt << "%, child: " << (double)total_child_cnt / (remove_cnt - leaf_cnt) << ", strahler: " << strahler_of_root << endl;
+        output << tree_width << " " << remove_cnt << " " << double(duration) / 1000000 << " " << depth_of_tree << " " << (double)leaf_cnt / remove_cnt << " " << (double)total_child_cnt / (remove_cnt - leaf_cnt) << " " << (double)remove_cnt / num_visited * 100 << " " << strahler_of_root << endl;
     }
 
     void make_tree()
@@ -82,7 +100,6 @@ public:
         for (int i = 0; i < node_stack.size(); ++i) {
             int nd = node_stack[i].first;
             vector<int> nbrs = node_stack[i].second;
-            // ouput <nd> <nbr 1> <nbr 2> ... <nbr n> <parent>
             int parent = -1; // the parent is itselft at first
             int max_depth = -1;
             sort(nbrs.begin(), nbrs.end());

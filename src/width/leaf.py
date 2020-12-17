@@ -67,7 +67,7 @@ def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_
     plt.plot(x_axis3, y_axis3, c="b",  label="DMDH")
     plt.plot(x_axis4, y_axis4, c="c",  label="LMDH")
     width = sys.argv[2]
-    saved_name = "charts/leaf/" + width + "-" + filename + ".pdf"
+    saved_name = "charts/width/leaf/" + width + "-" + filename + ".pdf"
     print(saved_name)
     plt.xlim(0, int(width))
     plt.ylim(bottom=0)

@@ -72,7 +72,7 @@ public:
         for (bool is_ret : visited)
             if (is_ret)
                 ret_cnt++;
-        export_info(max_tree_width, remove_cnt, true_num_nodes, output, duration, ret_cnt);
+        export_info(output, max_tree_width, remove_cnt, true_num_nodes, int(duration.count()), ret_cnt);
     }
 };
 

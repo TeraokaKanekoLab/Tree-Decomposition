@@ -36,7 +36,7 @@ public:
                 // is the end of the execution with the tree_width
                 auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
                 make_tree();
-                export_info(tree_width, remove_cnt, true_num_nodes, output, duration, true_num_nodes);
+                export_info(output, tree_width, remove_cnt, true_num_nodes, int(duration.count()), true_num_nodes);
                 tree_width = true_deg;
                 start = std::chrono::steady_clock::now();
             }
@@ -48,7 +48,7 @@ public:
         end = std::chrono::steady_clock::now();
         auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
         make_tree();
-        export_info(tree_width, remove_cnt, true_num_nodes, output, duration, true_num_nodes);
+        export_info(output, tree_width, remove_cnt, true_num_nodes, int(duration.count()), true_num_nodes);
         output.close();
         cout << "result written to " << output_name << endl;
     }

@@ -31,7 +31,7 @@ public:
                 end = std::chrono::steady_clock::now();
                 auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
                 make_tree();
-                export_info(crnt_deg, remove_cnt, true_num_nodes, output, duration, true_num_nodes);
+                export_info(output, crnt_deg, remove_cnt, true_num_nodes, int(duration.count()), true_num_nodes);
                 crnt_deg = deg;
                 start = std::chrono::steady_clock::now();
             }
@@ -53,7 +53,7 @@ public:
             end = std::chrono::steady_clock::now();
             auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
             make_tree();
-            export_info(crnt_deg, remove_cnt, true_num_nodes, output, duration, true_num_nodes);
+            export_info(output, crnt_deg, remove_cnt, true_num_nodes, int(duration.count()), true_num_nodes);
         }
         output.close();
         cout << "result written to " << output_name << endl;
