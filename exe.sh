@@ -126,6 +126,41 @@ step-chart() {
     open $filename
 }
 
+start-lmdh() {
+    echo "g++ src/start/lmdh.cpp -o ./start-lmdh --std=c++17"
+    g++ src/start/lmdh.cpp -o ./start-lmdh --std=c++17
+    echo "./start-lmdh $1 $2"
+    ./start-lmdh $1 $2
+    rm ./start-lmdh
+}
+
+start-dmdh() {
+    echo "g++ src/start/dmdh.cpp -o ./start-dmdh --std=c++17"
+    g++ src/start/dmdh.cpp -o ./start-dmdh --std=c++17
+    echo "./start-dmdh $1 $2"
+    ./start-dmdh $1 $2
+    rm ./start-dmdh
+}
+
+start-chart() {
+    echo "python3 src/start/depth.py $1 $2"
+    python3 src/start/depth.py $1 $2
+    filename="charts/start/depth/"$2"-"$1".pdf"
+    open $filename
+    echo "python3 src/start/child.py $1 $2"
+    python3 src/start/child.py $1 $2
+    filename="charts/start/child/"$2"-"$1".pdf"
+    open $filename
+    echo "python3 src/start/leaf.py $1 $2"
+    python3 src/start/leaf.py $1 $2
+    filename="charts/start/leaf/"$2"-"$1".pdf"
+    open $filename
+    echo "python3 src/start/strahler.py $1 $2"
+    python3 src/start/strahler.py $1 $2
+    filename="charts/start/strahler/"$2"-"$1".pdf"
+    open $filename
+}
+
 case $1 in
 "mdh")
     mdh $2 $3
@@ -167,6 +202,15 @@ case $1 in
 "step-chart")
     step-chart $2 $3
     ;;
+"start-lmdh")
+    start-lmdh $2 $3
+    ;;
+"start-dmdh")
+    start-dmdh $2 $3
+    ;;
+"start-chart")
+    start-chart $2 $3
+    ;;
 "width")
     mdh $2 $3
     sbr $2 $3
@@ -180,5 +224,10 @@ case $1 in
     step-dmdh $2 $3
     step-lmdh $2 $3
     step-chart $2 $3
+    ;;
+"start")
+    start-dmdh $2 $3
+    start-lmdh $2 $3
+    start-chart $2 $3
     ;;
 esac
