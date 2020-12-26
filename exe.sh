@@ -147,6 +147,10 @@ start-chart() {
     python3 src/start/depth.py $1 $2
     filename="charts/start/depth/"$2"-"$1".pdf"
     open $filename
+    echo "python3 src/start/rem-depth.py $1 $2"
+    python3 src/start/rem-depth.py $1 $2
+    filename="charts/start/rem-depth/"$2"-"$1".pdf"
+    open $filename
     echo "python3 src/start/child.py $1 $2"
     python3 src/start/child.py $1 $2
     filename="charts/start/child/"$2"-"$1".pdf"

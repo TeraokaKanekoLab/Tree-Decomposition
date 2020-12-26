@@ -28,13 +28,21 @@ if __name__ == '__main__':
         print("usage: python3", sys.argv[0], "<filename>")
         exit()
     c, d = read_file(sys.argv[1])
-    while True:
-        print("Input node number: ", end='')
-        nd = int(input())
-        if nd not in d:
-            print("node " + str(nd) + " doesn't exist")
+    # while True:
+    #     print("Input node number: ", end='')
+    #     nd = int(input())
+    #     if nd not in d:
+    #         print("node " + str(nd) + " doesn't exist")
+    #         continue
+    #     print("degree: " + str(c[nd]) + ", neighbor:", end='')
+    #     for nb in d[nd]:
+    #         print(" " + str(nb), end='')
+    #     print()
+    for nd in d:
+        if c[nd] == 10:
             continue
-        print("degree: " + str(c[nd]) + ", neighbor:", end='')
+        print("nd: " + str(nd) + ", degree: " +
+              str(len(d[nd])) + ", neighbor:", end='')
         for nb in d[nd]:
             print(" " + str(nb), end='')
         print()
