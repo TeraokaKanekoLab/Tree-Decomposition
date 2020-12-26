@@ -1,7 +1,7 @@
 import networkx as nx
 from networkx.classes.function import number_of_nodes
 
-degree = 3
+degree = 10
 num_nodes = 1000000
 
 filename = "graph/" + str(degree) + "-regular-" + str(num_nodes) + ".gr"
