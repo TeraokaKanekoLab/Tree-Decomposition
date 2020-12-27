@@ -4,7 +4,7 @@ class mdh_graph : public mdh {
 public:
     void decompose()
     {
-        string output_name = "step/mdh-" + to_string(max_tree_width) + "-" + filename + ".output";
+        string output_name = "output/step/mdh-" + to_string(max_tree_width) + "-" + filename + ".output";
         ofstream output(output_name);
         int crnt_deg = 1;
         priority_queue<node, vector<node>, greater<node>> degreeq;

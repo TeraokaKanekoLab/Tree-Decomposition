@@ -7,7 +7,7 @@ public:
         int tree_width = 1;
         parent.resize(num_nodes);
         priority_queue<node, vector<node>, greater<node>> Q;
-        string output_name = "output/sbr-" + to_string(max_tree_width) + "-" + filename + ".output";
+        string output_name = "output/width/sbr-" + to_string(max_tree_width) + "-" + filename + ".output";
         ofstream output(output_name);
         chrono::steady_clock::time_point start = std::chrono::steady_clock::now();
         chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
@@ -69,6 +69,7 @@ int main(int argc, char* argv[])
     g.make_graph();
     g.decompose();
     // g.print_stack();
+    g.print_depth_bagsize();
 
     return 0;
 }

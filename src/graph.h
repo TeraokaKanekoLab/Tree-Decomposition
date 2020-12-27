@@ -139,6 +139,19 @@ public:
         compute_strahler();
     }
 
+    void print_depth_bagsize()
+    {
+        string output_name = "output/depth-bagsize/" + type + "-" + to_string(max_tree_width) + "-" + filename + ".output";
+        ofstream depth_bagize_output(output_name);
+        for (int i = 0; i < node_stack.size(); ++i) {
+            int nd = node_stack[i].first;
+            vector<int> nbrs = node_stack[i].second;
+            int bag_size = nbrs.size();
+            int d = depth[nd];
+            depth_bagize_output << d << " " << bag_size << endl;
+        }
+    }
+
     void print_stack()
     {
         string output_name = "tree/" + type + "-" + to_string(max_tree_width) + "-" + filename + ".tree";

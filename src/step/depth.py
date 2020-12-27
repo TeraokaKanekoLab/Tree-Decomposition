@@ -10,7 +10,7 @@ def read_file():
 
     filename = sys.argv[1]
     arg_width = sys.argv[2]
-    filepath = "step/mdh-"+arg_width+"-"+filename+".output"
+    filepath = "output/step/mdh-"+arg_width+"-"+filename+".output"
     f = open(filepath, "r")
     lines = f.readlines()
     widths1 = []
@@ -26,7 +26,7 @@ def read_file():
         depths1.append(depth)
         cnts1.append(depth)
 
-    filepath = "step/sbr-" + arg_width+"-"+filename+".output"
+    filepath = "output/step/sbr-" + arg_width+"-"+filename+".output"
     f = open(filepath, "r")
     lines = f.readlines()
     widths2 = []
@@ -37,7 +37,7 @@ def read_file():
         widths2.append(width/num_nodes)
         cnts2.append(depth)
 
-    filepath = "step/dmdh-" + arg_width + "-" + filename+".output"
+    filepath = "output/step/dmdh-" + arg_width + "-" + filename+".output"
     f = open(filepath, "r")
     lines = f.readlines()
     widths3 = []
@@ -48,7 +48,7 @@ def read_file():
         widths3.append(width/num_nodes)
         cnts3.append(depth)
 
-    filepath = "step/lmdh-" + arg_width + "-" + filename+".output"
+    filepath = "output/step/lmdh-" + arg_width + "-" + filename+".output"
     f = open(filepath, "r")
     lines = f.readlines()
     widths4 = []

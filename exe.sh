@@ -59,6 +59,10 @@ width-chart() {
     python3 src/width/time.py $1 $2
     filename="charts/width/time/"$2"-"$1".pdf"
     open $filename
+    echo "python3 src/width/depth-bagsize.py $1 $2"
+    python3 src/width/depth-bagsize.py $1 $2
+    filename="charts/depth-bagsize/"$2"-"$1".pdf"
+    open $filename
 }
 
 tree() {

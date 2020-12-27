@@ -11,7 +11,7 @@ def read_file():
     filename = sys.argv[1]
     arg_width = sys.argv[2]
 
-    filepath = "start/dmdh-" + arg_width + "-" + filename+".output"
+    filepath = "output/start/dmdh-" + arg_width + "-" + filename+".output"
     f = open(filepath, "r")
     lines = f.readlines()
     degree1 = []
@@ -22,7 +22,7 @@ def read_file():
         degree1.append(degree)
         cnts3.append(time)
 
-    filepath = "start/lmdh-" + arg_width + "-" + filename+".output"
+    filepath = "output/start/lmdh-" + arg_width + "-" + filename+".output"
     f = open(filepath, "r")
     lines = f.readlines()
     degree2 = []

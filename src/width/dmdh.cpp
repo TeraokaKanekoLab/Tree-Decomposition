@@ -92,7 +92,7 @@ int main(int argc, char* argv[])
     filename = argv[1];
     int max_width = stoi(argv[2]);
     type = "dmdh";
-    string output_name = "output/" + type + "-" + to_string(max_width) + "-" + filename + ".output";
+    string output_name = "output/width/" + type + "-" + to_string(max_width) + "-" + filename + ".output";
     ofstream output(output_name);
     dmdh master;
     master.read_edges();
@@ -106,10 +106,11 @@ int main(int argc, char* argv[])
         dmdh g;
         copy_master(g, master);
         g.decompose(width, output);
-        // if (width == max_width) {
-        //     g.max_tree_width = width;
-        //     g.print_stack();
-        // }
+        if (width == max_width) {
+            g.max_tree_width = width;
+            // g.print_stack();
+            g.print_depth_bagsize();
+        }
     }
     // master.decompose(max_width, output);
     output.close();

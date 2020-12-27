@@ -7,7 +7,7 @@ public:
         int tree_width = 1;
         parent.resize(num_nodes);
         priority_queue<node, vector<node>, greater<node>> Q;
-        string output_name = "step/sbr-" + to_string(max_tree_width) + "-" + filename + ".output";
+        string output_name = "output/step/sbr-" + to_string(max_tree_width) + "-" + filename + ".output";
         ofstream output(output_name);
 
         for (int nd = 0; nd < num_nodes; ++nd) {

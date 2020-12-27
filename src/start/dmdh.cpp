@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
     filename = argv[1];
     int width = stoi(argv[2]);
     type = "dmdh";
-    string output_name = "start/" + type + "-" + to_string(width) + "-" + filename + ".output";
+    string output_name = "output/start/" + type + "-" + to_string(width) + "-" + filename + ".output";
     ofstream output(output_name);
     dmdh master;
     master.read_edges();

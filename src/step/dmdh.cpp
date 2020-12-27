@@ -93,7 +93,7 @@ int main(int argc, char* argv[])
     filename = argv[1];
     int max_width = stoi(argv[2]);
     type = "dmdh";
-    string output_name = "step/" + type + "-" + to_string(max_width) + "-" + filename + ".output";
+    string output_name = "output/step/" + type + "-" + to_string(max_width) + "-" + filename + ".output";
     ofstream output(output_name);
     dmdh master;
     master.read_edges();

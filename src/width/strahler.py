@@ -10,7 +10,7 @@ def read_file():
 
     filename = sys.argv[1]
     arg_width = sys.argv[2]
-    filepath = "output/mdh-"+arg_width+"-"+filename+".output"
+    filepath = "output/width/mdh-"+arg_width+"-"+filename+".output"
     f = open(filepath, "r")
     lines = f.readlines()
     widths1 = []
@@ -25,7 +25,7 @@ def read_file():
         widths1.append(width1)
         strahlers1.append(strahler)
 
-    filepath = "output/sbr-" + arg_width+"-"+filename+".output"
+    filepath = "output/width/sbr-" + arg_width+"-"+filename+".output"
     f = open(filepath, "r")
     lines = f.readlines()
     widths2 = []
@@ -36,7 +36,7 @@ def read_file():
         widths2.append(width)
         strahlers2.append(strahler)
 
-    filepath = "output/dmdh-" + arg_width + "-" + filename+".output"
+    filepath = "output/width/dmdh-" + arg_width + "-" + filename+".output"
     f = open(filepath, "r")
     lines = f.readlines()
     widths3 = []
@@ -47,7 +47,7 @@ def read_file():
         widths3.append(width)
         strahlers3.append(strahler)
 
-    filepath = "output/lmdh-" + arg_width + "-" + filename+".output"
+    filepath = "output/width/lmdh-" + arg_width + "-" + filename+".output"
     f = open(filepath, "r")
     lines = f.readlines()
     widths4 = []
