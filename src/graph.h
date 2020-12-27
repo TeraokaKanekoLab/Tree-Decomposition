@@ -89,7 +89,7 @@ public:
     void make_tree()
     {
         // initialize
-        depth.resize(num_nodes, -1);
+        depth.resize(num_nodes, 0);
         parents.resize(num_nodes, -1);
         children.clear();
         children.resize(num_nodes, vector<int>());

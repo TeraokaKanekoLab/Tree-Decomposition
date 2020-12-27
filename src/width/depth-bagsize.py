@@ -59,14 +59,14 @@ def read_file():
 
 
 def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_axis4,  filename):
-    plt.scatter(x_axis1, y_axis1, c="r",  label="MDH")
-    plt.scatter(x_axis2, y_axis2,  c="g",  label="SBR")
-    plt.scatter(x_axis3, y_axis3, c="b",  label="DMDH")
-    plt.scatter(x_axis4, y_axis4, c="c",  label="LMDH")
+    # plt.scatter(x_axis1, y_axis1, c="r",  label="MDH", s=1)
+    plt.scatter(x_axis2, y_axis2,  c="g",  label="SBR", s=1)
+    # plt.scatter(x_axis3, y_axis3, c="b",  label="DMDH", s=1)
+    # plt.scatter(x_axis4, y_axis4, c="c",  label="LMDH", s=1)
     depth = sys.argv[2]
     saved_name = "charts/depth-bagsize/" + depth + "-" + filename + ".pdf"
     print(saved_name)
-    plt.xlim(left=0)
+    plt.xlim(0, 70)
     plt.ylim(bottom=0)
     plt.xlabel("depth")
     plt.ylabel("bagsize")

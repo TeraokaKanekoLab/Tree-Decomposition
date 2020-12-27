@@ -111,6 +111,14 @@ step-dmdh() {
     rm ./step-dmdh
 }
 
+l-max-dh() {
+    echo "g++ src/l-max-dh/l-max-dh.cpp -o ./l-max-dh --std=c++17"
+    g++ src/l-max-dh/l-max-dh.cpp -o ./l-max-dh --std=c++17
+    echo "./l-max-dh $1 $2"
+    ./l-max-dh $1 $2
+    rm ./l-max-dh
+}
+
 step-chart() {
     echo "python3 src/step/depth.py $1 $2"
     python3 src/step/depth.py $1 $2
@@ -177,6 +185,13 @@ start-chart() {
     open $filename
 }
 
+l-max-dh-chart() {
+    echo "python3 src/l-max-dh/time.py $1 $2"
+    python3 src/l-max-dh/time.py $1 $2
+    filename="charts/l-max-dh/"$2"-"$1".pdf"
+    open $filename
+}
+
 case $1 in
 "mdh")
     mdh $2 $3
@@ -193,6 +208,13 @@ case $1 in
 "lmdh")
     lmdh $2 $3
     # tree lmdh $2 $3
+    ;;
+"l-max-dh")
+    l-max-dh $2 $3
+    l-max-dh-chart $2 $3
+    ;;
+"l-max-dh-chart")
+    l-max-dh-chart $2 $3
     ;;
 "width-chart")
     width-chart $2 $3
