@@ -66,7 +66,7 @@ def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_
     depth = sys.argv[2]
     saved_name = "charts/depth-bagsize/" + depth + "-" + filename + ".pdf"
     print(saved_name)
-    plt.xlim(0, int(depth))
+    plt.xlim(left=0)
     plt.ylim(bottom=0)
     plt.xlabel("depth")
     plt.ylabel("bagsize")
