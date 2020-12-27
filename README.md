@@ -32,6 +32,7 @@ We aim to classify graphs by exploiting the relation between the width and core 
 | 1.3 | December 17, 2020 | [75300e5](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/75300e5ce153401e6eea4f1a42c815d23f12e80b) | Added program tracing metric values over steps |
 | 1.4 | December 17, 2020 | [f65d061](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/f65d061de14e7b03180cab7fe9046d42f7236b18) | Added program tracing metric values over degree of start node |
 | 1.5 | December 27, 2020 | [8f06be](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/8f06be2bccff4688f27fc3de61ad44fe868e402c) | Added depth-bagsize chart |
+| 1.6 | December 27, 2020 | [b08dfb4](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/b08dfb414de1968a061d131d96663e76c2926f10) | Added l-max-dh |
 
 ## C++ Version
 We recommend to use C++ 20 when you run the codes.
