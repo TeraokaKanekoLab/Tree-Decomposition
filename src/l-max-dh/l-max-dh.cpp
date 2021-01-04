@@ -69,6 +69,8 @@ int main(int argc, char* argv[])
     master.read_edges();
     master.make_graph();
     master.decompose(limit, output);
+    master.max_tree_width = limit;
+    master.print_stack();
 
     output.close();
     cout << "result written to " << output_name << endl;

@@ -19,6 +19,7 @@ public:
     vector<int> parents;
     vector<vector<int>> children;
     vector<int> children_of_core;
+    vector<int> initial_degree;
     int root_node = -1;
     int depth_of_tree = 0;
     int leaf_cnt = 0;

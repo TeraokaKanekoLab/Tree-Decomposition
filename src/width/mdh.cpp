@@ -7,12 +7,18 @@ public:
         string output_name = "output/width/mdh-" + to_string(max_tree_width) + "-" + filename + ".output";
         ofstream output(output_name);
         int crnt_deg = 1;
-        priority_queue<node, vector<node>, greater<node>> degreeq;
+        priority_queue<node, vector<node>, function<bool(node, node)>> degreeq([&](node a, node b) -> bool {
+            if (a.first != b.first)
+                return a.first > b.first;
+            return initial_degree[a.second] > initial_degree[b.second];
+        });
+        // priority_queue<node, vector<node>, greater<node>> degreeq;
 
         // counts vertices with edges (exclude non-edged vertex)
         // initialize priority queue
         for (int i = 0; i < neighbors_of.size(); ++i) {
             int deg = neighbors_of[i].size();
+            initial_degree.push_back(deg);
             if (deg) {
                 true_num_nodes++;
                 degreeq.push(node(deg, i));
@@ -74,7 +80,7 @@ int main(int argc, char* argv[])
     g.read_edges();
     g.make_graph();
     g.decompose();
-    // g.print_stack();
+    g.print_stack();
     g.print_depth_bagsize();
 
     return 0;

@@ -66,8 +66,8 @@ width-chart() {
 }
 
 tree() {
-    echo "python3 src/width/removed_nodes.py $1 $2 $3"
-    python3 src/width/tree.py $1 $2 $3
+    echo "python3 src/tree.py $1 $2 $3"
+    python3 src/tree.py $1 $2 $3
     filename="tree/figures/"$1"-"$3"-"$2".pdf"
     open $filename
 }
@@ -195,7 +195,7 @@ l-max-dh-chart() {
 case $1 in
 "mdh")
     mdh $2 $3
-    # tree mdh $2 $3
+    tree mdh $2 $3
     ;;
 "sbr")
     sbr $2 $3
@@ -211,6 +211,7 @@ case $1 in
     ;;
 "l-max-dh")
     l-max-dh $2 $3
+    tree l-max-dh $2 $3
     l-max-dh-chart $2 $3
     ;;
 "l-max-dh-chart")
