@@ -199,6 +199,13 @@ read_tree() {
     open $filename
 }
 
+dist_root() {
+    echo "python3 src/dist_root.py $1 $2 $3"
+    python3 src/dist_root.py $1 $2 $3
+    filename="charts/dist_root/"$3"-"$2".pdf"
+    open $filename
+}
+
 case $1 in
 "mdh")
     mdh $2 $3
@@ -278,5 +285,8 @@ case $1 in
     ;;
 "read_tree")
     read_tree $2 $3 $4
+    ;;
+"dist_root")
+    dist_root $2 $3 $4
     ;;
 esac
