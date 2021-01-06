@@ -192,6 +192,13 @@ l-max-dh-chart() {
     open $filename
 }
 
+read_tree() {
+    echo "python3 src/read_tree.py $1 $2 $3"
+    python3 src/read_tree.py $1 $2 $3
+    filename="charts/tree-graph/"$3"-"$2".pdf"
+    open $filename
+}
+
 case $1 in
 "mdh")
     mdh $2 $3
@@ -268,5 +275,8 @@ case $1 in
     start-dmdh $2 $3
     start-lmdh $2 $3
     start-chart $2 $3
+    ;;
+"read_tree")
+    read_tree $2 $3 $4
     ;;
 esac
