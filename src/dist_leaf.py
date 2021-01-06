@@ -58,7 +58,7 @@ def find_dist_from_leaf(childrens, nd, dists):
     if nd not in childrens:
         return 0
     for child in childrens[nd]:
-        d = find_dist_from_leaf(childrens, child) + 1
+        d = find_dist_from_leaf(childrens, child, dists) + 1
         if d > max:
             max = d
     dists[nd] = max
