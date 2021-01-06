@@ -7,11 +7,12 @@ public:
         string output_name = "output/width/mdh-" + to_string(max_tree_width) + "-" + filename + ".output";
         ofstream output(output_name);
         int crnt_deg = 1;
-        priority_queue<node, vector<node>, function<bool(node, node)>> degreeq([&](node a, node b) -> bool {
+        auto comp = [&](node a, node b) {
             if (a.first != b.first)
                 return a.first > b.first;
             return initial_degree[a.second] > initial_degree[b.second];
-        });
+        };
+        priority_queue<node, vector<node>, decltype(comp)> degreeq(comp);
         // priority_queue<node, vector<node>, greater<node>> degreeq;
 
         // counts vertices with edges (exclude non-edged vertex)
