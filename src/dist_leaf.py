@@ -83,7 +83,7 @@ def draw_chart(x_axis1, y_axis1):
     plt.ylim(bottom=0)
     plt.xlabel("distance from leaf")
     plt.ylabel("distance in graph")
-    plt.title("distance in graph over distance from leaf in leaf " +
+    plt.title("distance in graph over distance from leaf in tree " +
               width + ": " + filename)
     plt.savefig(saved_name)
 
