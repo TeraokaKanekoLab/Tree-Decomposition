@@ -3,7 +3,7 @@ from dijkstar import Graph, find_path
 import random
 import matplotlib.pyplot as plt
 
-LIMIT = 10000
+LIMIT = 10
 
 
 def read_graph():
@@ -27,11 +27,11 @@ def read_tree():
     lines = f.readlines()
     length = len(lines)
     if lines[0].split()[0] != "core":
-        root = int(lines[0])
-        root_node = str(root)
+        leaf = int(lines[0])
+        leaf_node = str(leaf)
         for i in lines[1].split():
-            root_node += " " + i
-        d[root] = root_node
+            leaf_node += " " + i
+        d[leaf] = leaf_node
     parents = dict()
     childrens = dict()
     bags = []
@@ -51,16 +51,19 @@ def read_tree():
     return parents, childrens, bags
 
 
-def find_dist_from_root(parents, nd):
-    path1 = []
-    while nd != -1:
-        path1.append(nd)
-        nd = parents[nd]
-    return len(path1)
+def find_dist_from_leaf(childrens, nd):
+    max = 0
+    if nd not in childrens:
+        return 0
+    for child in childrens[nd]:
+        d = find_dist_from_leaf(childrens, child) + 1
+        if d > max:
+            max = d
+    return max
 
 
 def write_to_file(x_axis, y_axis):
-    saved_name = "output/dist_root/" + arg_width + \
+    saved_name = "output/dist_leaf/" + arg_width + \
         "-" + filename + "-" + str(LIMIT) + ".output"
     f = open(saved_name, "w")
     for x, y in zip(x_axis, y_axis):
@@ -71,13 +74,13 @@ def write_to_file(x_axis, y_axis):
 def draw_chart(x_axis1, y_axis1):
     plt.scatter(x_axis1, y_axis1, c="r")
     width = sys.argv[2]
-    saved_name = "charts/dist_root/" + arg_width + "-" + filename + ".pdf"
+    saved_name = "charts/dist_leaf/" + arg_width + "-" + filename + ".pdf"
     print(saved_name)
     plt.xlim(left=0)
     plt.ylim(bottom=0)
-    plt.xlabel("distance from root")
+    plt.xlabel("distance from leaf")
     plt.ylabel("distance in graph")
-    plt.title("distance in graph over distance from root in tree " +
+    plt.title("distance in graph over distance from leaf in leaf " +
               width + ": " + filename)
     plt.savefig(saved_name)
 
@@ -101,11 +104,11 @@ if __name__ == '__main__':
         nd2 = parents[nd1]
         if nd2 < 0:
             continue
-        dist_from_root = find_dist_from_root(parents, nd1)
+        dist_from_leaf = find_dist_from_leaf(childrens, nd1)
         dist_in_graph = find_path(graph, nd1, nd2)[3]
-        tree_dists.append(dist_from_root)
+        tree_dists.append(dist_from_leaf)
         graph_dists.append(dist_in_graph)
-        print("dist from root: " + str(dist_from_root) +
+        print("dist from leaf: " + str(dist_from_leaf) +
               ", dist in graph: " + str(dist_in_graph))
         cnt += 1
     write_to_file(tree_dists, graph_dists)

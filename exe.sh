@@ -206,6 +206,13 @@ dist_root() {
     open $filename
 }
 
+dist_leaf() {
+    echo "python3 src/dist_leaf.py $1 $2 $3"
+    python3 src/dist_leaf.py $1 $2 $3
+    filename="charts/dist_leaf/"$3"-"$2".pdf"
+    open $filename
+}
+
 case $1 in
 "mdh")
     mdh $2 $3
@@ -288,5 +295,8 @@ case $1 in
     ;;
 "dist_root")
     dist_root $2 $3 $4
+    ;;
+"dist_leaf")
+    dist_leaf $2 $3 $4
     ;;
 esac
