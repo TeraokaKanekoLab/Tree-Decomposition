@@ -57,6 +57,14 @@ def find_dist_from_root(parents, nd):
     return len(path1)
 
 
+def write_to_file(x_axis, y_axis):
+    saved_name = "output/dist_root/" + arg_width + "-" + filename + ".pdf"
+    f = open(saved_name, "w")
+    for x, y in zip(x_axis, y_axis):
+        line = str(x) + " " + str(y) + "\n"
+        f.write(line)
+
+
 def draw_chart(x_axis1, y_axis1):
     plt.scatter(x_axis1, y_axis1, c="r")
     width = sys.argv[2]
@@ -97,4 +105,5 @@ if __name__ == '__main__':
         print("dist from root: " + str(dist_from_root) +
               ", dist in graph: " + str(dist_in_graph))
         cnt += 1
+    write_to_file(tree_dists, graph_dists)
     draw_chart(tree_dists, graph_dists)

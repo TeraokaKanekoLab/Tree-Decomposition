@@ -19,6 +19,14 @@ def read_graph():
     return graph
 
 
+def write_to_file(x_axis, y_axis):
+    saved_name = "output/dist_root/" + arg_width + "-" + filename + ".pdf"
+    f = open(saved_name, "w")
+    for x, y in zip(x_axis, y_axis):
+        line = str(x) + " " + str(y) + "\n"
+        f.write(line)
+
+
 def read_tree():
     filepath = "tree/" + type + "-"+arg_width+"-"+filename+".tree"
     f = open(filepath, "r")
@@ -109,4 +117,5 @@ if __name__ == '__main__':
         tree_dists.append(dist_in_tree)
         graph_dists.append(dist_in_graph)
         print("tree: " + str(dist_in_tree) + ", graph : " + str(dist_in_graph))
+    write_to_file(tree_dists, graph_dists)
     draw_chart(tree_dists, graph_dists)
