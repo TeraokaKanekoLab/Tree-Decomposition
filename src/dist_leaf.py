@@ -5,7 +5,6 @@ import matplotlib.pyplot as plt
 
 LIMIT = 330000
 
-
 def read_graph():
     filepath = "graph/" + filename+".gr"
     graph = Graph()
@@ -38,16 +37,15 @@ def read_tree():
     for i in range(1, length//3):
         nd = int(lines[i*3])
         bags.append(nd)
-        for j in map(int, lines[i*3 + 1].split()):
-            if nd in childrens:
-                childrens[nd].append(j)
-            else:
-                childrens[nd] = [j]
         parent = int(lines[i*3 + 2])
         if parent in parents:
             parents[nd] = parent
         else:
             parents[nd] = -1
+        if parent in childrens:
+            childrens[parent].append(nd)
+        else:
+            childrens[parent] = [nd]
     return parents, childrens, bags
 
 
@@ -104,8 +102,8 @@ if __name__ == '__main__':
     dists = dict()
     cnt = 0
     # while cnt < LIMIT:
-    for nd1 in bags:
         # nd1 = random.choice(bags)
+    for nd1 in bags:
         nd2 = parents[nd1]
         if nd2 < 0:
             continue
