@@ -84,7 +84,8 @@ if __name__ == '__main__':
     graph = read_graph()
     tree_dists = []
     graph_dists = []
-    for _ in range(1000):
+    cnt = 0
+    while cnt < 1000:
         nd1 = random.choice(bags)
         nd2 = parents[nd1]
         if nd2 < 0:
@@ -95,4 +96,5 @@ if __name__ == '__main__':
         graph_dists.append(dist_in_graph)
         print("dist from root: " + str(dist_from_root) +
               ", dist in graph: " + str(dist_in_graph))
+        cnt += 1
     draw_chart(tree_dists, graph_dists)
