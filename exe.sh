@@ -195,7 +195,7 @@ l-max-dh-chart() {
 case $1 in
 "mdh")
     mdh $2 $3
-    # tree mdh $2 $3
+    tree mdh $2 $3
     ;;
 "sbr")
     sbr $2 $3
@@ -203,7 +203,7 @@ case $1 in
     ;;
 "dmdh")
     dmdh $2 $3
-    # tree dmdh $2 $3
+    tree dmdh $2 $3
     ;;
 "lmdh")
     lmdh $2 $3

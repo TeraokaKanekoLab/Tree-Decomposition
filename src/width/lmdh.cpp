@@ -98,7 +98,7 @@ int main(int argc, char* argv[])
         g.decompose(width, output);
         if (width == max_width) {
             g.max_tree_width = max_width;
-            // g.print_stack();
+            g.print_stack();
             g.print_depth_bagsize();
         }
     }

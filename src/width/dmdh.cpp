@@ -5,15 +5,24 @@ public:
     void decompose(int max_tree_width, ofstream& output)
     {
         int tree_width = 1;
-        priority_queue<node, vector<node>, greater<node>> degreeq;
+        priority_queue<node, vector<node>, function<bool(node, node)>> degreeq([&](node a, node b) -> bool {
+            if (a.first != b.first)
+                return a.first > b.first;
+            return initial_degree[a.second] > initial_degree[b.second];
+        });
+        // priority_queue<node, vector<node>, greater<node>> degreeq;
         vector<bool> visited(num_nodes, false);
-        for (auto nd : neighbors_of)
-            if (nd.second.size())
+        for (int i = 0; i < neighbors_of.size(); ++i) {
+            int deg = neighbors_of[i].size();
+            initial_degree.push_back(deg);
+            if (deg)
                 true_num_nodes++;
+        }
 
         auto start = std::chrono::steady_clock::now();
         // start with the first node of the first edge.
-        int nd = edges[0].first;
+        // int nd = edges[10].first;
+        int nd = 10;
         visited[nd] = true;
         degreeq.push(node(neighbors_of[nd].size(), nd));
         // print_priority_queue(degreeq);
@@ -108,7 +117,7 @@ int main(int argc, char* argv[])
         g.decompose(width, output);
         if (width == max_width) {
             g.max_tree_width = width;
-            // g.print_stack();
+            g.print_stack();
             g.print_depth_bagsize();
         }
     }
