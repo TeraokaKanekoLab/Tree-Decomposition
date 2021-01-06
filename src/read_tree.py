@@ -101,7 +101,7 @@ if __name__ == '__main__':
     graph = read_graph()
     tree_dists = []
     graph_dists = []
-    for _ in range(3):
+    for _ in range(100):
         nd1 = random.choice(bags)
         nd2 = random.choice(bags)
         dist_in_tree = find_dist_in_tree(parents, nd1, nd2)
