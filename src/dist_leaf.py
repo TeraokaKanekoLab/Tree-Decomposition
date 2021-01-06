@@ -3,7 +3,7 @@ from dijkstar import Graph, find_path
 import random
 import matplotlib.pyplot as plt
 
-LIMIT = 10
+LIMIT = 1000
 
 
 def read_graph():
