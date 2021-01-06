@@ -38,16 +38,15 @@ def read_tree():
     for i in range(1, length//3):
         nd = int(lines[i*3])
         bags.append(nd)
-        for j in map(int, lines[i*3 + 1].split()):
-            if nd in childrens:
-                childrens[nd].append(j)
-            else:
-                childrens[nd] = [j]
         parent = int(lines[i*3 + 2])
         if parent in parents:
             parents[nd] = parent
         else:
             parents[nd] = -1
+        if parent in childrens:
+            childrens[parent].append(nd)
+        else:
+            childrens[parent] = [nd]
     return parents, childrens, bags
 
 
