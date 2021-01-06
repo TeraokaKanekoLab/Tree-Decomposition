@@ -51,14 +51,17 @@ def read_tree():
     return parents, childrens, bags
 
 
-def find_dist_from_leaf(childrens, nd):
+def find_dist_from_leaf(childrens, nd, dists):
     max = 0
+    if nd in dists:
+        return dists[nd]
     if nd not in childrens:
         return 0
     for child in childrens[nd]:
         d = find_dist_from_leaf(childrens, child) + 1
         if d > max:
             max = d
+    dists[nd] = max
     return max
 
 
@@ -98,6 +101,7 @@ if __name__ == '__main__':
     graph = read_graph()
     tree_dists = []
     graph_dists = []
+    dists = dict()
     cnt = 0
     while cnt < LIMIT:
         nd1 = random.choice(bags)
@@ -105,7 +109,7 @@ if __name__ == '__main__':
         if nd2 < 0:
             continue
         print(str(nd1), "calculating... ")
-        dist_from_leaf = find_dist_from_leaf(childrens, nd1)
+        dist_from_leaf = find_dist_from_leaf(childrens, nd1, dists)
         dist_in_graph = find_path(graph, nd1, nd2)[3]
         tree_dists.append(dist_from_leaf)
         graph_dists.append(dist_in_graph)

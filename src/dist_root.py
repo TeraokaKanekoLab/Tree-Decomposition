@@ -56,6 +56,7 @@ def find_dist_from_root(parents, nd):
     while nd != -1:
         path1.append(nd)
         nd = parents[nd]
+    print(path1)
     return len(path1)
 
 
