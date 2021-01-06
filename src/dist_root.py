@@ -64,9 +64,9 @@ def draw_chart(x_axis1, y_axis1):
     print(saved_name)
     plt.xlim(left=0)
     plt.ylim(bottom=0)
-    plt.xlabel("distance in tree")
+    plt.xlabel("distance from root")
     plt.ylabel("distance in graph")
-    plt.title("distance in graph over distance in tree " +
+    plt.title("distance in graph over distance from root in tree " +
               width + ": " + filename)
     plt.savefig(saved_name)
 
