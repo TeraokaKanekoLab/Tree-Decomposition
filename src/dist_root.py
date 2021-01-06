@@ -101,7 +101,7 @@ if __name__ == '__main__':
         nd2 = parents[nd1]
         if nd2 < 0:
             continue
-        dist_from_root = find_dist_from_root(parents, nd1)
+        dist_from_root = find_dist_from_root(parents, nd2)
         dist_in_graph = find_path(graph, nd1, nd2)[3]
         tree_dists.append(dist_from_root)
         graph_dists.append(dist_in_graph)

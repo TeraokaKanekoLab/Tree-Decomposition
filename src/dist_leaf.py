@@ -104,6 +104,7 @@ if __name__ == '__main__':
         nd2 = parents[nd1]
         if nd2 < 0:
             continue
+        print(str(nd1), "calculating... ")
         dist_from_leaf = find_dist_from_leaf(childrens, nd1)
         dist_in_graph = find_path(graph, nd1, nd2)[3]
         tree_dists.append(dist_from_leaf)
