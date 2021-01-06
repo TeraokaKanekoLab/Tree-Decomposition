@@ -3,6 +3,8 @@ from dijkstar import Graph, find_path
 import random
 import matplotlib.pyplot as plt
 
+LIMIT = 1000
+
 
 def read_graph():
     filepath = "graph/" + filename+".gr"
@@ -58,7 +60,8 @@ def find_dist_from_root(parents, nd):
 
 
 def write_to_file(x_axis, y_axis):
-    saved_name = "output/dist_root/" + arg_width + "-" + filename + ".pdf"
+    saved_name = "output/dist_root/" + arg_width + \
+        "-" + filename + "-" + str(LIMIT) + ".output"
     f = open(saved_name, "w")
     for x, y in zip(x_axis, y_axis):
         line = str(x) + " " + str(y) + "\n"
@@ -93,7 +96,7 @@ if __name__ == '__main__':
     tree_dists = []
     graph_dists = []
     cnt = 0
-    while cnt < 1000:
+    while cnt < LIMIT:
         nd1 = random.choice(bags)
         nd2 = parents[nd1]
         if nd2 < 0:

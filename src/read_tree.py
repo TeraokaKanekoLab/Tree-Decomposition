@@ -3,6 +3,8 @@ from dijkstar import Graph, find_path
 import random
 import matplotlib.pyplot as plt
 
+LIMIT = 1000
+
 
 def read_graph():
     filepath = "graph/" + filename+".gr"
@@ -20,7 +22,8 @@ def read_graph():
 
 
 def write_to_file(x_axis, y_axis):
-    saved_name = "output/dist_root/" + arg_width + "-" + filename + ".pdf"
+    saved_name = "output/read_tree/" + arg_width + \
+        "-" + filename + "-" + str(LIMIT) + ".output"
     f = open(saved_name, "w")
     for x, y in zip(x_axis, y_axis):
         line = str(x) + " " + str(y) + "\n"
@@ -109,7 +112,7 @@ if __name__ == '__main__':
     graph = read_graph()
     tree_dists = []
     graph_dists = []
-    for _ in range(1000):
+    for _ in range(LIMIT):
         nd1 = random.choice(bags)
         nd2 = random.choice(bags)
         dist_in_tree = find_dist_in_tree(parents, nd1, nd2)
