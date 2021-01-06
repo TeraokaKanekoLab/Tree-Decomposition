@@ -84,7 +84,7 @@ if __name__ == '__main__':
     graph = read_graph()
     tree_dists = []
     graph_dists = []
-    for _ in range(10):
+    for _ in range(1000):
         nd1 = random.choice(bags)
         nd2 = parents[nd1]
         if nd2 < 0:
