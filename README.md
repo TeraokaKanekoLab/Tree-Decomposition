@@ -34,7 +34,8 @@ We aim to classify graphs by exploiting the relation between the width and core 
 | 1.5 | December 27, 2020 | [8f06be](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/8f06be2bccff4688f27fc3de61ad44fe868e402c) | Added depth-bagsize chart |
 | 1.6 | December 27, 2020 | [b08dfb4](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/b08dfb414de1968a061d131d96663e76c2926f10) | Added l-max-dh |
 | 2.0 | January 7, 2020 | [f17b219](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/f17b21962cb9a219597bb915fda54bc6a564f73e) | Theme Changed II |
-| 2.0 | January 8, 2020 | [beaa460](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/beaa460d6de1de25898452dc145aad4bc274cbc0) | Added C++ codes for graph, tree decomposition, and community |
+| 2.1 | January 8, 2020 | [beaa460](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/beaa460d6de1de25898452dc145aad4bc274cbc0) | Added C++ codes for graph, tree decomposition, and community |
+| 2.2 | January 8, 2020 | [c6caad7](https://github.com/TeraokaKanekoLab/Tree-Decomposition/commit/c6caad7b86dfa3605bf24c5b2cdaa78c0b7ae975) | subtree size over community size |
 
 ## C++ Version
 We recommend to use C++ 20 when you run the codes.
