@@ -155,7 +155,7 @@ public:
 
     void print_stack()
     {
-        string output_name = "tree/" + type + "-" + to_string(max_tree_width) + "-" + filename + ".tree";
+        string output_name = "tree/" + to_string(max_tree_width) + "-" + filename + ".tree";
         ofstream tree_output(output_name);
         int start = 0;
         // decide whether there is a core or not
