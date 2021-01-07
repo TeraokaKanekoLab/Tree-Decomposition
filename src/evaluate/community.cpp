@@ -29,8 +29,26 @@ int main(int argc, char* argv[])
         if (is_in_tree)
             communities_in_tree.push_back(community);
     }
-    int num_communities_in_tree = communities_in_tree.size();
+    cout << "community: ";
+    int yeah = 81;
+    print_vector(communities_in_tree[yeah]);
+    cout << "path from root: " << endl;
+    for (int nd : communities_in_tree[yeah]) {
+        print_vector(t.path_from_root(nd));
+    }
 
-    
+    // string output_name = "output/community/" + width + "-" + filename + ".output";
+    // ofstream output(output_name);
+
+    // for (vector<int> comm : communities_in_tree) {
+    //     int subtree_size = t.nodes_in_subtree(comm).size();
+    //     int community_size = comm.size();
+    //     int d = subtree_size - community_size;
+    //     output << community_size << " " << subtree_size << " " << endl;
+    //     cout << community_size << " " << subtree_size << " " << endl;
+    //     if (d < 0)
+    //         print_vector(comm);
+    // }
+
     return 0;
 }

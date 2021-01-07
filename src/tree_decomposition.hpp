@@ -1,10 +1,22 @@
 #include "header.hpp"
 
+void print_vector(vector<int> v)
+{
+    if (v.size() == 0) {
+        cout << "[]" << endl;
+        return;
+    }
+    cout << "[" << v[0];
+    for (int i = 1; i < v.size(); ++i) {
+        cout << ", " << v[i];
+    }
+    cout << "]" << endl;
+}
 class Tree_Decomposition {
     vector<vector<int>> nodes_in_bags;
     vector<int> parents;
     vector<vector<int>> children;
-    unordered_map<int, bool> bags;
+    unordered_set<int> bags;
 
 public:
     bool has_core;
@@ -21,7 +33,7 @@ public:
             parents.resize(nd + 1);
             children.resize(nd + 1, vector<int>());
         }
-        bags[nd] = true;
+        bags.insert(nd);
     }
 
     void read_tree(string path)
@@ -95,13 +107,13 @@ public:
     void print_tree()
     {
         for (auto bag : bags) {
-            cout << bag.first << endl;
-            auto nodes_in_bag = nodes_in_bags[bag.first];
+            cout << bag << endl;
+            auto nodes_in_bag = nodes_in_bags[bag];
             for (int node_in_bag : nodes_in_bag) {
                 cout << node_in_bag << " ";
             }
             cout << endl;
-            cout << parents[bag.first] << endl;
+            cout << parents[bag] << endl;
         }
     }
 
@@ -116,8 +128,9 @@ public:
 
     vector<int> path_from_root(int nd)
     {
-        vector<int> path(nd);
-        while (nd = parents[nd] < 0) {
+        vector<int> path;
+        path.push_back(nd);
+        while ((nd = parents[nd]) >= 0) {
             path.push_back(nd);
         }
         if (has_core)
@@ -128,5 +141,53 @@ public:
 
     vector<int> nodes_in_subtree(vector<int> nds)
     {
+        vector<int> nodes_in_subtree;
+        vector<vector<int>> paths_from_root;
+        unordered_set<int> nodes_in_subtree_set;
+
+        int max_path_length = path_from_root(nds[0]).size();
+        int min_path_length = max_path_length;
+        int min_nd = nds[0];
+        for (int nd : nds) {
+            vector<int> path = path_from_root(nd);
+            for (int nd_in_path : path)
+                nodes_in_subtree_set.insert(nd_in_path);
+            paths_from_root.push_back(path);
+            if (max_path_length < path.size())
+                max_path_length = path.size();
+            if (min_path_length > path.size()) {
+                min_path_length = path.size();
+                min_nd = nd;
+            }
+        }
+
+        int prev = paths_from_root[0][0];
+        for (int i = 0; i < max_path_length; ++i) {
+            int def = paths_from_root[0][i];
+            bool all_same = true;
+            for (vector<int> path : paths_from_root) {
+                if (path[i] != def) {
+                    all_same = false;
+                    break;
+                }
+            }
+            if (def == min_nd && all_same)
+                break;
+
+            if (all_same) {
+                nodes_in_subtree_set.erase(def);
+                prev = def;
+            } else {
+                nodes_in_subtree_set.insert(prev);
+                break;
+            }
+        }
+        for (int nd : nodes_in_subtree_set) {
+            nodes_in_subtree.push_back(nd);
+        }
+
+        sort(nodes_in_subtree.begin(), nodes_in_subtree.end());
+
+        return nodes_in_subtree;
     }
 };

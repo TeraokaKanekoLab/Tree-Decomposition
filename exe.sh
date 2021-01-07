@@ -49,6 +49,13 @@ community() {
     rm ./community
 }
 
+community-chart() {
+    echo "python3 src/evaluate/community.py $1 $2"
+    python3 src/evaluate/community.py $1 $2
+    filename="charts/community/"$2"-"$1".pdf"
+    open $filename
+}
+
 case $1 in
 "mdh")
     mdh $2 $3
@@ -71,5 +78,9 @@ case $1 in
     ;;
 "community")
     community $2 $3
+    # community-chart $2 $3
+    ;;
+"community-chart")
+    community-chart $2 $3
     ;;
 esac
