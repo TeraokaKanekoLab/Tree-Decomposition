@@ -1,4 +1,4 @@
-#include "mdh.h"
+#include "mdh.hpp"
 
 class mdh_graph : public mdh {
 public:
@@ -74,7 +74,6 @@ int main(int argc, char* argv[])
         exit(-1);
     }
 
-    type = "mdh";
     filename = argv[1];
     mdh_graph g;
     g.max_tree_width = stoi(argv[2]);

@@ -118,6 +118,7 @@ if __name__ == '__main__':
         dist_in_graph = find_path(graph, nd1, nd2)[3]
         tree_dists.append(dist_in_tree)
         graph_dists.append(dist_in_graph)
-        print("tree: " + str(dist_in_tree) + ", graph : " + str(dist_in_graph))
+        print("node " + str(nd1) + " node " + str(nd2) + " tree: " +
+              str(dist_in_tree) + ", graph : " + str(dist_in_graph))
     write_to_file(tree_dists, graph_dists)
     draw_chart(tree_dists, graph_dists)

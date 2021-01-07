@@ -41,6 +41,14 @@ dist_leaf() {
     open $filename
 }
 
+community() {
+    echo "g++ src/evaluate/community.cpp -o ./community --std=c++17"
+    g++ src/evaluate/community.cpp -o ./community --std=c++17
+    echo "./community $1 $2"
+    ./community $1 $2
+    rm ./community
+}
+
 case $1 in
 "mdh")
     mdh $2 $3
@@ -60,5 +68,8 @@ case $1 in
     ;;
 "dist_leaf")
     dist_leaf $2 $3
+    ;;
+"community")
+    community $2 $3
     ;;
 esac
