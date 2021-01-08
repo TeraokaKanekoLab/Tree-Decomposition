@@ -56,6 +56,11 @@ community-chart() {
     open $filename
 }
 
+correl() {
+    echo "python3 src/evaluate/correl.py $1 $2"
+    python3 src/evaluate/correl.py community $1 $2
+}
+
 case $1 in
 "mdh")
     mdh $2 $3
@@ -82,5 +87,8 @@ case $1 in
     ;;
 "community-chart")
     community-chart $2 $3
+    ;;
+"correl")
+    correl $2 $3
     ;;
 esac
