@@ -50,8 +50,8 @@ community() {
 }
 
 community-chart() {
-    echo "python3 src/evaluate/community.py $1 $2"
-    python3 src/evaluate/community.py $1 $2
+    echo "python3 src/scatter_chart.py community $1 $2 community\ size subtree\ size"
+    python3 src/scatter_chart.py community $1 $2 community\ size subtree\ size
     filename="charts/community/"$2"-"$1".pdf"
     open $filename
 }
