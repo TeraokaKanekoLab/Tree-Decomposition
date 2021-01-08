@@ -1,17 +1,5 @@
 #include "header.hpp"
 
-void print_vector(vector<int> v)
-{
-    if (v.size() == 0) {
-        cout << "[]" << endl;
-        return;
-    }
-    cout << "[" << v[0];
-    for (int i = 1; i < v.size(); ++i) {
-        cout << ", " << v[i];
-    }
-    cout << "]" << endl;
-}
 class Tree_Decomposition {
     vector<vector<int>> nodes_in_bags;
     vector<int> parents;
@@ -20,6 +8,11 @@ class Tree_Decomposition {
 
 public:
     bool has_core;
+
+    int num_bags()
+    {
+        return bags.size();
+    }
 
     bool vector_is_small(int nd)
     {
@@ -124,6 +117,36 @@ public:
         for (int child : children[nd])
             cout << " " << child;
         cout << endl;
+    }
+
+    int num_children(int nd)
+    {
+        if (!exists(nd))
+            return -1;
+        return children[nd].size();
+    }
+
+    int num_children_of_core()
+    {
+        if (!has_core)
+            return 0;
+        int num_children_of_core = 0;
+        for (int bag : bags)
+            if (parent_of(bag) < 0)
+                num_children_of_core++;
+
+        return num_children_of_core;
+    }
+
+    vector<int> all_bags()
+    {
+        vector<int> bags_vector;
+        for (int bag : bags) {
+            bags_vector.push_back(bag);
+        }
+        sort(bags_vector.begin(), bags_vector.end());
+
+        return bags_vector;
     }
 
     vector<int> path_from_root(int nd)

@@ -56,9 +56,24 @@ community-chart() {
     open $filename
 }
 
+connection() {
+    echo "g++ src/evaluate/connection.cpp -o ./connection --std=c++17"
+    g++ src/evaluate/connection.cpp -o ./connection --std=c++17
+    echo "./connection $1 $2"
+    ./connection $1 $2
+    rm ./connection
+}
+
+connection-chart() {
+    echo "python3 src/scatter_chart.py connection $1 $2 connection\ in\ graph connection\ in\ tree"
+    python3 src/scatter_chart.py connection $1 $2 connection\ in\ graph connection\ in\ tree
+    filename="charts/connection/"$2"-"$1".pdf"
+    open $filename
+}
+
 correl() {
-    echo "python3 src/evaluate/correl.py $1 $2"
-    python3 src/evaluate/correl.py community $1 $2
+    echo "python3 src/evaluate/correl.py $1 $2 $3"
+    python3 src/evaluate/correl.py $1 $2 $3
 }
 
 case $1 in
@@ -88,7 +103,16 @@ case $1 in
 "community-chart")
     community-chart $2 $3
     ;;
+"connection")
+    connection $2 $3
+    connection-chart $2 $3
+    correl "connection" $2 $3
+    ;;
+"connection-chart")
+    connection-chart $2 $3
+    correl "connection" $2 $3
+    ;;
 "correl")
-    correl $2 $3
+    correl $2 $3 $4
     ;;
 esac

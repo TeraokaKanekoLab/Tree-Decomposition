@@ -9,17 +9,20 @@ def read_file():
     lines = f.readlines()
     x_axis = []
     y_axis = []
+    s = set()
     for line in lines:
         left = int(line.split()[0])
         right = int(line.split()[1])
+        if (left, right) in s:
+            continue
         x_axis.append(left)
         y_axis.append(right)
+        s.add((left, right))
     return x_axis, y_axis
 
 
 def draw_chart(x_axis, y_axis):
     plt.scatter(x_axis, y_axis, c="r")
-    width = sys.argv[2]
     saved_name = "charts/" + chart_type + "/" + arg_width + "-" + filename + ".pdf"
     print(saved_name)
     plt.xlim(left=0)
@@ -27,7 +30,7 @@ def draw_chart(x_axis, y_axis):
     plt.xlabel(x_axis_title)
     plt.ylabel(y_axis_title)
     plt.title(y_axis_title + " over " + x_axis_title + "; " +
-              width + ": " + filename)
+              arg_width + ": " + filename)
     plt.savefig(saved_name)
 
 

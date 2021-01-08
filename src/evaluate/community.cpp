@@ -1,6 +1,6 @@
 #include "../communities.hpp"
-#include "../graph.hpp"
 #include "../tree_decomposition.hpp"
+#include "../util.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -9,7 +9,7 @@ int main(int argc, char* argv[])
 
     // Graph g;
     // string path_to_graph = "graph/" + filename + ".gr";
-    // g.read_edges(path_to_graph);
+    // g.read_graph(path_to_graph);
 
     Tree_Decomposition t;
     string path_to_t = "tree/" + width + "-" + filename + ".tree";
@@ -46,8 +46,6 @@ int main(int argc, char* argv[])
         int d = subtree_size - community_size;
         output << community_size << " " << subtree_size << " " << endl;
         cout << community_size << " " << subtree_size << " " << endl;
-        if (d < 0)
-            print_vector(comm);
     }
 
     return 0;

@@ -50,7 +50,15 @@ public:
         return nodes[nd];
     }
 
-    void read_edges(string path)
+    int degree(int nd)
+    {
+        if (!exists(nd)) {
+            return -1;
+        }
+        return neighbors_of[nd].size();
+    }
+
+    void read_graph(string path)
     {
         ifstream file(path);
 
