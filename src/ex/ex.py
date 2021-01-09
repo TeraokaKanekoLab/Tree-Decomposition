@@ -21,8 +21,8 @@ if __name__ == "__main__":
     graph = read_graph()
 
     nd1 = 2
-    # nd2 = 34
+    nd2 = 34
     # dist_in_graph = find_path(graph, nd1, nd2)[3]
     # print("dist(" + str(nd1) + ", " + str(nd2) + ") = " + str(dist_in_graph))\
-    diameter = diameter(graph)
-    print("eccentricity(" + str(nd1) + ") = " + str(diameter))
+    eccentricity = eccentricity(graph, nd1)
+    print("eccentricity(" + str(nd1) + ") = " + str(eccentricity))
