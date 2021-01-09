@@ -79,12 +79,13 @@ correl() {
 ex() {
     g++ src/ex/ex.cpp -o ex --std=c++17
     ./ex
+    rm ./ex
 }
 
 case $1 in
 "mdh")
     mdh $2 $3
-    tree mdh $2 $3
+    # tree mdh $2 $3
     ;;
 "tree")
     tree $2 $3 $4

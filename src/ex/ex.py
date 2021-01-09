@@ -1,4 +1,5 @@
 from networkx.algorithms.distance_measures import eccentricity, diameter
+from networkx.algorithms import average_clustering
 import networkx as nx
 
 
@@ -24,5 +25,7 @@ if __name__ == "__main__":
     nd2 = 34
     # dist_in_graph = find_path(graph, nd1, nd2)[3]
     # print("dist(" + str(nd1) + ", " + str(nd2) + ") = " + str(dist_in_graph))\
-    eccentricity = eccentricity(graph, nd1)
-    print("eccentricity(" + str(nd1) + ") = " + str(eccentricity))
+    # eccentricity = eccentricity(graph, nd1)
+    # print("average_clustering(" + str(nd1) + ") = " + str(x))
+    x = average_clustering(graph, trials=graph.number_of_nodes())
+    print("average_clustering() = " + str(x))

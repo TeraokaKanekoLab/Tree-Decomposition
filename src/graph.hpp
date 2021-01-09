@@ -121,4 +121,36 @@ public:
 
         return eccentricity;
     }
+
+    vector<int> neighbors(int nd)
+    {
+        vector<int> neighbors;
+        for (auto nb : neighbors_of[nd])
+            neighbors.push_back(nb);
+        return neighbors;
+    }
+
+    double compute_clustering_coefficient(int nd)
+    {
+        vector<int> nbs = neighbors(nd);
+        int d = nbs.size(); // degree of nd
+        if (d < 2)
+            return 0;
+        int cnt = 0; // # of edges in any pairs of neighbors
+        for (int nb1 : nbs)
+            for (int nb2 : nbs)
+                if (neighbors_of[nb1].find(nb2) != neighbors_of[nb1].end())
+                    cnt++;
+        return (double)cnt / (d * (d - 1));
+    }
+
+    double compute_average_clustering()
+    {
+        double sum_clus = 0;
+        for (auto node : neighbors_of) {
+            int nd = node.first;
+            sum_clus += compute_clustering_coefficient(nd);
+        }
+        return sum_clus / num_nodes();
+    }
 };
