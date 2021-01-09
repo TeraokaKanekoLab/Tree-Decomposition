@@ -76,6 +76,11 @@ correl() {
     python3 src/evaluate/correl.py $1 $2 $3
 }
 
+ex() {
+    g++ src/ex/ex.cpp -o ex --std=c++17
+    ./ex
+}
+
 case $1 in
 "mdh")
     mdh $2 $3
@@ -114,5 +119,8 @@ case $1 in
     ;;
 "correl")
     correl $2 $3 $4
+    ;;
+"ex")
+    ex
     ;;
 esac
