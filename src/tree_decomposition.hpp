@@ -39,7 +39,6 @@ public:
         }
 
         string line;
-        streampos oldpos = file.tellg();
         getline(file, line);
         if (line == "core") {
             has_core = true;
@@ -47,7 +46,11 @@ public:
             getline(file, line);
         } else {
             has_core = false;
-            file.seekg(oldpos);
+            int nd = stoi(line);
+            add_bag(nd);
+            getline(file, line);
+            getline(file, line);
+            parents[nd] = -1;
         }
 
         while (getline(file, line)) {
@@ -149,9 +152,49 @@ public:
         return bags_vector;
     }
 
+    double average_dist_in_group(vector<int> community)
+    {
+        int size = community.size();
+        if (size < 2)
+            return -1;
+        int total_dist = 0;
+        int num_pairs = size * (size - 1) / 2;
+        for (int i = 0; i < size - 1; ++i) {
+            int nd1 = community[i];
+            for (int j = i + 1; j < size; ++j) {
+                int nd2 = community[j];
+                int d = dist(nd1, nd2);
+                if (d < 0)
+                    return -1;
+                total_dist += d;
+            }
+        }
+
+        return (double)total_dist / num_pairs;
+    }
+
+    int dist(int s, int t)
+    {
+        if (!exists(s) || !exists(t))
+            return -1;
+        vector<int> path1 = path_from_root(s);
+        vector<int> path2 = path_from_root(t);
+        int min_depth = min(path1.size(), path2.size());
+        int common_depth = 0;
+        while (common_depth < min_depth) {
+            if (path1[common_depth] != path2[common_depth])
+                break;
+            common_depth++;
+        }
+
+        return path1.size() + path2.size() - 2 * common_depth;
+    }
+
     vector<int> path_from_root(int nd)
     {
         vector<int> path;
+        if (!exists(nd))
+            return vector<int>();
         path.push_back(nd);
         while ((nd = parents[nd]) >= 0) {
             path.push_back(nd);

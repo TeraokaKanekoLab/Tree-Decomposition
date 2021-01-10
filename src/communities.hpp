@@ -32,6 +32,7 @@ public:
             communities.push_back(community);
         }
     }
+
     vector<vector<int>> get_communities()
     {
         return communities;

@@ -6,10 +6,18 @@ mdh() {
     rm ./mdh
 }
 
+mdh() {
+    echo "g++ src/try.cpp -o ./try --std=c++17"
+    g++ src/try.cpp -o ./try --std=c++17
+    echo "./try $1 $2"
+    ./try $1 $2
+    rm ./try
+}
+
 tree() {
-    echo "python3 src/evaluate/tree.py $2 $3"
-    python3 src/evaluate/tree.py $2 $3
-    filename="tree/figures/"$3"-"$2".pdf"
+    echo "python3 src/evaluate/tree.py $1 $2"
+    python3 src/evaluate/tree.py $1 $2
+    filename="tree/figures/"$2"-"$1".pdf"
     open $filename
 }
 
@@ -37,6 +45,15 @@ dist_root() {
 dist_leaf() {
     echo "python3 src/evaluate/dist_leaf.py $1 $2"
     python3 src/evaluate/dist_leaf.py $1 $2
+    filename="charts/dist_leaf/"$2"-"$1".pdf"
+    open $filename
+}
+
+open-chart() {
+    filename="charts/tree-graph/"$2"-"$1".pdf"
+    open $filename
+    filename="charts/dist_root/"$2"-"$1".pdf"
+    open $filename
     filename="charts/dist_leaf/"$2"-"$1".pdf"
     open $filename
 }
@@ -77,7 +94,9 @@ correl() {
 }
 
 ex() {
+    echo "g++ src/ex/ex.cpp -o ex --std=c++17"
     g++ src/ex/ex.cpp -o ex --std=c++17
+    echo "./ex"
     ./ex
     rm ./ex
 }
@@ -87,8 +106,12 @@ case $1 in
     mdh $2 $3
     # tree mdh $2 $3
     ;;
+"try")
+    mdh $2 $3
+    # tree mdh $2 $3
+    ;;
 "tree")
-    tree $2 $3 $4
+    tree $2 $3
     ;;
 "graph")
     graph $2 $3
@@ -117,6 +140,11 @@ case $1 in
 "connection-chart")
     connection-chart $2 $3
     correl "connection" $2 $3
+    ;;
+"chart")
+    community-chart $2 $3
+    connection-chart $2 $3
+    open-chart $2 $3
     ;;
 "correl")
     correl $2 $3 $4
