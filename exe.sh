@@ -88,8 +88,8 @@ correl() {
 ex() {
     echo "g++ src/ex/ex.cpp -o ex --std=c++17"
     g++ src/ex/ex.cpp -o ex --std=c++17
-    echo "./ex"
-    ./ex
+    echo "./ex $1"
+    ./ex $1
     rm ./ex
 }
 
@@ -138,6 +138,6 @@ case $1 in
     correl $2 $3 $4
     ;;
 "ex")
-    ex
+    ex $2
     ;;
 esac
