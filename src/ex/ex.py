@@ -1,10 +1,11 @@
 from networkx.algorithms.distance_measures import eccentricity, diameter
-from networkx.algorithms import average_clustering
+from networkx.algorithms.cluster import average_clustering
 import networkx as nx
 
 
 def read_graph():
-    filepath = "graph/com-amazon.gr"
+    # filepath = "graph/com-amazon.gr"
+    filepath = "graph/fb-pages-food.gr"
     graph = nx.Graph()
     f = open(filepath, "r")
     lines = f.readlines()
@@ -13,6 +14,8 @@ def read_graph():
             continue
         left = int(line.split()[0])
         right = int(line.split()[1])
+        if left == right:
+            continue
         graph.add_edge(left, right)
         graph.add_edge(right, left)
     return graph
@@ -27,5 +30,5 @@ if __name__ == "__main__":
     # print("dist(" + str(nd1) + ", " + str(nd2) + ") = " + str(dist_in_graph))\
     # eccentricity = eccentricity(graph, nd1)
     # print("average_clustering(" + str(nd1) + ") = " + str(x))
-    x = average_clustering(graph, trials=graph.number_of_nodes())
+    x = average_clustering(graph)
     print("average_clustering() = " + str(x))

@@ -266,6 +266,8 @@ public:
     void make_graph()
     {
         for (pair<int, int> e : edges) {
+            if (e.first == e.second)
+                continue;
             neighbors_of[e.first].insert(e.second);
             neighbors_of[e.second].insert(e.first);
         }

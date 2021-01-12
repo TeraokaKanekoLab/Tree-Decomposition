@@ -11,6 +11,8 @@ public:
     {
         if (u > v)
             swap(u, v);
+        if (u == v)
+            return;
         neighbors_of[u].insert(v);
         neighbors_of[v].insert(u);
         if (u + 1 > array_size)
