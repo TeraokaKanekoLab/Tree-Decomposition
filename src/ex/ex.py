@@ -32,8 +32,8 @@ if __name__ == "__main__":
     # dist_in_graph = find_path(graph, nd1, nd2)[3]
     # print("dist(" + str(nd1) + ", " + str(nd2) + ") = " + str(dist_in_graph))\
     # eccentricity = eccentricity(graph, nd1)
-    # print("average_clustering(" + str(nd1) + ") = " + str(x))
-    x = diameter(graph)
-    print("diameter() = " + str(x))
+    print("average_clustering(" + str(nd1) + ") = " + str(x))
+    # x = diameter(graph)
+    # print("diameter() = " + str(x))
     # x = betweenness_centrality(graph)
     # print("average_clustering() = " + str(x))
