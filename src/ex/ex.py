@@ -36,5 +36,5 @@ if __name__ == "__main__":
     print("average_clustering() = " + str(x))
     # x = diameter(graph)
     # print("diameter() = " + str(x))
-    # x = betweenness_centrality(graph)
-    # print("average_clustering() = " + str(x))
+    x = betweenness_centrality(graph)
+    print("betweenness_centrality() =", x)
