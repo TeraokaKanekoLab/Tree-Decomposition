@@ -30,6 +30,9 @@ def write_to_file(bcs):
 
 
 if __name__ == "__main__":
+    print("loading...")
     graph = read_graph()
+    print("calculating...")
     bcs = betweenness_centrality(graph)
+    print("writing result...")
     write_to_file(bcs)
