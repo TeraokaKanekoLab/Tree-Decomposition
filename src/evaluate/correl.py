@@ -12,7 +12,7 @@ Y_X = []
 for line in lines:
     line = line.split()
     x = int(line[0])
-    y = int(line[1])
+    y = float(line[1])
     X.append(x)
     Y.append(y)
     Y_X.append(y-x)

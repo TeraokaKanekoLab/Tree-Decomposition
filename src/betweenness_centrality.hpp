@@ -9,7 +9,7 @@ public:
         ifstream file(path);
 
         if (!file.good()) {
-            cout << "betweenness_centrality file not found" << endl;
+            cout << path << ": betweenness_centrality file not found" << endl;
             exit(-1);
         }
 

@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
     t.read_tree(path_to_t);
 
     Betweenness_centrality b;
-    string path_to_b = "output/betweeness_centrality/" + filename + ".cm";
+    string path_to_b = "output/betweenness_centrality/" + filename + ".bc";
     b.read_betweenness_centrality(path_to_b);
     vector<pair<int, double>> bcs = b.get_betweenness_centrality();
 
@@ -23,8 +23,9 @@ int main(int argc, char* argv[])
         int nd = bc_pair.first;
         double bc = bc_pair.second;
         int num_children = t.num_children(nd);
-        output << num_children << bc << endl;
+        output << num_children << " " << bc << endl;
     }
+    cout << "result written to " << output_name << endl;
 
     return 0;
 }

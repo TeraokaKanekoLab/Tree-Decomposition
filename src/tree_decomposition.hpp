@@ -34,7 +34,7 @@ public:
         ifstream file(path);
 
         if (!file.good()) {
-            cout << "tree file not found" << endl;
+            cout << path << ": tree file not found" << endl;
             exit(-1);
         }
 
