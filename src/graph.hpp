@@ -206,7 +206,7 @@ public:
                 continue; // outdated entry
             while (k < d)
                 k++;
-            k_core[v] = k + 1;
+            k_core[v] = k;
             degrees[v] = -1;
             for (int nb : neighbors_of[v]) {
                 if (degrees[nb] < 0)
