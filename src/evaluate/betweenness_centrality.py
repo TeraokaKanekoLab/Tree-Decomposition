@@ -1,6 +1,7 @@
 import networkx as nx
 from networkx.algorithms.centrality import betweenness_centrality
 import sys
+import time
 
 
 def read_graph():
@@ -33,6 +34,9 @@ if __name__ == "__main__":
     print("loading...")
     graph = read_graph()
     print("calculating...")
+    start = time.time()
     bcs = betweenness_centrality(graph)
+    end = time.time()
     print("writing result...")
     write_to_file(bcs)
+    print(end-start)
