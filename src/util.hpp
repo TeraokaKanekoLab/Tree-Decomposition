@@ -12,3 +12,14 @@ void print_vector(vector<int> v)
     }
     cout << "]" << endl;
 }
+
+void print_vector_with_index(vector<int> v)
+{
+    if (v.size() == 0) {
+        cout << "[]" << endl;
+        return;
+    }
+    for (int i = 0; i < v.size(); i++) {
+        cout << i << ": " << v[i] << endl;
+    }
+}

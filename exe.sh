@@ -6,14 +6,6 @@ mdh() {
     rm ./mdh
 }
 
-mdh() {
-    echo "g++ src/try.cpp -o ./try --std=c++17"
-    g++ src/try.cpp -o ./try --std=c++17
-    echo "./try $1 $2"
-    ./try $1 $2
-    rm ./try
-}
-
 tree() {
     echo "python3 src/evaluate/tree.py $1 $2"
     python3 src/evaluate/tree.py $1 $2
@@ -103,10 +95,6 @@ ex() {
 
 case $1 in
 "mdh")
-    mdh $2 $3
-    # tree mdh $2 $3
-    ;;
-"try")
     mdh $2 $3
     # tree mdh $2 $3
     ;;

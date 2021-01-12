@@ -2,16 +2,15 @@
 
 class Graph {
     typedef pair<int, int> edge;
-    vector<edge> edges;
     unordered_map<int, unordered_set<int>> neighbors_of;
     int array_size;
+    int num_edges;
 
 public:
     void add_edge(int u, int v)
     {
         if (u > v)
             swap(u, v);
-        edges.push_back({ u, v });
         neighbors_of[u].insert(v);
         neighbors_of[v].insert(u);
         if (u + 1 > array_size)
@@ -20,12 +19,12 @@ public:
             array_size = v + 1;
     }
 
-    int num_edges()
+    int get_num_edges()
     {
-        return edges.size();
+        return num_edges;
     }
 
-    int num_nodes()
+    int get_num_nodes()
     {
         return neighbors_of.size();
     }
@@ -41,6 +40,28 @@ public:
             return -1;
         }
         return neighbors_of[nd].size();
+    }
+
+    double compute_average_degree()
+    {
+        int sum = 0;
+        for (auto node : neighbors_of) {
+            sum += node.second.size();
+        }
+
+        return (double)sum / get_num_nodes();
+    }
+
+    int find_max_degree()
+    {
+        int max_d = 0;
+        for (auto node : neighbors_of) {
+            int d = node.second.size();
+            if (d > max_d)
+                max_d = d;
+        }
+
+        return max_d;
     }
 
     void read_graph(string path)
@@ -67,6 +88,11 @@ public:
         while (file >> u >> v)
             add_edge(u, v);
         file.close();
+
+        for (auto node : neighbors_of) {
+            num_edges += node.second.size();
+        }
+        num_edges /= 2;
     }
 
     int shortest_dist(int s, int t)
@@ -151,6 +177,54 @@ public:
             int nd = node.first;
             sum_clus += compute_clustering_coefficient(nd);
         }
-        return sum_clus / num_nodes();
+        return sum_clus / get_num_nodes();
+    }
+
+    vector<int> k_core()
+    {
+        typedef pair<int, int> node;
+        vector<int> degrees(array_size, -1);
+        priority_queue<node, vector<node>, greater<node>> degreeq;
+        vector<int> k_core(array_size, -1);
+        for (auto nd : neighbors_of) {
+            int v = nd.first;
+            int d = nd.second.size();
+            degrees[v] = d;
+            degreeq.push(node(d, v));
+        }
+
+        int k = 1;
+
+        while (!degreeq.empty()) {
+            pair<int, int> nd = degreeq.top();
+            degreeq.pop();
+            int v = nd.second;
+            int d = nd.first;
+            if (d != degrees[v])
+                continue; // outdated entry
+            while (k < d)
+                k++;
+            k_core[v] = k + 1;
+            degrees[v] = -1;
+            for (int nb : neighbors_of[v]) {
+                if (degrees[nb] < 0)
+                    continue;
+                degrees[nb]--;
+                degreeq.push(node(degrees[nb], nb));
+            }
+        }
+
+        return k_core;
+    }
+
+    double average_k_core()
+    {
+        vector<int> k_core_vector = k_core();
+        int sum = 0;
+        for (int k_core_size : k_core_vector)
+            if (k_core_size > 0)
+                sum += k_core_size;
+
+        return (double)sum / get_num_nodes();
     }
 };
