@@ -6,14 +6,17 @@
 int main(int argc, char* argv[])
 {
     Graph g;
-    // g.read_graph("graph/soc-pages-artist.gr");
+    // g.read_graph("graph/fb-pages-artist.gr");
+    // g.read_graph("graph/fb-pages-tvshow.gr");
     // g.read_graph("graph/ca-CondMat.gr");
-    g.read_graph("graph/fb-pages-food.gr");
+    // g.read_graph("graph/fb-pages-food.gr");
+    // g.read_graph("graph/soc-karate.gr");
+    g.read_graph("graph/soc-flickr.gr");
 
     int nd1 = 3, nd2 = 34;
     // // cout << "eccentricity(" << nd1 << ") = " << g.compute_eccentricity(nd1) << endl;
     // // cout << "clustering_coefficient(" << nd1 << ") = " << g.compute_clustering_coefficient(nd1) << endl;
-    cout << "average_clustering() = " << g.compute_average_clustering() << endl;
+    // cout << "average_clustering() = " << g.compute_average_clustering() << endl;
     cout << "num_nodes() = " << g.get_num_nodes() << endl;
     cout << "num_edges() = " << g.get_num_edges() << endl;
     // print_vector_with_index(g.k_core());
