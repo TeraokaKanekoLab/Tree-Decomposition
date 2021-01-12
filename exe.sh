@@ -80,6 +80,21 @@ connection-chart() {
     open $filename
 }
 
+bc-child() {
+    echo "g++ src/evaluate/bc-child.cpp -o ./bc-child --std=c++17"
+    g++ src/evaluate/bc-child.cpp -o ./bc-child --std=c++17
+    echo "./bc-child $1 $2"
+    ./bc-child $1 $2
+    rm ./bc-child
+}
+
+bc-child-chart() {
+    echo "python3 src/scatter_chart.py bc-child $1 $2 \#\ of\ children betweenness\ centrality"
+    python3 src/scatter_chart.py bc-child $1 $2 \#\ of\ children betweenness\ centrality
+    filename="charts/bc-child/"$2"-"$1".pdf"
+    open $filename
+}
+
 correl() {
     echo "python3 src/evaluate/correl.py $1 $2 $3"
     python3 src/evaluate/correl.py $1 $2 $3
@@ -128,6 +143,11 @@ case $1 in
 "connection-chart")
     connection-chart $2 $3
     correl "connection" $2 $3
+    ;;
+"bc-child")
+    bc-child $2 $3
+    bc-child-chart $2 $3
+    correl "bc-child" $2 $3
     ;;
 "chart")
     community-chart $2 $3
