@@ -144,6 +144,9 @@ public:
                     pq.push(node(d[nb], nb));
                 }
         }
+        for (int i = 0; i < array_size; ++i)
+            if (d[s] == INF)
+                d[s] = 0;
         return d;
     }
 

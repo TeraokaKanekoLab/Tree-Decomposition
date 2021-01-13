@@ -177,7 +177,6 @@ public:
 
     int compute_width(int nd)
     {
-        cout << "yeah" << endl;
         if (widths.size() == 0)
             widths.resize(array_size, 0);
         if (widths[nd])

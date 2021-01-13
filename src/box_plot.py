@@ -41,21 +41,21 @@ def read_file():
     x_axis = []
     for i in range(len(pre_x_axis)):
         x_axis.append(pre_x_axis[i] - x_min)
-    if x_max >= DIV:
+    if x_max >= DIV*1.5:
         return divide_in_ten(x_axis, y_axis, x_max, x_min)
     data_to_plot = []
-    for i in range(x_max+1):
+    for i in range(x_min, x_max+1):
         data_to_plot.append([])
-    for x, y in zip(pre_x_axis, y_axis):
+    for x, y in zip(x_axis, y_axis):
         data_to_plot[x].append(y)
-    return data_to_plot, [str(i) for i in range(x_max+1)]
+    return data_to_plot, [str(i) for i in range(x_min, x_max+1)]
 
 
 def draw_chart(data_to_plot, x_tick_label):
     saved_name = "charts/" + chart_type + "/" + arg_width + "-" + filename + ".pdf"
     print(saved_name)
     fig, axes = plt.subplots(figsize=(12, 8))
-    plt.boxplot(data_to_plot)
+    plt.boxplot(data_to_plot, sym="")
     axes.set_xticklabels(x_tick_label)
     plt.xlabel(x_axis_title)
     plt.ylabel(y_axis_title)
