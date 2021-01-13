@@ -89,9 +89,54 @@ bc-child() {
 }
 
 bc-child-chart() {
-    echo "python3 src/scatter_chart.py bc-child $1 $2 \#\ of\ children betweenness\ centrality"
-    python3 src/scatter_chart.py bc-child $1 $2 \#\ of\ children betweenness\ centrality
+    echo "python3 src/box_plot.py bc-child $1 $2 \#\ of\ children\ in\ tree betweenness\ centrality"
+    python3 src/box_plot.py bc-child $1 $2 \#\ of\ children\ in\ tree betweenness\ centrality
     filename="charts/bc-child/"$2"-"$1".pdf"
+    open $filename
+}
+
+bc-eccentricity() {
+    echo "g++ src/evaluate/bc-eccentricity.cpp -o ./bc-eccentricity --std=c++17"
+    g++ src/evaluate/bc-eccentricity.cpp -o ./bc-eccentricity --std=c++17
+    echo "./bc-eccentricity $1 $2"
+    ./bc-eccentricity $1 $2
+    rm ./bc-eccentricity
+}
+
+bc-eccentricity-chart() {
+    echo "python3 src/box_plot.py bc-eccentricity $1 $2 eccentricity\ in\ tree betweenness\ centrality"
+    python3 src/box_plot.py bc-eccentricity $1 $2 eccentricity\ in\ tree betweenness\ centrality
+    filename="charts/bc-eccentricity/"$2"-"$1".pdf"
+    open $filename
+}
+
+bc-bagsize() {
+    echo "g++ src/evaluate/bc-bagsize.cpp -o ./bc-bagsize --std=c++17"
+    g++ src/evaluate/bc-bagsize.cpp -o ./bc-bagsize --std=c++17
+    echo "./bc-bagsize $1 $2"
+    ./bc-bagsize $1 $2
+    rm ./bc-bagsize
+}
+
+bc-bagsize-chart() {
+    echo "python3 src/box_plot.py bc-bagsize $1 $2 bagsize\ in\ tree betweenness\ centrality"
+    python3 src/box_plot.py bc-bagsize $1 $2 bagsize\ in\ tree betweenness\ centrality
+    filename="charts/bc-bagsize/"$2"-"$1".pdf"
+    open $filename
+}
+
+bc-dist_leaf() {
+    echo "g++ src/evaluate/bc-dist_leaf.cpp -o ./bc-dist_leaf --std=c++17"
+    g++ src/evaluate/bc-dist_leaf.cpp -o ./bc-dist_leaf --std=c++17
+    echo "./bc-dist_leaf $1 $2"
+    ./bc-dist_leaf $1 $2
+    rm ./bc-dist_leaf
+}
+
+bc-dist_leaf-chart() {
+    echo "python3 src/box_plot.py bc-dist_leaf $1 $2 dist_leaf\ in\ tree betweenness\ centrality"
+    python3 src/box_plot.py bc-dist_leaf $1 $2 dist_leaf\ in\ tree betweenness\ centrality
+    filename="charts/bc-dist_leaf/"$2"-"$1".pdf"
     open $filename
 }
 
@@ -130,7 +175,7 @@ case $1 in
     ;;
 "community")
     community $2 $3
-    # community-chart $2 $3
+    community-chart $2 $3
     ;;
 "community-chart")
     community-chart $2 $3
@@ -148,6 +193,21 @@ case $1 in
     bc-child $2 $3
     bc-child-chart $2 $3
     correl "bc-child" $2 $3
+    ;;
+"bc-eccentricity")
+    bc-eccentricity $2 $3
+    bc-eccentricity-chart $2 $3
+    correl "bc-eccentricity" $2 $3
+    ;;
+"bc-bagsize")
+    bc-bagsize $2 $3
+    bc-bagsize-chart $2 $3
+    correl "bc-bagsize" $2 $3
+    ;;
+"bc-dist_leaf")
+    bc-dist_leaf $2 $3
+    bc-dist_leaf-chart $2 $3
+    correl "bc-dist_leaf" $2 $3
     ;;
 "chart")
     community-chart $2 $3

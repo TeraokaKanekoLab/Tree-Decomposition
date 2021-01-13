@@ -5,6 +5,71 @@ class Tree_Decomposition {
     vector<int> parents;
     vector<vector<int>> children;
     unordered_set<int> bags;
+    unordered_set<int> leaves;
+    int array_size;
+    int root;
+    vector<int> children_of_core;
+    vector<int> eccentricities;
+    vector<int> dist_from_parent;
+    vector<int> dist_from_child;
+    vector<int> widths;
+
+    int compute_eccentricity_from_child(int nd)
+    {
+        int max = 0;
+        if (dist_from_child[nd])
+            return dist_from_child[nd];
+        if (num_children(nd) == 0)
+            return 0;
+        for (int child : children[nd]) {
+            int ec = compute_eccentricity_from_child(child);
+            if (ec > max)
+                max = ec;
+        }
+        dist_from_child[nd] = max + 1;
+        return max + 1;
+    }
+
+    void compute_eccentricity_from_parent(int nd)
+    {
+        int parent = parent_of(nd);
+        if (parent < 0)
+            dist_from_parent[nd] = 0;
+        else {
+            int max = dist_from_parent[parent];
+            for (int child : children_of(parent)) {
+                if (child == nd)
+                    continue;
+                if (dist_from_child[child] + 1 > max)
+                    max = dist_from_child[child] + 1;
+            }
+            dist_from_parent[nd] = max + 1;
+        }
+        for (int child : children_of(nd)) {
+            compute_eccentricity_from_parent(child);
+        }
+    }
+
+    void compute_eccentricities()
+    {
+        eccentricities = vector<int>(array_size, 0);
+        dist_from_parent = vector<int>(array_size, 0);
+        dist_from_child = vector<int>(array_size, 0);
+        if (root < 0)
+            for (int nd : children_of_core) {
+                compute_eccentricity_from_child(nd);
+                compute_eccentricity_from_parent(nd);
+            }
+        else {
+            compute_eccentricity_from_child(root);
+            compute_eccentricity_from_parent(root);
+        }
+        for (int i = 0; i < array_size; ++i) {
+            int c = dist_from_child[i];
+            int p = dist_from_parent[i];
+            eccentricities[i] = max(c, p);
+        }
+    }
 
 public:
     bool has_core;
@@ -25,6 +90,7 @@ public:
             nodes_in_bags.resize(nd + 1, vector<int>());
             parents.resize(nd + 1);
             children.resize(nd + 1, vector<int>());
+            array_size = nd + 1;
         }
         bags.insert(nd);
     }
@@ -42,20 +108,24 @@ public:
         getline(file, line);
         if (line == "core") {
             has_core = true;
+            root = -1;
             getline(file, line);
             getline(file, line);
         } else {
             has_core = false;
             int nd = stoi(line);
+            root = nd;
             add_bag(nd);
             getline(file, line);
             getline(file, line);
             parents[nd] = -1;
+            leaves.insert(nd);
         }
 
         while (getline(file, line)) {
             int nd = stoi(line);
             add_bag(nd);
+            leaves.insert(nd);
             getline(file, line);
             int pos = 0;
             std::string delimiter = " ";
@@ -71,11 +141,14 @@ public:
             getline(file, line);
             int parent = stoi(line);
             // child of core
-            if (bags.find(parent) == bags.end())
+            if (bags.find(parent) == bags.end()) {
                 parents[nd] = -1;
-            else {
+                children_of_core.push_back(nd);
+            } else {
                 parents[nd] = parent;
                 children[parent].push_back(nd);
+                if (leaves.find(parent) != leaves.end())
+                    leaves.erase(parent);
             }
         }
     }
@@ -91,6 +164,35 @@ public:
         if (exists(nd))
             return children[nd];
         return vector<int>();
+    }
+
+    int bagsize_of(int nd)
+    {
+        if (!exists(nd))
+            return -1;
+        return nodes_in_bags[nd].size();
+    }
+
+    int compute_width(int nd)
+    {
+        if (widths[nd])
+            return widths[nd];
+        int width = bagsize_of(nd);
+        for (int child : children[nd]) {
+            int child_width = compute_width(child);
+            if (child_width > width)
+                width = child_width;
+        }
+
+        widths[nd] = width;
+        return width;
+    }
+
+    vector<int> get_eccentricities()
+    {
+        if (eccentricities.size() != array_size)
+            compute_eccentricities();
+        return eccentricities;
     }
 
     int parent_of(int nd)
@@ -188,6 +290,22 @@ public:
         }
 
         return path1.size() + path2.size() - 2 * common_depth;
+    }
+
+    int dist_from_leaf(int nd)
+    {
+        if (dist_from_child.size() != array_size) {
+            if (root < 0)
+                for (int nd : children_of_core) {
+                    compute_eccentricity_from_child(nd);
+                    compute_eccentricity_from_parent(nd);
+                }
+            else {
+                compute_eccentricity_from_child(root);
+                compute_eccentricity_from_parent(root);
+            }
+        }
+        return dist_from_child[nd];
     }
 
     vector<int> path_from_root(int nd)
