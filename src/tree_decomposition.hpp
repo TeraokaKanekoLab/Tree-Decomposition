@@ -12,6 +12,7 @@ class Tree_Decomposition {
     vector<int> eccentricities;
     vector<int> dist_from_parent;
     vector<int> dist_from_child;
+    vector<int> dist_from_root;
     vector<int> widths;
     vector<int> subtree_sizes;
 
@@ -307,6 +308,17 @@ public:
                 compute_eccentricity_from_child(root);
         }
         return dist_from_child[nd];
+    }
+
+    int compute_dist_from_root(int nd)
+    {
+        if (dist_from_root.size() == 0)
+            dist_from_root.resize(array_size, 0);
+        if (dist_from_root[nd])
+            return dist_from_root[nd];
+        int d = dist_from_root[parent_of(nd)] + 1;
+        dist_from_root[nd] = d;
+        return d;
     }
 
     vector<int> path_from_root(int nd)

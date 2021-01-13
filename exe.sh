@@ -178,7 +178,7 @@ degree-subtree() {
     rm ./degree-subtree
 }
 
-degree-subtree-chart() {
+degree-subtree-charts() {
     echo "python3 src/box_plot.py degree-subtree $1 $2 subtree\ size degree"
     python3 src/box_plot.py degree-subtree $1 $2 subtree\ size degree
     filename="charts/degree-subtree/"$2"-"$1".pdf"
@@ -197,6 +197,36 @@ degree-dist_leaf-chart() {
     echo "python3 src/box_plot.py degree-dist_leaf $1 $2 dist_leaf degree"
     python3 src/box_plot.py degree-dist_leaf $1 $2 dist_leaf degree
     filename="charts/degree-dist_leaf/"$2"-"$1".pdf"
+    open $filename
+}
+
+center-dist_leaf() {
+    echo "g++ src/evaluate/center-dist_leaf.cpp -o ./center-dist_leaf --std=c++17"
+    g++ src/evaluate/center-dist_leaf.cpp -o ./center-dist_leaf --std=c++17
+    echo "./center-dist_leaf $1 $2"
+    ./center-dist_leaf $1 $2
+    rm ./center-dist_leaf
+}
+
+center-dist_leaf-chart() {
+    echo "python3 src/box_plot.py center-dist_leaf $1 $2 dist_leaf average\ distance\ from\ centers\ in\ graph"
+    python3 src/box_plot.py center-dist_leaf $1 $2 dist_leaf average\ distance\ from\ centers\ in\ graph
+    filename="charts/center-dist_leaf/"$2"-"$1".pdf"
+    open $filename
+}
+
+center-dist_root() {
+    echo "g++ src/evaluate/center-dist_root.cpp -o ./center-dist_root --std=c++17"
+    g++ src/evaluate/center-dist_root.cpp -o ./center-dist_root --std=c++17
+    echo "./center-dist_root $1 $2"
+    ./center-dist_root $1 $2
+    rm ./center-dist_root
+}
+
+center-dist_root-chart() {
+    echo "python3 src/box_plot.py center-dist_root $1 $2 dist_root average\ distance\ from\ centers\ in\ graph"
+    python3 src/box_plot.py center-dist_root $1 $2 dist_root average\ distance\ from\ centers\ in\ graph
+    filename="charts/center-dist_root/"$2"-"$1".pdf"
     open $filename
 }
 
@@ -318,6 +348,16 @@ case $1 in
     degree-dist_leaf $2 $3
     degree-dist_leaf-chart $2 $3
     correl "degree-dist_leaf" $2 $3
+    ;;
+"center-dist_leaf")
+    center-dist_leaf $2 $3
+    center-dist_leaf-chart $2 $3
+    correl "center-dist_leaf" $2 $3
+    ;;
+"center-dist_root")
+    center-dist_root $2 $3
+    center-dist_root-chart $2 $3
+    correl "center-dist_root" $2 $3
     ;;
 "bc-branch")
     bc-branch $2 $3

@@ -98,7 +98,7 @@ public:
         num_edges /= 2;
     }
 
-    vector<int> compute_centers(vector<pair<int, int>>& ecs)
+    vector<int> compute_centers(vector<pair<int, int>> ecs)
     {
         vector<int> min_eccs;
         int min = ecs[0].second;
@@ -120,7 +120,7 @@ public:
                 sum_dists[i] += dists[i];
         }
         for (int i = 0; i < array_size; ++i)
-            sum_dists[i] /= array_size;
+            sum_dists[i] /= centers.size();
         return sum_dists;
     }
 
