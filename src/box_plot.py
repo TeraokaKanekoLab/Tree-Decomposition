@@ -6,12 +6,15 @@ mpl.use('agg')
 DIV = 10
 
 
-def divide_in_ten(x_axis, y_axis, x_max):
+def divide_in_ten(x_axis, y_axis, x_max, x_min):
+    x_max -= x_min
     data_to_plot = []
     x_tick_label = []
+    x_max = (x_max // DIV + 1) * DIV
     for i in range(DIV):
         data_to_plot.append([])
-        label = str(x_max // DIV * i) + "-" + str(x_max // DIV * (i + 1))
+        label = str(x_max // DIV * i + x_min) + \
+            "-" + str(x_max // DIV * (i + 1) + x_min)
         x_tick_label.append(label)
     for x, y in zip(x_axis, y_axis):
         for i in range(DIV):
@@ -26,20 +29,24 @@ def read_file():
         arg_width + "-" + filename + ".output"
     f = open(filepath, "r")
     lines = f.readlines()
-    x_axis = []
+    pre_x_axis = []
     y_axis = []
     for line in lines:
         left = int(line.split()[0])
         right = float(line.split()[1])
-        x_axis.append(left)
+        pre_x_axis.append(left)
         y_axis.append(right)
-    x_max = max(x_axis)
+    x_max = max(pre_x_axis)
+    x_min = min(pre_x_axis)
+    x_axis = []
+    for i in range(len(pre_x_axis)):
+        x_axis.append(pre_x_axis[i] - x_min)
     if x_max >= DIV:
-        return divide_in_ten(x_axis, y_axis, x_max)
+        return divide_in_ten(x_axis, y_axis, x_max, x_min)
     data_to_plot = []
     for i in range(x_max+1):
         data_to_plot.append([])
-    for x, y in zip(x_axis, y_axis):
+    for x, y in zip(pre_x_axis, y_axis):
         data_to_plot[x].append(y)
     return data_to_plot, [str(i) for i in range(x_max+1)]
 
@@ -48,7 +55,7 @@ def draw_chart(data_to_plot, x_tick_label):
     saved_name = "charts/" + chart_type + "/" + arg_width + "-" + filename + ".pdf"
     print(saved_name)
     fig, axes = plt.subplots(figsize=(12, 8))
-    plt.boxplot(data_to_plot, sym="")
+    plt.boxplot(data_to_plot)
     axes.set_xticklabels(x_tick_label)
     plt.xlabel(x_axis_title)
     plt.ylabel(y_axis_title)

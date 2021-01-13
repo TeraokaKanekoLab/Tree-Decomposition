@@ -125,6 +125,21 @@ bc-bagsize-chart() {
     open $filename
 }
 
+bc-width() {
+    echo "g++ src/evaluate/bc-width.cpp -o ./bc-width --std=c++17"
+    g++ src/evaluate/bc-width.cpp -o ./bc-width --std=c++17
+    echo "./bc-width $1 $2"
+    ./bc-width $1 $2
+    rm ./bc-width
+}
+
+bc-width-chart() {
+    echo "python3 src/box_plot.py bc-width $1 $2 width\ in\ tree betweenness\ centrality"
+    python3 src/box_plot.py bc-width $1 $2 width\ in\ tree betweenness\ centrality
+    filename="charts/bc-width/"$2"-"$1".pdf"
+    open $filename
+}
+
 bc-dist_leaf() {
     echo "g++ src/evaluate/bc-dist_leaf.cpp -o ./bc-dist_leaf --std=c++17"
     g++ src/evaluate/bc-dist_leaf.cpp -o ./bc-dist_leaf --std=c++17
@@ -137,6 +152,66 @@ bc-dist_leaf-chart() {
     echo "python3 src/box_plot.py bc-dist_leaf $1 $2 dist_leaf\ in\ tree betweenness\ centrality"
     python3 src/box_plot.py bc-dist_leaf $1 $2 dist_leaf\ in\ tree betweenness\ centrality
     filename="charts/bc-dist_leaf/"$2"-"$1".pdf"
+    open $filename
+}
+
+bc-subtree() {
+    echo "g++ src/evaluate/bc-subtree.cpp -o ./bc-subtree --std=c++17"
+    g++ src/evaluate/bc-subtree.cpp -o ./bc-subtree --std=c++17
+    echo "./bc-subtree $1 $2"
+    ./bc-subtree $1 $2
+    rm ./bc-subtree
+}
+
+bc-subtree-chart() {
+    echo "python3 src/box_plot.py bc-subtree $1 $2 subtree\ size betweenness\ centrality"
+    python3 src/box_plot.py bc-subtree $1 $2 subtree\ size betweenness\ centrality
+    filename="charts/bc-subtree/"$2"-"$1".pdf"
+    open $filename
+}
+
+degree-subtree() {
+    echo "g++ src/evaluate/degree-subtree.cpp -o ./degree-subtree --std=c++17"
+    g++ src/evaluate/degree-subtree.cpp -o ./degree-subtree --std=c++17
+    echo "./degree-subtree $1 $2"
+    ./degree-subtree $1 $2
+    rm ./degree-subtree
+}
+
+degree-subtree-chart() {
+    echo "python3 src/box_plot.py degree-subtree $1 $2 subtree\ size degree"
+    python3 src/box_plot.py degree-subtree $1 $2 subtree\ size degree
+    filename="charts/degree-subtree/"$2"-"$1".pdf"
+    open $filename
+}
+
+bc-branch() {
+    echo "g++ src/evaluate/bc-branch.cpp -o ./bc-branch --std=c++17"
+    g++ src/evaluate/bc-branch.cpp -o ./bc-branch --std=c++17
+    echo "./bc-branch $1 $2"
+    ./bc-branch $1 $2
+    rm ./bc-branch
+}
+
+bc-branch-chart() {
+    echo "python3 src/box_plot.py bc-branch $1 $2 size\ of\ subtree\ with\ branch betweenness\ centrality"
+    python3 src/box_plot.py bc-branch $1 $2 size\ of\ subtree\ with\ branch betweenness\ centrality
+    filename="charts/bc-branch/"$2"-"$1".pdf"
+    open $filename
+}
+
+bc-ec() {
+    echo "g++ src/evaluate/bc-ec.cpp -o ./bc-ec --std=c++17"
+    g++ src/evaluate/bc-ec.cpp -o ./bc-ec --std=c++17
+    echo "./bc-ec $1 $2"
+    ./bc-ec $1 $2
+    rm ./bc-ec
+}
+
+bc-ec-chart() {
+    echo "python3 src/box_plot.py bc-ec $1 $2 eccentricity betweenness\ centrality"
+    python3 src/box_plot.py bc-ec $1 $2 eccentricity betweenness\ centrality
+    filename="charts/bc-ec/"$2"-"$1".pdf"
     open $filename
 }
 
@@ -204,10 +279,40 @@ case $1 in
     bc-bagsize-chart $2 $3
     correl "bc-bagsize" $2 $3
     ;;
+"bc-width")
+    bc-width $2 $3
+    bc-width-chart $2 $3
+    correl "bc-width" $2 $3
+    ;;
 "bc-dist_leaf")
     bc-dist_leaf $2 $3
     bc-dist_leaf-chart $2 $3
     correl "bc-dist_leaf" $2 $3
+    ;;
+"bc-subtree")
+    bc-subtree $2 $3
+    bc-subtree-chart $2 $3
+    correl "bc-subtree" $2 $3
+    ;;
+"degree-subtree")
+    degree-subtree $2 $3
+    degree-subtree-chart $2 $3
+    correl "degree-subtree" $2 $3
+    ;;
+"bc-branch")
+    bc-branch $2 $3
+    bc-branch-chart $2 $3
+    correl "bc-branch" $2 $3
+    ;;
+"bc-ec")
+    bc-ec $2 $3
+    bc-ec-chart $2 $3
+    correl "bc-ec" $2 $3
+    ;;
+"ec-dist_leaf")
+    ec-dist_leaf $2 $3
+    ec-dist_leaf-chart $2 $3
+    correl "ec-dist_leaf" $2 $3
     ;;
 "chart")
     community-chart $2 $3

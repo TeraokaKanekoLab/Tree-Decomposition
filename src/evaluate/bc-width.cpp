@@ -16,14 +16,14 @@ int main(int argc, char* argv[])
     b.read_betweenness_centrality(path_to_b);
     vector<pair<int, double>> bcs = b.get_betweenness_centrality();
 
-    string output_name = "output/child-eecentricity/" + width + "-" + filename + ".output";
+    string output_name = "output/bc-width/" + width + "-" + filename + ".output";
     ofstream output(output_name);
 
     for (auto bc_pair : bcs) {
         int nd = bc_pair.first;
         double bc = bc_pair.second;
-        int bagsize = t.bagsize_of(nd);
-        output << bagsize << " " << bc << endl;
+        int width = t.compute_width(nd);
+        output << width << " " << bc << endl;
     }
     cout << "result written to " << output_name << endl;
 

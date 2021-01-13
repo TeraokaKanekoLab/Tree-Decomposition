@@ -12,7 +12,7 @@ int main(int argc, char* argv[])
     t.read_tree(path_to_t);
 
     Betweenness_centrality b;
-    string path_to_b = "output/betweenness_centrality/" + filename + ".bc";
+    string path_to_b = "data/betweenness_centrality/" + filename + ".bc";
     b.read_betweenness_centrality(path_to_b);
     vector<pair<int, double>> bcs = b.get_betweenness_centrality();
 

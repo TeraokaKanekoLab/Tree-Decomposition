@@ -13,6 +13,7 @@ class Tree_Decomposition {
     vector<int> dist_from_parent;
     vector<int> dist_from_child;
     vector<int> widths;
+    vector<int> subtree_sizes;
 
     int compute_eccentricity_from_child(int nd)
     {
@@ -175,6 +176,9 @@ public:
 
     int compute_width(int nd)
     {
+        cout << "yeah" << endl;
+        if (widths.size() == 0)
+            widths.resize(array_size, 0);
         if (widths[nd])
             return widths[nd];
         int width = bagsize_of(nd);
@@ -295,15 +299,12 @@ public:
     int dist_from_leaf(int nd)
     {
         if (dist_from_child.size() != array_size) {
+            dist_from_child.resize(array_size, 0);
             if (root < 0)
-                for (int nd : children_of_core) {
+                for (int nd : children_of_core)
                     compute_eccentricity_from_child(nd);
-                    compute_eccentricity_from_parent(nd);
-                }
-            else {
+            else
                 compute_eccentricity_from_child(root);
-                compute_eccentricity_from_parent(root);
-            }
         }
         return dist_from_child[nd];
     }
@@ -373,5 +374,32 @@ public:
         sort(nodes_in_subtree.begin(), nodes_in_subtree.end());
 
         return nodes_in_subtree;
+    }
+
+    int subtree_size(int nd)
+    {
+        if (subtree_sizes.size() != array_size)
+            subtree_sizes.resize(array_size, 0);
+        if (subtree_sizes[nd])
+            return subtree_sizes[nd];
+        int size = 1;
+        for (int child : children_of(nd)) {
+            size += subtree_size(child);
+        }
+        subtree_sizes[nd] = size;
+        return size;
+    }
+
+    void export_info(string filepath)
+    {
+        ofstream file(filepath);
+        for (int nd : all_bags()) {
+            int nc = num_children(nd);
+            int bs = bagsize_of(nd);
+            int dl = dist_from_leaf(nd);
+            int w = compute_width(nd);
+            file << num_children(nd) << " " << bagsize_of(nd) << " " << dist_from_leaf(nd) << " " << compute_width(nd) << endl;
+        }
+        file.close();
     }
 };

@@ -71,7 +71,7 @@ public:
         ifstream file(path);
 
         if (!file.good()) {
-            cout << "graph file not found" << endl;
+            cout << path << ": graph file not found" << endl;
             exit(-1);
         }
 
