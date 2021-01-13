@@ -8,7 +8,7 @@ int main(int argc, char* argv[])
     string width = argv[2];
 
     Eccentricity e;
-    string path_to_e = "data/eccentricity/" + filename + ".ecc";
+    string path_to_e = "data/eccentricity/" + filename + ".eccentricity";
     e.read_eccentricity(path_to_e);
     vector<pair<int, int>> ecs = e.get_eccentricity();
     sort(ecs.begin(), ecs.end());

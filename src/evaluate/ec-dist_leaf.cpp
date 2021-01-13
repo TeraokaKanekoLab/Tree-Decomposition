@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
     vector<int> eccentricities = t.get_eccentricities();
 
     Eccentricity e;
-    string path_to_e = "data/eccentricity/" + filename + ".ecc";
+    string path_to_e = "data/eccentricity/" + filename + ".eccentricity";
     e.read_eccentricity(path_to_e);
     vector<pair<int, int>> ecs = e.get_eccentricity();
 
