@@ -1,3 +1,4 @@
+#include "eccentricity.hpp"
 #include "header.hpp"
 
 class Graph {
@@ -95,6 +96,55 @@ public:
             num_edges += node.second.size();
         }
         num_edges /= 2;
+    }
+
+    vector<int> compute_centers(vector<pair<int, int>>& ecs)
+    {
+        vector<int> min_eccs;
+        int min = ecs[0].second;
+        for (pair<int, int> ec : ecs)
+            if (ec.second < min)
+                min = ec.second;
+        for (pair<int, int> ec : ecs)
+            if (ec.second == min)
+                min_eccs.push_back(ec.first);
+        return min_eccs;
+    }
+
+    vector<double> average_dist_from_vectors(vector<int> centers)
+    {
+        vector<double> sum_dists(array_size, 0);
+        for (int center : centers) {
+            vector<int> dists = shortest_dists_from(center);
+            for (int i = 0; i < array_size; ++i)
+                sum_dists[i] += dists[i];
+        }
+        for (int i = 0; i < array_size; ++i)
+            sum_dists[i] /= array_size;
+        return sum_dists;
+    }
+
+    vector<int> shortest_dists_from(int s)
+    {
+        int INF = INT_MAX;
+        int COST = 1; // unweighted
+        vector<int> d(array_size, INF);
+        d[s] = 0;
+        typedef pair<int, int> node; // <dist, id>
+        priority_queue<node, vector<node>, greater<node>> pq;
+        pq.push(node(0, s));
+        while (!pq.empty()) {
+            node v = pq.top();
+            pq.pop();
+            int nd = v.second;
+            int dist = v.first;
+            for (auto nb : neighbors_of[nd])
+                if (dist + COST < d[nb]) {
+                    d[nb] = dist + COST;
+                    pq.push(node(d[nb], nb));
+                }
+        }
+        return d;
     }
 
     int shortest_dist(int s, int t)

@@ -185,6 +185,21 @@ degree-subtree-chart() {
     open $filename
 }
 
+degree-dist_leaf() {
+    echo "g++ src/evaluate/degree-dist_leaf.cpp -o ./degree-dist_leaf --std=c++17"
+    g++ src/evaluate/degree-dist_leaf.cpp -o ./degree-dist_leaf --std=c++17
+    echo "./degree-dist_leaf $1 $2"
+    ./degree-dist_leaf $1 $2
+    rm ./degree-dist_leaf
+}
+
+degree-dist_leaf-chart() {
+    echo "python3 src/box_plot.py degree-dist_leaf $1 $2 dist_leaf degree"
+    python3 src/box_plot.py degree-dist_leaf $1 $2 dist_leaf degree
+    filename="charts/degree-dist_leaf/"$2"-"$1".pdf"
+    open $filename
+}
+
 bc-branch() {
     echo "g++ src/evaluate/bc-branch.cpp -o ./bc-branch --std=c++17"
     g++ src/evaluate/bc-branch.cpp -o ./bc-branch --std=c++17
@@ -298,6 +313,11 @@ case $1 in
     degree-subtree $2 $3
     degree-subtree-chart $2 $3
     correl "degree-subtree" $2 $3
+    ;;
+"degree-dist_leaf")
+    degree-dist_leaf $2 $3
+    degree-dist_leaf-chart $2 $3
+    correl "degree-dist_leaf" $2 $3
     ;;
 "bc-branch")
     bc-branch $2 $3

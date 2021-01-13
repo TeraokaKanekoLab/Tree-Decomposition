@@ -10,7 +10,6 @@ int main(int argc, char* argv[])
     Tree_Decomposition t;
     string path_to_t = "tree/" + width + "-" + filename + ".tree";
     t.read_tree(path_to_t);
-    vector<int> eccentricities = t.get_eccentricities();
 
     Betweenness_centrality b;
     string path_to_b = "data/betweenness_centrality/" + filename + ".bc";

@@ -8,18 +8,24 @@ int main(int argc, char* argv[])
     string filename = argv[1];
     string width = "5";
 
-    // Graph g;
-    // g.read_graph("graph/fb-pages-artist.gr");
+    Graph g;
+    g.read_graph("graph/fb-pages-artist.gr");
 
-    Tree_Decomposition t;
-    cout << "loading..." << endl;
-    t.read_tree("tree/" + width + "-" + filename + ".tree");
-    vector<int> bags = t.all_bags();
-    for (int bag : bags)
-        cout << bag << ": " << t.subtree_size(bag) << endl;
+    // Tree_Decomposition t;
+    // cout << "loading..." << endl;
+    // t.read_tree("tree/" + width + "-" + filename + ".tree");
+    // vector<int> bags = t.all_bags();
+    // for (int bag : bags)
+    //     cout << bag << ": " << t.subtree_size(bag) << endl;
 
     // Communities c;
     // c.read_community("graph/community/com-amazon.cm");
+
+    Eccentricity e;
+    e.read_eccentricity("data/eccentricity/" + filename + ".eccentricity");
+    vector<pair<int, int>> eccs = e.get_eccentricity();
+
+    print_vector(g.compute_centers(eccs));
 
     return 0;
 }
