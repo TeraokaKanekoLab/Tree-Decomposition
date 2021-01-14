@@ -10,44 +10,44 @@ tree() {
     echo "python3 src/evaluate/tree.py $1 $2"
     python3 src/evaluate/tree.py $1 $2
     filename="tree/figures/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
 }
 
 graph() {
     echo "python3 src/evaluate/graph_draw.py $1 $2"
     python3 src/evaluate/graph_draw.py $1 $2
     filename="graph/figures/"$2".pdf"
-    # open $filename
+    open $filename
 }
 
 read_tree() {
     echo "python3 src/evaluate/read_tree.py $1 $2"
     python3 src/evaluate/read_tree.py $1 $2
     filename="charts/tree-graph/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
 }
 
 dist_root() {
     echo "python3 src/evaluate/dist_root.py $1 $2"
     python3 src/evaluate/dist_root.py $1 $2
     filename="charts/dist_root/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
 }
 
 dist_leaf() {
     echo "python3 src/evaluate/dist_leaf.py $1 $2"
     python3 src/evaluate/dist_leaf.py $1 $2
     filename="charts/dist_leaf/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
 }
 
 open-chart() {
     filename="charts/tree-graph/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
     filename="charts/dist_root/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
     filename="charts/dist_leaf/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
 }
 
 community() {
@@ -62,7 +62,7 @@ community-chart() {
     echo "python3 src/scatter_chart.py community $1 $2 community\ size subtree\ size"
     python3 src/scatter_chart.py community $1 $2 community\ size subtree\ size
     filename="charts/community/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
 }
 
 connection() {
@@ -77,7 +77,7 @@ connection-chart() {
     echo "python3 src/scatter_chart.py connection $1 $2 connection\ in\ graph connection\ in\ tree"
     python3 src/scatter_chart.py connection $1 $2 connection\ in\ graph connection\ in\ tree
     filename="charts/connection/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
 }
 
 bc-child() {
@@ -92,7 +92,7 @@ bc-child-chart() {
     echo "python3 src/box_plot.py bc-child $1 $2 \#\ of\ children\ in\ tree betweenness\ centrality\ in\ graph"
     python3 src/box_plot.py bc-child $1 $2 \#\ of\ children\ in\ tree betweenness\ centrality\ in\ graph
     filename="charts/bc-child/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
 }
 
 bc-eccentricity() {
@@ -107,7 +107,7 @@ bc-eccentricity-chart() {
     echo "python3 src/box_plot.py bc-eccentricity $1 $2 eccentricity\ in\ tree betweenness\ centrality\ in\ graph"
     python3 src/box_plot.py bc-eccentricity $1 $2 eccentricity\ in\ tree betweenness\ centrality\ in\ graph
     filename="charts/bc-eccentricity/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
 }
 
 bc-bagsize() {
@@ -122,7 +122,7 @@ bc-bagsize-chart() {
     echo "python3 src/box_plot.py bc-bagsize $1 $2 bagsize\ in\ tree betweenness\ centrality\ in\ graph"
     python3 src/box_plot.py bc-bagsize $1 $2 bagsize\ in\ tree betweenness\ centrality\ in\ graph
     filename="charts/bc-bagsize/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
 }
 
 bc-width() {
@@ -137,7 +137,7 @@ bc-width-chart() {
     echo "python3 src/box_plot.py bc-width $1 $2 width\ in\ tree betweenness\ centrality"
     python3 src/box_plot.py bc-width $1 $2 width\ in\ tree betweenness\ centrality
     filename="charts/bc-width/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
 }
 
 bc-dist_leaf() {
@@ -152,7 +152,7 @@ bc-dist_leaf-chart() {
     echo "python3 src/box_plot.py bc-dist_leaf $1 $2 distance\ from\ furthest\ descendant\ in\ tree betweenness\ centrality\ in\ graph"
     python3 src/box_plot.py bc-dist_leaf $1 $2 distance\ from\ furthest\ descendant\ in\ tree betweenness\ centrality\ in\ graph
     filename="charts/bc-dist_leaf/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
 }
 
 ec-dist_leaf() {
@@ -167,7 +167,7 @@ ec-dist_leaf-chart() {
     echo "python3 src/box_plot.py ec-dist_leaf $1 $2 distance\ from\ furthest\ descendant\ in\ tree eccentricity\ in\ graph"
     python3 src/box_plot.py ec-dist_leaf $1 $2 distance\ from\ furthest\ descendant\ in\ tree eccentricity\ in\ graph
     filename="charts/ec-dist_leaf/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
 }
 
 bc-subtree() {
@@ -182,7 +182,37 @@ bc-subtree-chart() {
     echo "python3 src/box_plot.py bc-subtree $1 $2 subtree\ size betweenness\ centrality\ in\ graph"
     python3 src/box_plot.py bc-subtree $1 $2 subtree\ size betweenness\ centrality\ in\ graph
     filename="charts/bc-subtree/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
+}
+
+bc-induce() {
+    echo "g++ src/evaluate/bc-induce.cpp -o ./bc-induce --std=c++17"
+    g++ src/evaluate/bc-induce.cpp -o ./bc-induce --std=c++17
+    echo "./bc-induce $1 $2"
+    ./bc-induce $1 $2
+    rm ./bc-induce
+}
+
+bc-induce-chart() {
+    echo "python3 src/box_plot.py bc-induce $1 $2 induced\ subtree\ size betweenness\ centrality\ in\ graph"
+    python3 src/box_plot.py bc-induce $1 $2 induced\ subtree\ size betweenness\ centrality\ in\ graph
+    filename="charts/bc-induce/"$2"-"$1".pdf"
+    open $filename
+}
+
+bc-mainstream() {
+    echo "g++ src/evaluate/bc-mainstream.cpp -o ./bc-mainstream --std=c++17"
+    g++ src/evaluate/bc-mainstream.cpp -o ./bc-mainstream --std=c++17
+    echo "./bc-mainstream $1 $2"
+    ./bc-mainstream $1 $2
+    rm ./bc-mainstream
+}
+
+bc-mainstream-chart() {
+    echo "python3 src/box_plot.py bc-mainstream $1 $2 is\ in\ mainstream betweenness\ centrality\ in\ graph"
+    python3 src/box_plot.py bc-mainstream $1 $2 is\ in\ mainstream betweenness\ centrality\ in\ graph
+    filename="charts/bc-mainstream/"$2"-"$1".pdf"
+    open $filename
 }
 
 degree-subtree() {
@@ -197,7 +227,7 @@ degree-subtree-chart() {
     echo "python3 src/box_plot.py degree-subtree $1 $2 subtree\ size\ in\ tree degree\ in\ graph"
     python3 src/box_plot.py degree-subtree $1 $2 subtree\ size\ in\ tree degree\ in\ graph
     filename="charts/degree-subtree/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
 }
 
 degree-dist_leaf() {
@@ -212,7 +242,7 @@ degree-dist_leaf-chart() {
     echo "python3 src/box_plot.py degree-dist_leaf $1 $2 distance\ from\ furthest\ descendant\ in\ tree degree\ in\ graph"
     python3 src/box_plot.py degree-dist_leaf $1 $2 distance\ from\ furthest\ descendant\ in\ tree degree\ in\ graph
     filename="charts/degree-dist_leaf/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
 }
 
 center-dist_leaf() {
@@ -227,7 +257,7 @@ center-dist_leaf-chart() {
     echo "python3 src/box_plot.py center-dist_leaf $1 $2 distance\ from\ furthest\ descendant\ in\ tree average\ distance\ from\ centers\ in\ graph"
     python3 src/box_plot.py center-dist_leaf $1 $2 distance\ from\ furthest\ descendant\ in\ tree average\ distance\ from\ centers\ in\ graph
     filename="charts/center-dist_leaf/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
 }
 
 center-dist_root() {
@@ -242,7 +272,7 @@ center-dist_root-chart() {
     echo "python3 src/box_plot.py center-dist_root $1 $2 distance\ from\ root\ in\ tree average\ distance\ from\ centers\ in\ graph"
     python3 src/box_plot.py center-dist_root $1 $2 distance\ from\ root\ in\ tree average\ distance\ from\ centers\ in\ graph
     filename="charts/center-dist_root/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
 }
 
 bc-branch() {
@@ -257,7 +287,7 @@ bc-branch-chart() {
     echo "python3 src/box_plot.py bc-branch $1 $2 size\ of\ subtree\ with\ branch\ in\ tree betweenness\ centrality\ in\ graph"
     python3 src/box_plot.py bc-branch $1 $2 size\ of\ subtree\ with\ branch\ in\ tree betweenness\ centrality\ in\ graph
     filename="charts/bc-branch/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
 }
 
 bc-ec() {
@@ -272,7 +302,22 @@ bc-ec-chart() {
     echo "python3 src/box_plot.py bc-ec $1 $2 eccentricity\ in\ graph betweenness\ centrality\ in\ graph"
     python3 src/box_plot.py bc-ec $1 $2 eccentricity\ in\ graph betweenness\ centrality\ in\ graph
     filename="charts/bc-ec/"$2"-"$1".pdf"
-    # open $filename
+    open $filename
+}
+
+select_top() {
+    echo "g++ src/evaluate/select_top.cpp -o ./select_top --std=c++17"
+    g++ src/evaluate/select_top.cpp -o ./select_top --std=c++17
+    echo "./select_top $1 $2"
+    ./select_top $1 $2
+    rm ./select_top
+}
+
+select_top-chart() {
+    echo "python3 src/chart/size-dist.py $1 $2"
+    python3 src/chart/size-dist.py $1 $2
+    filename="charts/select_top/"$2"-"$1".pdf"
+    open $filename
 }
 
 correl() {
@@ -286,6 +331,14 @@ ex() {
     echo "./ex $1"
     ./ex $1
     rm ./ex
+}
+
+write_data() {
+    echo "g++ src/ex/write_data.cpp -o write_data --std=c++17"
+    g++ src/ex/write_data.cpp -o write_data --std=c++17
+    echo "./write_data $1"
+    ./write_data $1
+    rm ./write_data
 }
 
 case $1 in
@@ -349,10 +402,23 @@ case $1 in
     bc-dist_leaf-chart $2 $3
     correl "bc-dist_leaf" $2 $3
     ;;
+"bc-dist_leaf-chart")
+    bc-dist_leaf-chart $2 $3
+    ;;
 "bc-subtree")
     bc-subtree $2 $3
     bc-subtree-chart $2 $3
     correl "bc-subtree" $2 $3
+    ;;
+"bc-induce")
+    bc-induce $2 $3
+    bc-induce-chart $2 $3
+    correl "bc-induce" $2 $3
+    ;;
+"bc-mainstream")
+    bc-mainstream $2 $3
+    bc-mainstream-chart $2 $3
+    correl "bc-mainstream" $2 $3
     ;;
 "degree-subtree")
     degree-subtree $2 $3
@@ -400,6 +466,13 @@ case $1 in
 "ex")
     ex $2
     ;;
+"write_data")
+    write_data $2
+    ;;
+"select_top")
+    select_top $2 $3
+    select_top-chart $2 $3
+    ;;
 "all")
     bc-child $2 $3
     bc-child-chart $2 $3
@@ -413,6 +486,10 @@ case $1 in
     bc-dist_leaf-chart $2 $3
     bc-subtree $2 $3
     bc-subtree-chart $2 $3
+    bc-induce $2 $3
+    bc-induce-chart $2 $3
+    bc-mainstream $2 $3
+    bc-mainstream-chart $2 $3
     degree-subtree $2 $3
     degree-subtree-chart $2 $3
     degree-dist_leaf $2 $3

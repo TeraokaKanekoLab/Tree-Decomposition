@@ -6,6 +6,7 @@ class Tree_Decomposition {
     vector<vector<int>> children;
     unordered_set<int> bags;
     unordered_set<int> leaves;
+    unordered_set<int> mainstream;
     int array_size;
     int root;
     vector<int> children_of_core;
@@ -15,6 +16,7 @@ class Tree_Decomposition {
     vector<int> dist_from_root;
     vector<int> widths;
     vector<int> subtree_sizes;
+    vector<int> num_bags_including;
 
     int compute_eccentricity_from_child(int nd)
     {
@@ -175,6 +177,23 @@ public:
         return nodes_in_bags[nd].size();
     }
 
+    int subtree_size_induced_by(int nd)
+    {
+        if (!exists(nd))
+            return 0;
+        if (num_bags_including.size() < array_size) {
+            num_bags_including.resize(array_size, 0);
+            for (int bag : bags) {
+                num_bags_including[bag] = 1;
+            }
+            for (auto nodes_in_bag : nodes_in_bags)
+                for (int node : nodes_in_bag)
+                    num_bags_including[node]++;
+        }
+
+        return num_bags_including[nd];
+    }
+
     int compute_width(int nd)
     {
         if (widths.size() == 0)
@@ -315,9 +334,33 @@ public:
             dist_from_root.resize(array_size, 0);
         if (dist_from_root[nd])
             return dist_from_root[nd];
-        int d = dist_from_root[parent_of(nd)] + 1;
+        if (nd == root)
+            return 0;
+        int parent = parent_of(nd);
+        int d = compute_dist_from_root(parent) + 1;
         dist_from_root[nd] = d;
         return d;
+    }
+
+    bool is_in_mainstream(int nd)
+    {
+        if (mainstream.size() != 0)
+            return mainstream.find(nd) != mainstream.end();
+
+        int max = 0;
+        for (int bag : bags) {
+            int d = compute_dist_from_root(bag);
+            if (max < d)
+                max = d;
+        }
+        for (int bag : bags) {
+            int d = compute_dist_from_root(bag);
+            if (d == max)
+                for (int b : path_from_root(bag))
+                    mainstream.insert(b);
+        }
+
+        return mainstream.find(nd) != mainstream.end();
     }
 
     vector<int> path_from_root(int nd)

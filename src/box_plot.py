@@ -56,6 +56,7 @@ def draw_chart(data_to_plot, x_tick_label):
     print(saved_name)
     fig, axes = plt.subplots(figsize=(12, 8))
     plt.boxplot(data_to_plot, sym="")
+    # plt.boxplot(data_to_plot)
     axes.set_xticklabels(x_tick_label)
     plt.xlabel(x_axis_title)
     plt.ylabel(y_axis_title)
