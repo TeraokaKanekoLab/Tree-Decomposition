@@ -14,21 +14,19 @@ int main(int argc, char* argv[])
     Tree_Decomposition t;
     cout << "loading..." << endl;
     t.read_tree("tree/" + width + "-" + filename + ".tree");
-    // vector<int> bags = t.all_bags();
-    // for (int bag : bags)
-    //     cout << bag << ": " << t.subtree_size(bag) << endl;
+    vector<int> bags = t.all_bags();
 
     // Communities c;
     // c.read_community("graph/community/com-amazon.cm");
 
-    Eccentricity e;
-    e.read_eccentricity("data/eccentricity/" + filename + ".eccentricity");
-    vector<pair<int, int>> eccs = e.get_eccentricity();
+    // Eccentricity e;
+    // e.read_eccentricity("data/eccentricity/" + filename + ".eccentricity");
+    // vector<pair<int, int>> eccs = e.get_eccentricity();
 
-    vector<int> centers = g.compute_centers(eccs);
-
-    for (int center : centers) {
-        cout << center << ": " << t.num_children(center) << endl;
+    string output_name = "output/" + filename + ".csv";
+    ofstream output(output_name);
+    for (int bag : bags) {
+        output << t.dist_from_leaf(bag) << " " << t.subtree_size_induced_by(bag) << endl;
     }
 
     return 0;
