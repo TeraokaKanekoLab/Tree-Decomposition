@@ -41,9 +41,9 @@ public:
                 start = std::chrono::steady_clock::now();
             }
             remove_cnt++;
-            end = std::chrono::steady_clock::now();
             add_to_stack(nd, nbrs);
             contract(nd);
+            end = std::chrono::steady_clock::now();
         }
         end = std::chrono::steady_clock::now();
         auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
