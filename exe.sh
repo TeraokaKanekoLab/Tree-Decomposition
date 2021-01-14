@@ -6,6 +6,14 @@ mdh() {
     rm ./mdh
 }
 
+sbr() {
+    echo "g++ src/sbr.cpp -o ./sbr --std=c++17"
+    g++ src/sbr.cpp -o ./sbr --std=c++17
+    echo "./sbr $1 $2"
+    ./sbr $1 $2
+    rm ./sbr
+}
+
 tree() {
     echo "python3 src/evaluate/tree.py $1 $2"
     python3 src/evaluate/tree.py $1 $2
@@ -344,6 +352,10 @@ write_data() {
 case $1 in
 "mdh")
     mdh $2 $3
+    # tree mdh $2 $3
+    ;;
+"sbr")
+    sbr $2 $3
     # tree mdh $2 $3
     ;;
 "tree")

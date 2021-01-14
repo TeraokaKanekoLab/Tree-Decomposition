@@ -37,7 +37,7 @@ public:
             if (deg > crnt_deg) {
                 end = std::chrono::steady_clock::now();
                 auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
-                make_tree();
+                // make_tree();
                 export_info(output, crnt_deg, remove_cnt, true_num_nodes, int(duration.count()), true_num_nodes);
                 crnt_deg = deg;
                 start = std::chrono::steady_clock::now();

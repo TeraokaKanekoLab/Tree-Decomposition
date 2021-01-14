@@ -47,7 +47,7 @@ public:
         }
         end = std::chrono::steady_clock::now();
         auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
-        // make_tree();
+        make_tree();
         export_info(output, tree_width, remove_cnt, true_num_nodes, int(duration.count()), true_num_nodes);
         output.close();
         cout << "result written to " << output_name << endl;
