@@ -32,6 +32,7 @@ public:
             }
             // print_neighbor(u, nbrs);
             if (true_deg > tree_width) {
+                end = std::chrono::steady_clock::now();
                 // when we come here, the last chrono::steady_clock::time_point& end
                 // is the end of the execution with the tree_width
                 auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
@@ -43,7 +44,6 @@ public:
             remove_cnt++;
             add_to_stack(nd, nbrs);
             contract(nd);
-            end = std::chrono::steady_clock::now();
         }
         end = std::chrono::steady_clock::now();
         auto duration = chrono::duration_cast<chrono::microseconds>(end - start);
