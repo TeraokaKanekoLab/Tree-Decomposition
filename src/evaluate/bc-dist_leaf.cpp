@@ -1,4 +1,5 @@
 #include "../betweenness_centrality.hpp"
+#include "../graph.hpp"
 #include "../tree_decomposition.hpp"
 #include "../util.hpp"
 
@@ -16,6 +17,9 @@ int main(int argc, char* argv[])
     b.read_betweenness_centrality(path_to_b);
     vector<pair<int, double>> bcs = b.get_betweenness_centrality();
 
+    Graph g;
+    g.read_graph("graph/" + filename + ".gr");
+
     string output_name = "output/bc-dist_leaf/" + width + "-" + filename + ".output";
     ofstream output(output_name);
 
@@ -23,6 +27,7 @@ int main(int argc, char* argv[])
         int nd = bc_pair.first;
         double bc = bc_pair.second;
         int dl = t.dist_from_leaf(nd);
+        // int dl = g.degree(nd);
         output << dl << " " << bc << endl;
     }
     cout << "result written to " << output_name << endl;

@@ -12,7 +12,7 @@ void print_vector(vector<int> v)
     }
     cout << "]" << endl;
 }
-void print_pair_vector(vector<pair<int, int>> v)
+void print_pair_vector(vector<pair<double, int>> v)
 {
     if (v.size() == 0) {
         cout << "[]" << endl;

@@ -359,6 +359,7 @@ public:
                 for (int b : path_from_root(bag))
                     mainstream.insert(b);
         }
+        cout << "#nodes = " << mainstream.size() << "(" << (double)mainstream.size() / num_bags() * 100 << "%)" << endl;
 
         return mainstream.find(nd) != mainstream.end();
     }
