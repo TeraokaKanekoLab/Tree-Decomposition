@@ -313,18 +313,18 @@ bc-ec-chart() {
     open $filename
 }
 
-select_top() {
-    echo "g++ src/evaluate/select_top.cpp -o ./select_top --std=c++17"
-    g++ src/evaluate/select_top.cpp -o ./select_top --std=c++17
-    echo "./select_top $1 $2"
-    ./select_top $1 $2
-    rm ./select_top
+select-top() {
+    echo "g++ src/evaluate/select-top.cpp -o ./select-top --std=c++17"
+    g++ src/evaluate/select-top.cpp -o ./select-top --std=c++17
+    echo "./select-top $1 $2"
+    ./select-top $1 $2
+    rm ./select-top
 }
 
-select_top-chart() {
-    echo "python3 src/chart/size-dist.py $1 $2"
-    python3 src/chart/size-dist.py $1 $2
-    filename="charts/select_top/"$2"-"$1".pdf"
+select-top-chart() {
+    echo "python3 src/chart/select-top.py $1 $2"
+    python3 src/chart/select-top.py $1 $2
+    filename="charts/select-top/"$2"-"$1".pdf"
     open $filename
 }
 
@@ -481,9 +481,9 @@ case $1 in
 "write_data")
     write_data $2
     ;;
-"select_top")
-    select_top $2 $3
-    select_top-chart $2 $3
+"select-top")
+    select-top $2 $3
+    select-top-chart $2 $3
     ;;
 "all")
     bc-child $2 $3
