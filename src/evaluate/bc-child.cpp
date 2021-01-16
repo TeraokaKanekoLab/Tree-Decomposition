@@ -19,6 +19,7 @@ int main(int argc, char* argv[])
     string output_name = "output/bc-child/" + width + "-" + filename + ".output";
     ofstream output(output_name);
 
+    cout << "root: " << t.get_root() << endl;
     for (auto bc_pair : bcs) {
         int nd = bc_pair.first;
         double bc = bc_pair.second;

@@ -59,7 +59,7 @@ def draw_chart(x_axis, y_axis1, y_axis2, y_axis3, y_axis4, y_axis5, y_axis6):
     print(saved_name)
     plt.xlim(0, 100)
     plt.ylim(0, 100)
-    plt.xlabel("top x % with highest betweenness eccentricity")
+    plt.xlabel("top x % with highest betweenness centrality")
     plt.ylabel("% of included nodes")
     plt.title(filename)
     plt.legend(loc="lower right", fontsize=8)  # (7)凡例表示

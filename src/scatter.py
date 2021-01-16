@@ -23,14 +23,14 @@ def read_file():
 
 def draw_chart(x_axis, y_axis):
     plt.scatter(x_axis, y_axis, c="r")
-    saved_name = "charts/" + chart_type + "/" + arg_width + "-" + filename + ".pdf"
+    saved_name = "charts/" + chart_type + "/scatter-" + \
+        arg_width + "-" + filename + ".pdf"
     print(saved_name)
     plt.xlim(left=0)
     plt.ylim(bottom=0)
     plt.xlabel(x_axis_title)
     plt.ylabel(y_axis_title)
-    plt.title(y_axis_title + " over " + x_axis_title + "; " +
-              arg_width + ": " + filename)
+    plt.title(y_axis_title + " over " + x_axis_title + ": " + filename)
     plt.savefig(saved_name)
 
 

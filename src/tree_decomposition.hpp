@@ -17,6 +17,7 @@ class Tree_Decomposition {
     vector<int> widths;
     vector<int> subtree_sizes;
     vector<int> num_bags_including;
+    vector<vector<int>> bags_including;
 
     int compute_eccentricity_from_child(int nd)
     {
@@ -99,6 +100,11 @@ public:
         bags.insert(nd);
     }
 
+    int get_root()
+    {
+        return root;
+    }
+
     void read_tree(string path)
     {
         ifstream file(path);
@@ -177,6 +183,16 @@ public:
         return nodes_in_bags[nd].size();
     }
 
+    int total_subtree_size_induced_by(int nd)
+    {
+        int size = 0;
+        for (int bag : compute_bags_including(nd)) {
+            size += nodes_in_bags[bag].size();
+        }
+
+        return size;
+    }
+
     int subtree_size_induced_by(int nd)
     {
         if (!exists(nd))
@@ -192,6 +208,26 @@ public:
         }
 
         return num_bags_including[nd];
+    }
+
+    vector<int> compute_bags_including(int nd)
+    {
+        if (!exists(nd))
+            return vector<int>();
+        if (bags_including.size() < array_size) {
+            bags_including.resize(array_size, vector<int>());
+            for (int bag : bags)
+                bags_including[bag].push_back(nd);
+
+            // for (auto nodes_in_bag : nodes_in_bags)
+            for (int i = 0; i < nodes_in_bags.size(); ++i) {
+                vector<int> nodes_in_bag = nodes_in_bags[i];
+                for (int node : nodes_in_bag)
+                    bags_including[node].push_back(i);
+            }
+        }
+
+        return bags_including[nd];
     }
 
     int compute_width(int nd)
@@ -443,6 +479,38 @@ public:
         }
         subtree_sizes[nd] = size;
         return size;
+    }
+
+    int compute_betweenness_centrality(int nd)
+    {
+        if (nd == root)
+            return 0;
+        if (leaves.find(nd) != leaves.end())
+            return 0;
+        vector<int> components;
+        components.push_back(num_bags() - subtree_size(nd));
+        for (int child : children_of(nd)) {
+            components.push_back(subtree_size(child));
+        }
+
+        int paths = 0;
+        for (int i = 0; i < components.size() - 1; ++i) {
+            for (int j = i + 1; j < components.size(); ++j) {
+                paths += components[i] * components[j];
+            }
+        }
+        return paths;
+    }
+
+    int depth()
+    {
+        int max = 0;
+        for (int nd : all_bags()) {
+            int d = compute_dist_from_root(nd);
+            if (d > max)
+                max = d;
+        }
+        return max;
     }
 
     void export_info(string filepath)
