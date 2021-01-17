@@ -23,7 +23,7 @@ def read_graph():
 
 
 def write_to_file(bcs):
-    saved_name = "output/betweenness_centrality/" + sys.argv[1] + ".bc"
+    saved_name = "data/betweenness_centrality/" + sys.argv[1] + ".bc"
     f = open(saved_name, "w")
     for key in bcs:
         line = str(key) + " " + str(bcs[key]) + "\n"
