@@ -12,7 +12,7 @@ void print_vector(vector<int> v)
     }
     cout << "]" << endl;
 }
-void print_pair_vector(vector<pair<double, int>> v)
+void print_pair_vector(vector<pair<int, int>> v)
 {
     if (v.size() == 0) {
         cout << "[]" << endl;
@@ -34,4 +34,28 @@ void print_vector_with_index(vector<int> v)
     for (int i = 0; i < v.size(); i++) {
         cout << i << ": " << v[i] << endl;
     }
+}
+void print_vector_second(vector<pair<int, int>> v)
+{
+    if (v.size() == 0) {
+        cout << "[]" << endl;
+        return;
+    }
+    cout << "[" << v[0].second;
+    for (int i = 1; i < v.size(); ++i) {
+        cout << ", " << v[i].second;
+    }
+    cout << "]" << endl;
+}
+void print_vector_second_double(vector<pair<double, int>> v)
+{
+    if (v.size() == 0) {
+        cout << "[]" << endl;
+        return;
+    }
+    cout << "[" << v[0].second;
+    for (int i = 1; i < v.size(); ++i) {
+        cout << ", " << v[i].second;
+    }
+    cout << "]" << endl;
 }

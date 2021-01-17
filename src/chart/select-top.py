@@ -46,7 +46,7 @@ def draw_chart(x_axis, y_axis1, y_axis2, y_axis3, y_axis4, y_axis5, y_axis6):
                                                 for i in range(0, 101, 10)])
     plt.yticks([i for i in range(0, 101, 10)], [str(i)
                                                 for i in range(0, 101, 10)])
-    plt.plot(x_axis, y_axis1,  c="r",  label="1%")
+    # plt.plot(x_axis, y_axis1,  c="r",  label="1%")
     plt.plot(x_axis, y_axis2,  c="g", label="5%")
     plt.plot(x_axis, y_axis3,  c="b", label="10%")
     plt.plot(x_axis, y_axis4,  c="c", label="15%")

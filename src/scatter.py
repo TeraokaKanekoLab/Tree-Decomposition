@@ -11,7 +11,7 @@ def read_file():
     y_axis = []
     s = set()
     for line in lines:
-        left = int(line.split()[0])
+        left = float(line.split()[0])
         right = float(line.split()[1])
         if (left, right) in s:
             continue

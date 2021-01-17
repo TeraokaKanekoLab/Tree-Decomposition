@@ -1,3 +1,4 @@
+from typing import Counter
 import networkx as nx
 from networkx.algorithms.distance_measures import eccentricity, diameter
 from networkx.algorithms.cluster import average_clustering
@@ -26,15 +27,19 @@ def read_graph():
 
 if __name__ == "__main__":
     graph = read_graph()
-
-    nd1 = 2
-    nd2 = 34
-    # dist_in_graph = find_path(graph, nd1, nd2)[3]
-    # print("dist(" + str(nd1) + ", " + str(nd2) + ") = " + str(dist_in_graph))\
-    # eccentricity = eccentricity(graph, nd1)
-    x = average_clustering(graph)
-    print("average_clustering() = " + str(x))
-    # x = diameter(graph)
-    # print("diameter() = " + str(x))
-    x = betweenness_centrality(graph)
-    print("betweenness_centrality() =", x)
+    degs = []
+    for nd in graph.nodes:
+        degs.append(graph.degree(nd))
+    c = Counter(degs)
+    degs = list(c.items())
+    degs.sort(reverse=True)
+    print("{", end='')
+    for deg in degs:
+        if deg[1] < 2:
+            continue
+        if deg[0] == 2:
+            print(deg[0], end='')
+            break
+        msg = str(deg[0]) + ", "
+        print(msg, end='')
+    print("}")

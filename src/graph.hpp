@@ -282,4 +282,12 @@ public:
 
         return (double)sum / get_num_nodes();
     }
+
+    double average_degree_of_neighbors(int nd)
+    {
+        int sum = 0;
+        for (int nbr : neighbors(nd))
+            sum += degree(nbr);
+        return (double)sum / neighbors(nd).size();
+    }
 };

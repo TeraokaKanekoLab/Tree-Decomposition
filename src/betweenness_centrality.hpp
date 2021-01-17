@@ -2,6 +2,7 @@
 
 class Betweenness_centrality {
     vector<pair<int, double>> bcs;
+    unordered_map<int, double> bc_map;
 
 public:
     void read_betweenness_centrality(string path)
@@ -25,11 +26,19 @@ public:
 
             double bc = stod(line);
             bcs.push_back(make_pair(nd, bc));
+            bc_map[nd] = bc;
         }
     }
 
     vector<pair<int, double>> get_betweenness_centrality()
     {
         return bcs;
+    }
+
+    double betweenness_centrality_of(int nd)
+    {
+        if (bc_map.find(nd) == bc_map.end())
+            return -1;
+        return bc_map[nd];
     }
 };

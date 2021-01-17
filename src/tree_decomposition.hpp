@@ -18,6 +18,8 @@ class Tree_Decomposition {
     vector<int> subtree_sizes;
     vector<int> num_bags_including;
     vector<vector<int>> bags_including;
+    vector<int> latest_remove_order_of;
+    vector<int> latest_remove_order;
 
     int compute_eccentricity_from_child(int nd)
     {
@@ -92,17 +94,40 @@ public:
     void add_bag(int nd)
     {
         if (vector_is_small(nd)) {
-            nodes_in_bags.resize(nd + 1, vector<int>());
-            parents.resize(nd + 1);
-            children.resize(nd + 1, vector<int>());
             array_size = nd + 1;
+            nodes_in_bags.resize(array_size, vector<int>());
+            parents.resize(array_size);
+            children.resize(array_size, vector<int>());
+            latest_remove_order_of.resize(array_size);
         }
+        latest_remove_order.push_back(nd);
+        latest_remove_order_of[nd] = latest_remove_order.size();
         bags.insert(nd);
     }
 
     int get_root()
     {
         return root;
+    }
+
+    int get_array_size()
+    {
+        return array_size;
+    }
+
+    int get_remove_order_of(int nd)
+    {
+        if (!exists(nd))
+            return -1;
+        return num_bags() - latest_remove_order_of[nd] + 1;
+    }
+
+    int get_node_removed_at(int number)
+    {
+        // 1 origin
+        if (number < 1 || number > array_size - 1)
+            return -1;
+        return latest_remove_order[num_bags() - number];
     }
 
     void read_tree(string path)
@@ -180,7 +205,7 @@ public:
     {
         if (!exists(nd))
             return -1;
-        return nodes_in_bags[nd].size();
+        return nodes_in_bags[nd].size() + 1;
     }
 
     int total_subtree_size_induced_by(int nd)
@@ -232,11 +257,12 @@ public:
 
     int compute_width(int nd)
     {
+        if (!exists(nd))return -1;
         if (widths.size() == 0)
             widths.resize(array_size, 0);
         if (widths[nd])
             return widths[nd];
-        int width = bagsize_of(nd);
+        int width = bagsize_of(nd) - 1;
         for (int child : children[nd]) {
             int child_width = compute_width(child);
             if (child_width > width)

@@ -40,15 +40,16 @@ int main(int argc, char* argv[])
     for (int bag : t.all_bags())
         // if (t.is_in_mainstream(bag))
         // sorted_by_size.push_back(make_pair(t.subtree_size_induced_by(bag), bag));
-        sorted_by_size.push_back(make_pair(t.dist_from_leaf(bag), bag));
-    // sorted_by_size.push_back(make_pair(g.degree(bag), bag));
+        // sorted_by_size.push_back(make_pair(t.dist_from_leaf(bag), bag));
+        // sorted_by_size.push_back(make_pair(g.degree(bag), bag));
+        sorted_by_size.push_back(make_pair(2 * t.subtree_size_induced_by(bag) - g.degree(bag), bag));
     // sorted_by_size.push_back(make_pair(t.num_children(bag), bag));
 
     int num_bags = t.num_bags();
 
     sort(sorted_by_size.begin(), sorted_by_size.end(), greater<pair<int, int>>());
     auto first = sorted_by_size.begin();
-    auto last = sorted_by_size.begin() + num_bags * 1 / 100; // 1%
+    auto last = sorted_by_size.begin() + num_bags * 1 / 100; // 0.1%
     vector<pair<int, int>> top1(first, last);
     last = sorted_by_size.begin() + num_bags * 5 / 100; // 5%
     vector<pair<int, int>> top5(first, last);

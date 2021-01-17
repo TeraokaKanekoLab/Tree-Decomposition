@@ -11,7 +11,7 @@ Y = []
 Y_X = []
 for line in lines:
     line = line.split()
-    x = int(line[0])
+    x = float(line[0])
     y = float(line[1])
     X.append(x)
     Y.append(y)
