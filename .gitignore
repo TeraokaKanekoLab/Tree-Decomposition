@@ -3,6 +3,7 @@ graph/com-orkut.gr
 graph/soc-flickr.gr
 tree/1000000-com-amazon-sbr.tree
 tree/1000000-soc-douban.tree
+tree/1000000-soc-slashdot.tree
 .DS_Store
 */.DS_Store
 .vscode
