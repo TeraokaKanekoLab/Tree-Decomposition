@@ -19,7 +19,8 @@ int main(int argc, char* argv[])
     ofstream output(output_name);
 
     for (auto bc : bcs) {
-        output << bc.second << " " << g.compute_clustering_coefficient(bc.first) << endl;
+        double cc = g.compute_clustering_coefficient(bc.first);
+        output << cc << " " << bc.second << endl;
     }
     cout << "result written to " << output_name << endl;
 

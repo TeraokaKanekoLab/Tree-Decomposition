@@ -24,8 +24,6 @@ int main(int argc, char* argv[])
         int nd = bcs[i].first;
         int deg = g.degree(nd);
         double bc = bcs[i].second;
-        if (deg == 1)
-            continue;
         output << deg << " " << bc << endl;
     }
     cout << "result written to " << output_name << endl;

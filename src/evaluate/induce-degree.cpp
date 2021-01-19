@@ -32,9 +32,13 @@ int main(int argc, char* argv[])
     string output_name = "output/induce-degree/" + width + "-" + filename + ".output";
     ofstream output(output_name);
 
+    int bias = g.degree(600);
+
     for (int bag : all_bags) {
         int subtree = t.subtree_size_induced_by(bag);
         int deg = g.degree(bag);
+        if (deg < bias)
+            continue;
 
         output << deg << " " << subtree << endl;
     }

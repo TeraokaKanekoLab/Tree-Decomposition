@@ -24,7 +24,7 @@ int main(int argc, char* argv[])
     // e.read_eccentricity("data/eccentricity/" + filename + ".eccentricity");
     // vector<pair<int, int>> eccs = e.get_eccentricity();
 
-    vector<int> candidates { 53213, 35290, 38109, 1086 };
+    vector<int> candidates { 4636, 85176, 111161, 1086 };
     for (int cand : candidates) {
         string output_name = "output/nbr-deg/" + to_string(cand) + "-" + filename + ".output";
         ofstream output(output_name);

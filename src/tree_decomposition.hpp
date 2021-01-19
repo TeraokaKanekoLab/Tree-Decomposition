@@ -201,6 +201,13 @@ public:
         return vector<int>();
     }
 
+    vector<int> get_nodes_in_bag(int nd)
+    {
+        if (!exists(nd))
+            return vector<int>();
+        return nodes_in_bags[nd];
+    }
+
     int bagsize_of(int nd)
     {
         if (!exists(nd))
@@ -255,9 +262,21 @@ public:
         return bags_including[nd];
     }
 
+    int num_whisk(int nd)
+    {
+        if (!exists(nd))
+            return -1;
+        int sum = 0;
+        for (int child : children_of(nd))
+            if (num_children(child) == 0)
+                sum++;
+        return sum;
+    }
+
     int compute_width(int nd)
     {
-        if (!exists(nd))return -1;
+        if (!exists(nd))
+            return -1;
         if (widths.size() == 0)
             widths.resize(array_size, 0);
         if (widths[nd])

@@ -4,6 +4,17 @@ import matplotlib as mp
 import matplotlib.pyplot as plt
 
 
+def color_normalize(r, g, b):
+    return [r/256, g/256, b/256]
+
+
+RED = color_normalize(219, 68, 55)
+GREEN = color_normalize(15, 157, 88)
+BLUE = color_normalize(66, 133, 244)
+YELLOW = color_normalize(244, 160, 0)
+BLACK = color_normalize(59, 59, 59)
+
+
 def read_file():
     if len(sys.argv) != 3:
         print("usage: python3", sys.argv[0], "<filename> <width>")
@@ -41,18 +52,21 @@ def draw_chart(x_axis, y_axis1, y_axis2, y_axis3, y_axis4):
                                                   for i in range(11)])
     plt.yticks([i for i in range(0, 101, 10)], [str(i)
                                                 for i in range(0, 101,  10)])
-    plt.plot(x_axis, y_axis1,  c="r",  label="induced subtree size", zorder=10)
-    plt.plot(x_axis, y_axis3,  c="b", label="degree", zorder=5)
-    plt.plot(x_axis, y_axis2,  c="g", label="furthest descendant", zorder=1)
-    plt.plot(x_axis, y_axis4,  c="y", label="2ISS-DEG")
+    plt.plot(x_axis, y_axis1,  c=GREEN,  label="ISS", zorder=50)
+    plt.plot(x_axis, y_axis2,  c=YELLOW, label="#Child", zorder=10)
+    plt.plot(x_axis, y_axis3,  c=RED, label="ISS + #Child", zorder=100)
+    plt.plot(x_axis, y_axis4,  c=BLUE, label="Degree", zorder=5)
     plt.grid(ls='--')
     filename = sys.argv[1]
     width = sys.argv[2]
     saved_name = "charts/select-topk/" + width + "-" + filename + ".pdf"
     print(saved_name)
-    plt.xlim(0, xlim)
+    if (xlim < x_axis[-1]):
+        plt.xlim(0, xlim)
+    else:
+        plt.xlim(left=0)
     plt.ylim(0, 100)
-    plt.xlabel("top x %")
+    plt.xlabel("Top x %")
     plt.ylabel("Accuracy Rate")
     plt.title(filename)
     plt.legend(loc="lower right", fontsize=8)  # (7)凡例表示

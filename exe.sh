@@ -235,6 +235,25 @@ cc-induce-chart() {
     open $filename
 }
 
+cc-induce_degree() {
+    echo "g++ src/evaluate/cc-induce_degree.cpp -o ./cc-induce_degree --std=c++17"
+    g++ src/evaluate/cc-induce_degree.cpp -o ./cc-induce_degree --std=c++17
+    echo "./cc-induce_degree $1 $2"
+    ./cc-induce_degree $1 $2
+    rm ./cc-induce_degree
+}
+
+cc-induce_degree-chart() {
+    echo "python3 src/scatter.py cc-induce_degree $1 $2 ISS\ -\ degree clustering\ coefficient\ in\ graph"
+    python3 src/scatter.py cc-induce_degree $1 $2 ISS\ -\ degree clustering\ coefficient\ in\ graph
+    filename="charts/cc-induce_degree/scatter-"$2"-"$1".pdf"
+    open $filename
+    echo "python3 src/box.py cc-induce_degree $1 $2 ISS\ -\ degree clustering\ coefficient\ in\ graph"
+    python3 src/box.py cc-induce_degree $1 $2 ISS\ -\ degree clustering\ coefficient\ in\ graph
+    filename="charts/cc-induce_degree/box-"$2"-"$1".pdf"
+    open $filename
+}
+
 bc-cc() {
     echo "g++ src/evaluate/bc-cc.cpp -o ./bc-cc --std=c++17"
     g++ src/evaluate/bc-cc.cpp -o ./bc-cc --std=c++17
@@ -417,13 +436,15 @@ bc-degree() {
 }
 
 bc-degree-chart() {
-    echo "python3 src/box.py bc-degree $1 $2 degree\ in\ graph betweenness\ centrality\ in\ graph"
-    python3 src/box.py bc-degree $1 $2 degree\ in\ graph betweenness\ centrality\ in\ graph
     filename="charts/bc-degree/box-"$2"-"$1".pdf"
+    rm $filename
+    echo "python3 src/box.py bc-degree $1 $2 degree\ in\ graph betweenness\ centrality"
+    python3 src/box.py bc-degree $1 $2 degree\ in\ graph betweenness\ centrality
     open $filename
-    echo "python3 src/scatter.py bc-degree $1 $2 degree\ in\ graph betweenness\ centrality\ in\ graph"
-    python3 src/scatter.py bc-degree $1 $2 degree\ in\ graph betweenness\ centrality\ in\ graph
     filename="charts/bc-degree/scatter-"$2"-"$1".pdf"
+    rm $filename
+    echo "python3 src/scatter.py bc-degree $1 $2 degree\ in\ graph betweenness\ centrality"
+    python3 src/scatter.py bc-degree $1 $2 degree\ in\ graph betweenness\ centrality
     open $filename
 }
 
@@ -485,9 +506,9 @@ induce-degree() {
 }
 
 induce-degree-chart() {
-    echo "python3 src/scatter.py induce-degree $1 $2 degree\ in\ graph induced\ subtree\ size"
-    python3 src/scatter.py induce-degree $1 $2 degree\ in\ graph induced\ subtree\ size
-    filename="charts/induce-degree/scatter-"$2"-"$1".pdf"
+    echo "python3 src/box.py induce-degree $1 $2 degree\ in\ graph induced\ subtree\ size"
+    python3 src/box.py induce-degree $1 $2 degree\ in\ graph induced\ subtree\ size
+    filename="charts/induce-degree/box-"$2"-"$1".pdf"
     open $filename
     echo "python3 src/scatter.py induce-degree $1 $2 degree\ in\ graph induced\ subtree\ size"
     python3 src/scatter.py induce-degree $1 $2 degree\ in\ graph induced\ subtree\ size
@@ -521,6 +542,14 @@ ex() {
     echo "./ex $1"
     ./ex $1
     rm ./ex
+}
+
+free() {
+    echo "g++ src/ex/free.cpp -o free --std=c++17"
+    g++ src/ex/free.cpp -o free --std=c++17
+    echo "./free $1 $2"
+    ./free $1 $2
+    rm ./free
 }
 
 analyze() {
@@ -643,6 +672,11 @@ case $1 in
     cc-induce-chart $2 $3
     correl "cc-induce" $2 $3
     ;;
+"cc-induce_degree")
+    cc-induce_degree $2 $3
+    cc-induce_degree-chart $2 $3
+    correl "cc-induce_degree" $2 $3
+    ;;
 "bc-total_induce")
     bc-total_induce $2 $3
     bc-total_induce-chart $2 $3
@@ -734,6 +768,9 @@ case $1 in
 "ex")
     ex $2
     ;;
+"free")
+    free $2 $3
+    ;;
 "analyze")
     analyze $2 $3
     ;;
@@ -748,6 +785,9 @@ case $1 in
     ;;
 "select-top")
     select-top $2 $3
+    select-top-chart $2 $3
+    ;;
+"select-top-chart")
     select-top-chart $2 $3
     ;;
 "select-topk")

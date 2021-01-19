@@ -16,9 +16,9 @@ vector<pair<double, int>> bc_index(vector<pair<int, double>> index_bc)
 int main(int argc, char* argv[])
 {
     string filename = argv[1];
-    // string width = "1000000";
+    string width = "1000000";
     // string width = "5";
-    string width = "10";
+    // string width = "10";
 
     Graph g;
     g.read_graph("graph/" + filename + ".gr");
@@ -39,9 +39,7 @@ int main(int argc, char* argv[])
     Betweenness_centrality b;
     b.read_betweenness_centrality("data/betweenness_centrality/" + filename + ".bc");
     vector<pair<double, int>> bcs = bc_index(b.get_betweenness_centrality());
-    int nd = 4636;
-    cout << "node " << nd << ", order: " << t.get_remove_order_of(nd) << endl;
-    cout << "node " << nd << ", width: " << t.compute_width(nd) << endl;
 
+    
     return 0;
 }

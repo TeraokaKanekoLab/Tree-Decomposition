@@ -47,10 +47,10 @@ def read_file(filepath):
     return x_axis, y_axis
 
 
-def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_axis4, saved_name):
-    plt.plot(x_axis1, y_axis1, c="r", label="53213")
-    plt.plot(x_axis2, y_axis2, c="g", label="35290")
-    plt.plot(x_axis3, y_axis3, c="b", label="38109")
+def draw_plot(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_axis4, saved_name):
+    plt.plot(x_axis1, y_axis1, c="r", label="4636")
+    plt.plot(x_axis2, y_axis2, c="g", label="85176")
+    plt.plot(x_axis3, y_axis3, c="b", label="111161")
     plt.plot(x_axis4, y_axis4, c="y", label="1086")
     print(saved_name)
     plt.xlim(left=0)
@@ -63,7 +63,7 @@ def draw_chart(x_axis1, y_axis1, x_axis2, y_axis2, x_axis3, y_axis3, x_axis4, y_
 
 
 def plot():
-    files = ["53213", "35290", "38109", "1086"]
+    files = ["4636", "85176", "111161", "1086"]
     X = []
     Y = []
     for file in files:
@@ -72,15 +72,15 @@ def plot():
         X.append(x)
         Y.append(y)
 
-    draw_chart(X[0], Y[0], X[1], Y[1], X[2], Y[2],
-               X[3], Y[3], "charts/nbr-deg/yeah.pdf")
+    draw_plot(X[0], Y[0], X[1], Y[1], X[2], Y[2],
+              X[3], Y[3], "charts/nbr-deg/yeah.pdf")
 
 
 if __name__ == '__main__':
     if IS_PLOT:
         plot()
         exit()
-    nodes = [53213, 35290, 38109, 62821, 93504, 92790, 21718, 1086]
+    nodes = [4636, 85176, 111161, 1086]
     graph = read_graph("graph/ca-astroph-connected.gr")
     data_to_plot = []
     for node in nodes:

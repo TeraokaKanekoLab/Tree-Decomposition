@@ -150,6 +150,18 @@ public:
         return d;
     }
 
+    double average_dist_from_node_to_group(int nd, vector<int> group)
+    {
+        if (!exists(nd) || group.size() == 0)
+            return -1;
+        double sum_hop_to_node_in_graph = 0;
+        vector<int> dists = shortest_dists_from(nd);
+        for (int node_in_bag : group)
+            sum_hop_to_node_in_graph += dists[node_in_bag];
+
+        return sum_hop_to_node_in_graph / group.size();
+    }
+
     int shortest_dist(int s, int t)
     {
         int INF = INT_MAX;
