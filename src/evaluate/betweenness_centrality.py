@@ -39,4 +39,4 @@ if __name__ == "__main__":
     end = time.time()
     print("writing result...")
     write_to_file(bcs)
-    print(end-start)
+    write_to_file(end-start)

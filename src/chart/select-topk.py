@@ -54,7 +54,7 @@ def draw_chart(x_axis, y_axis1, y_axis2, y_axis3, y_axis4):
                                                 for i in range(0, 101,  10)])
     plt.plot(x_axis, y_axis1,  c=GREEN,  label="ISS", zorder=50)
     plt.plot(x_axis, y_axis2,  c=YELLOW, label="#Child", zorder=10)
-    plt.plot(x_axis, y_axis3,  c=RED, label="ISS + #Child", zorder=100)
+    plt.plot(x_axis, y_axis3,  c=RED, label="#Strahler", zorder=100)
     plt.plot(x_axis, y_axis4,  c=BLUE, label="Degree", zorder=5)
     plt.grid(ls='--')
     filename = sys.argv[1]

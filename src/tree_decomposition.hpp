@@ -556,11 +556,15 @@ public:
             strahler.resize(array_size, 0);
         if (strahler[nd])
             return strahler[nd];
+        if (num_children(nd) == 0) {
+            strahler[nd] = 1;
+            return 1;
+        }
 
         int max = 0;
         bool should_add_one = false;
-        for (int child : children[nd]) {
-            int child_strahler = strahler[child];
+        for (int child : children_of(nd)) {
+            int child_strahler = compute_strahler(child);
             if (child_strahler > max) {
                 max = child_strahler;
                 should_add_one = false;
@@ -570,14 +574,12 @@ public:
         }
         if (should_add_one) {
             strahler[nd] = max + 1;
+            if (max == 7)
+                cout << "branch at " << nd << endl;
             return max + 1;
-        } else if (max == 0) {
-            strahler[nd] = 1;
-            return 1;
-        } else {
-            strahler[nd] = max;
-            return max;
         }
+        strahler[nd] = max;
+        return max;
     }
 
     int depth()

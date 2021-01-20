@@ -220,6 +220,63 @@ bc-induce-chart() {
     open $filename
 }
 
+bc-strahler() {
+    echo "g++ src/evaluate/bc-strahler.cpp -o ./bc-strahler --std=c++17"
+    g++ src/evaluate/bc-strahler.cpp -o ./bc-strahler --std=c++17
+    echo "./bc-strahler $1 $2"
+    ./bc-strahler $1 $2
+    rm ./bc-strahler
+}
+
+bc-strahler-chart() {
+    echo "python3 src/box.py bc-strahler $1 $2 strahler\ number betweenness\ centrality\ in\ graph"
+    python3 src/box.py bc-strahler $1 $2 strahler\ number betweenness\ centrality\ in\ graph
+    filename="charts/bc-strahler/box-"$2"-"$1".pdf"
+    open $filename
+    echo "python3 src/scatter.py bc-strahler $1 $2 strahler\ number betweenness\ centrality\ in\ graph"
+    python3 src/scatter.py bc-strahler $1 $2 strahler\ number betweenness\ centrality\ in\ graph
+    filename="charts/bc-strahler/scatter-"$2"-"$1".pdf"
+    open $filename
+}
+
+bc-sum_strahler() {
+    echo "g++ src/evaluate/bc-sum_strahler.cpp -o ./bc-sum_strahler --std=c++17"
+    g++ src/evaluate/bc-sum_strahler.cpp -o ./bc-sum_strahler --std=c++17
+    echo "./bc-sum_strahler $1 $2"
+    ./bc-sum_strahler $1 $2
+    rm ./bc-sum_strahler
+}
+
+bc-sum_strahler-chart() {
+    echo "python3 src/box.py bc-sum_strahler $1 $2 sum\ of\ children\ strahler\ number betweenness\ centrality"
+    python3 src/box.py bc-sum_strahler $1 $2 sum\ of\ children\ strahler\ number betweenness\ centrality
+    filename="charts/bc-sum_strahler/box-"$2"-"$1".pdf"
+    open $filename
+    echo "python3 src/scatter.py bc-sum_strahler $1 $2 sum\ of\ children\ strahler\ number betweenness\ centrality"
+    python3 src/scatter.py bc-sum_strahler $1 $2 sum\ of\ children\ strahler\ number betweenness\ centrality
+    filename="charts/bc-sum_strahler/scatter-"$2"-"$1".pdf"
+    open $filename
+}
+
+induce-strahler() {
+    echo "g++ src/evaluate/induce-strahler.cpp -o ./induce-strahler --std=c++17"
+    g++ src/evaluate/induce-strahler.cpp -o ./induce-strahler --std=c++17
+    echo "./induce-strahler $1 $2"
+    ./induce-strahler $1 $2
+    rm ./induce-strahler
+}
+
+induce-strahler-chart() {
+    echo "python3 src/box.py induce-strahler $1 $2 strahler\ number ISS"
+    python3 src/box.py induce-strahler $1 $2 strahler\ number betweenness\ centrality\ in\ graph
+    filename="charts/induce-strahler/box-"$2"-"$1".pdf"
+    open $filename
+    echo "python3 src/scatter.py induce-strahler $1 $2 strahler\ number ISS"
+    python3 src/scatter.py induce-strahler $1 $2 strahler\ number betweenness\ centrality\ in\ graph
+    filename="charts/induce-strahler/scatter-"$2"-"$1".pdf"
+    open $filename
+}
+
 cc-induce() {
     echo "g++ src/evaluate/cc-induce.cpp -o ./cc-induce --std=c++17"
     g++ src/evaluate/cc-induce.cpp -o ./cc-induce --std=c++17
@@ -681,6 +738,16 @@ case $1 in
     bc-subtree-chart $2 $3
     correl "bc-subtree" $2 $3
     ;;
+"bc-strahler")
+    bc-strahler $2 $3
+    bc-strahler-chart $2 $3
+    correl "bc-strahler" $2 $3
+    ;;
+"bc-sum_strahler")
+    bc-sum_strahler $2 $3
+    bc-sum_strahler-chart $2 $3
+    correl "bc-sum_strahler" $2 $3
+    ;;
 "bc-induce")
     bc-induce $2 $3
     bc-induce-chart $2 $3
@@ -770,6 +837,11 @@ case $1 in
     induce-degree $2 $3
     induce-degree-chart $2 $3
     correl "induce-degree" $2 $3
+    ;;
+"induce-strahler")
+    induce-strahler $2 $3
+    induce-strahler-chart $2 $3
+    correl "induce-strahler" $2 $3
     ;;
 "child-induce")
     child-induce $2 $3

@@ -69,7 +69,10 @@ int main(int argc, char* argv[])
         // by_dist.push_back(node(bg, t.bagsize_of(bg), 10 * t.subtree_size_induced_by(bg) + g.degree(bg), true));
         by_degree.push_back(node(bg, t.bagsize_of(bg), g.degree(bg), false));
         // by_degree.push_back(node(bg, t.bagsize_of(bg), 20 * t.subtree_size_induced_by(bg) + g.degree(bg), true));
-        by_size_degree.push_back(node(bg, t.bagsize_of(bg), t.subtree_size_induced_by(bg) + t.num_children(bg), true));
+        int sum = 0;
+        for (int child : t.children_of(bg))
+            sum += t.compute_strahler(child);
+        by_size_degree.push_back(node(bg, t.bagsize_of(bg), sum, true));
         by_child.push_back(node(bg, t.bagsize_of(bg), t.num_children(bg), true));
     }
     int num_bags = t.num_bags();

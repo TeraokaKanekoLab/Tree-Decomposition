@@ -78,13 +78,13 @@ int main(int argc, char* argv[])
         bc_rank[bcs[i].second] = i + 1;
     }
 
-    cout << "|node id|degree|degree rank|ISS rank|betweenness centrality rank|clustering coefficient|#whisk|" << endl;
+    cout << "|node id|degree|degree rank|ISS rank|betweenness centrality rank|clustering coefficient|#strahler|" << endl;
     cout << "|:--:|:--:|:--:|:--:|:--:|:--:|:--:|" << endl;
     for (int i = 0; i < top_range; ++i) {
-        int nd = bcs[i].second;
+        int nd = by_size[i].second;
         double cc = g.compute_clustering_coefficient(nd);
         cout << "|" << nd << "|" << g.degree(nd) << "|" << degree_rank[nd] << "|"
-             << size_rank[nd] << "|" << bc_rank[nd] << "|" << cc << "|" << t.num_whisk(nd) << "|" << endl;
+             << size_rank[nd] << "|" << bc_rank[nd] << "|" << cc << "|" << t.compute_strahler(nd) << "|" << endl;
     }
 
     return 0;
