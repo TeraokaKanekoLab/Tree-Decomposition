@@ -531,6 +531,25 @@ child-induce-chart() {
     open $filename
 }
 
+child-degree() {
+    echo "g++ src/evaluate/child-degree.cpp -o ./child-degree --std=c++17"
+    g++ src/evaluate/child-degree.cpp -o ./child-degree --std=c++17
+    echo "./child-degree $1 $2"
+    ./child-degree $1 $2
+    rm ./child-degree
+}
+
+child-degree-chart() {
+    echo "python3 src/scatter.py child-degree $1 $2 degree \#children\ in\ graph"
+    python3 src/scatter.py child-degree $1 $2 degree \#children\ in\ graph
+    filename="charts/child-degree/scatter-"$2"-"$1".pdf"
+    open $filename
+    echo "python3 src/box.py child-degree $1 $2 degree \#children\ in\ graph"
+    python3 src/box.py child-degree $1 $2 degree \#children\ in\ graph
+    filename="charts/child-degree/box-"$2"-"$1".pdf"
+    open $filename
+}
+
 correl() {
     echo "python3 src/evaluate/correl.py $1 $2 $3"
     python3 src/evaluate/correl.py $1 $2 $3
@@ -756,6 +775,11 @@ case $1 in
     child-induce $2 $3
     child-induce-chart $2 $3
     correl "child-induce" $2 $3
+    ;;
+"child-degree")
+    child-degree $2 $3
+    child-degree-chart $2 $3
+    correl "child-degree" $2 $3
     ;;
 "chart")
     community-chart $2 $3

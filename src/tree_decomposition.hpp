@@ -20,6 +20,7 @@ class Tree_Decomposition {
     vector<vector<int>> bags_including;
     vector<int> latest_remove_order_of;
     vector<int> latest_remove_order;
+    vector<int> strahler;
 
     int compute_eccentricity_from_child(int nd)
     {
@@ -545,6 +546,38 @@ public:
             }
         }
         return paths;
+    }
+
+    int compute_strahler(int nd)
+    {
+        if (!exists(nd))
+            return -1;
+        if (strahler.size() == 0)
+            strahler.resize(array_size, 0);
+        if (strahler[nd])
+            return strahler[nd];
+
+        int max = 0;
+        bool should_add_one = false;
+        for (int child : children[nd]) {
+            int child_strahler = strahler[child];
+            if (child_strahler > max) {
+                max = child_strahler;
+                should_add_one = false;
+            } else if (child_strahler == max) {
+                should_add_one = true;
+            }
+        }
+        if (should_add_one) {
+            strahler[nd] = max + 1;
+            return max + 1;
+        } else if (max == 0) {
+            strahler[nd] = 1;
+            return 1;
+        } else {
+            strahler[nd] = max;
+            return max;
+        }
     }
 
     int depth()
