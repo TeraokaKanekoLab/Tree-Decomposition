@@ -36,7 +36,7 @@ int main(int argc, char* argv[])
                 if (g.has_edge(nodes_in_bag[i], nodes_in_bag[j]))
                     sum++;
 
-        if (size == 0) {
+        if (size < 2) {
             continue;
         }
         output << (double)sum * 2 / (size * (size - 1)) << " " << bc << endl;
