@@ -273,16 +273,31 @@ public:
         }
     }
 
-    void clique(vector<int>& nbrs)
+    void clique(int nd, vector<int>& nbrs, ofstream& output)
     {
-        for (int nbr1 : nbrs) {
-            for (int nbr2 : nbrs) {
-                if (nbr1 == nbr2)
-                    continue;
-                if (neighbors_of[nbr1].find(nbr2) == neighbors_of[nbr1].end())
+        // for (int nbr1 : nbrs) {
+        //     for (int nbr2 : nbrs) {
+        //         if (nbr1 == nbr2)
+        //             continue;
+        //         if (neighbors_of[nbr1].find(nbr2) == neighbors_of[nbr1].end())
+        //             neighbors_of[nbr1].insert(nbr2);
+        //     }
+        // }
+        int size = nbrs.size();
+        int hit = 0;
+        for (int i = 0; i < size - 1; ++i) {
+            int nbr1 = nbrs[i];
+            for (int j = i + 1; j < size; ++j) {
+                int nbr2 = nbrs[j];
+                if (neighbors_of[nbr1].find(nbr2) == neighbors_of[nbr1].end()) {
                     neighbors_of[nbr1].insert(nbr2);
+                    neighbors_of[nbr2].insert(nbr1);
+                    hit++;
+                }
             }
         }
+        if (size > 1)
+            output << nd << " " << hit << " " << size << endl;
     }
 
     vector<int> create_index_array(int num_elems)

@@ -6,6 +6,8 @@ public:
     {
         string output_name = "output/width/" + to_string(max_tree_width) + "-" + filename + ".output";
         ofstream output(output_name);
+        string data_output_name = "data/fillin/" + filename + ".fl";
+        ofstream fillin(data_output_name);
         int crnt_deg = 1;
         auto comp = [&](node a, node b) {
             if (a.first != b.first)
@@ -47,7 +49,7 @@ public:
             vector<int> nbrs;
             for (int nbr : neighbors_of[nd])
                 nbrs.push_back(nbr);
-            clique(nbrs);
+            clique(nd, nbrs, fillin);
             for (int nbr : nbrs) {
                 neighbors_of[nbr].erase(nd);
                 degreeq.push(node(neighbors_of[nbr].size(), nbr));
