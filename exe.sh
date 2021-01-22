@@ -301,12 +301,12 @@ cc-induce_degree() {
 }
 
 cc-induce_degree-chart() {
-    echo "python3 src/scatter.py cc-induce_degree $1 $2 ISS\ -\ degree clustering\ coefficient\ in\ graph"
-    python3 src/scatter.py cc-induce_degree $1 $2 ISS\ -\ degree clustering\ coefficient\ in\ graph
+    echo "python3 src/scatter.py cc-induce_degree $1 $2 ISS/degree\ ratio clustering\ coefficient\ in\ graph"
+    python3 src/scatter.py cc-induce_degree $1 $2 ISS/degree\ ratio clustering\ coefficient\ in\ graph
     filename="charts/cc-induce_degree/scatter-"$2"-"$1".pdf"
     open $filename
-    echo "python3 src/box.py cc-induce_degree $1 $2 ISS\ -\ degree clustering\ coefficient\ in\ graph"
-    python3 src/box.py cc-induce_degree $1 $2 ISS\ -\ degree clustering\ coefficient\ in\ graph
+    echo "python3 src/box.py cc-induce_degree $1 $2 ISS/degree\ ratio clustering\ coefficient\ in\ graph"
+    python3 src/box.py cc-induce_degree $1 $2 ISS/degree\ ratio clustering\ coefficient\ in\ graph
     filename="charts/cc-induce_degree/box-"$2"-"$1".pdf"
     open $filename
 }
@@ -323,6 +323,21 @@ bc-cc-chart() {
     echo "python3 src/scatter.py bc-cc $1 $2 clustering\ coefficient\ in\ graph betweenness\ centrality"
     python3 src/scatter.py bc-cc $1 $2 clustering\ coefficient\ in\ graph betweenness\ centrality
     filename="charts/bc-cc/scatter-"$2"-"$1".pdf"
+    open $filename
+}
+
+bc-fillin() {
+    echo "g++ src/evaluate/bc-fillin.cpp -o ./bc-fillin --std=c++17"
+    g++ src/evaluate/bc-fillin.cpp -o ./bc-fillin --std=c++17
+    echo "./bc-fillin $1 $2"
+    ./bc-fillin $1 $2
+    rm ./bc-fillin
+}
+
+bc-fillin-chart() {
+    echo "python3 src/scatter.py bc-fillin $1 $2 fillin betweenness\ centrality"
+    python3 src/scatter.py bc-fillin $1 $2 fillin betweenness\ centrality
+    filename="charts/bc-fillin/scatter-"$2"-"$1".pdf"
     open $filename
 }
 
@@ -763,6 +778,10 @@ case $1 in
     cc-induce_degree-chart $2 $3
     correl "cc-induce_degree" $2 $3
     ;;
+"cc-induce_degree-chart")
+    cc-induce_degree-chart $2 $3
+    correl "cc-induce_degree" $2 $3
+    ;;
 "bc-total_induce")
     bc-total_induce $2 $3
     bc-total_induce-chart $2 $3
@@ -817,6 +836,11 @@ case $1 in
     bc-cc $2 $3
     bc-cc-chart $2 $3
     correl "bc-cc" $2 $3
+    ;;
+"bc-fillin")
+    bc-fillin $2 $3
+    bc-fillin-chart $2 $3
+    correl "bc-fillin" $2 $3
     ;;
 "bc-degree")
     bc-degree $2 $3

@@ -21,6 +21,9 @@ y_sum = sum(Y)
 num_elements = len(lines)
 x_ave = x_sum / num_elements
 y_ave = y_sum / num_elements
+print("max(y-x) =", max(Y_X))
+print("min(y-x) =", min(Y_X))
+print("ave(y-x) =", sum(Y_X)/len(Y_X))
 print("x_ave ==", x_ave)
 print("y_ave ==", y_ave)
 c = 0

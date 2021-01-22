@@ -45,6 +45,13 @@ public:
         return neighbors_of[nd].size();
     }
 
+    bool has_edge(int u, int v)
+    {
+        if (exists(u))
+            return neighbors_of[u].find(v) != neighbors_of[u].end();
+        return false;
+    }
+
     double compute_average_degree()
     {
         int sum = 0;
