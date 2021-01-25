@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
         double bc = bc_pair.second;
         int dl = t.compute_dist_from_root(nd);
         // int dl = g.degree(nd);
-        output << dl << " " << bc << " " << g.degree(nd) << endl;
+        output << dl << " " << bc << " " << g.degree(nd) << " " << t.subtree_size_induced_by(nd) << endl;
     }
     cout << "result written to " << output_name << endl;
 

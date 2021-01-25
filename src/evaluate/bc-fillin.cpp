@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
         int nd = fillin.first;
         double fl = fillin.second;
         double bc = b.betweenness_centrality_of(nd);
-        output << fl << " " << bc << " " << g.degree(nd) << endl;
+        output << fl << " " << bc << " " << g.degree(nd) << " " << t.subtree_size_induced_by(nd) << endl;
     }
     cout << "result written to " << output_name << endl;
 

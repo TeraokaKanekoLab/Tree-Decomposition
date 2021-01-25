@@ -17,7 +17,7 @@ def read_file(metric):
     Y = []
     for line in lines:
         x = float(line.split()[0])
-        y = float(line.split()[2])
+        y = float(line.split()[3])
         X.append(x)
         Y.append(y)
     return X, Y
