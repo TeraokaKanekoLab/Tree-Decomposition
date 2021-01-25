@@ -60,17 +60,18 @@ int main(int argc, char* argv[])
     vector<node> sorted_by_size;
     for (int bag : t.all_bags())
         // if (t.is_in_mainstream(bag))
-        sorted_by_size.push_back(node(bag, t.bagsize_of(bag), t.subtree_size_induced_by(bag), true));
-    // sorted_by_size.push_back(make_pair(t.dist_from_leaf(bag), bag));
-    // sorted_by_size.push_back(make_pair(g.degree(bag), bag));
+        // sorted_by_size.push_back(node(bag, t.bagsize_of(bag), t.subtree_size_induced_by(bag), true));
+        // sorted_by_size.push_back(make_pair(t.dist_from_leaf(bag), bag));
+        sorted_by_size.push_back(node(bag, t.bagsize_of(bag), g.degree(bag), false));
     // sorted_by_size.push_back(make_pair(2 * t.subtree_size_induced_by(bag) - g.degree(bag), bag));
+    // sorted_by_size.push_back(node(bag, t.num_children(bag), t.subtree_size_induced_by(bag), true));
     // sorted_by_size.push_back(make_pair(t.num_children(bag), bag));
 
     int num_bags = t.num_bags();
 
     sort(sorted_by_size.begin(), sorted_by_size.end(), sort_by_metric);
     auto first = sorted_by_size.begin();
-    auto last = sorted_by_size.begin() + num_bags * 1 / 100; // 0.1%
+    auto last = sorted_by_size.begin() + num_bags * 1 / 100; // 1%
     vector<node> top1(first, last);
     last = sorted_by_size.begin() + num_bags * 5 / 100; // 5%
     vector<node> top5(first, last);

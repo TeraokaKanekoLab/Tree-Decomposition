@@ -1,5 +1,6 @@
 #include "../betweenness_centrality.hpp"
 #include "../communities.hpp"
+#include "../fillin.hpp"
 #include "../graph.hpp"
 #include "../tree_decomposition.hpp"
 #include "../util.hpp"
@@ -36,6 +37,11 @@ int main(int argc, char* argv[])
     // Eccentricity e;
     // e.read_eccentricity("data/eccentricity/" + filename + ".eccentricity");
     // vector<pair<int, int>> eccs = e.get_eccentricity();
+
+    // Fillin f;
+    // string path_to_f = "data/fillin/" + filename + ".fl";
+    // f.read_fillin(path_to_f);
+    // vector<pair<int, double>> fillins = f.get_fillins();
 
     Betweenness_centrality b;
     b.read_betweenness_centrality("data/betweenness_centrality/" + filename + ".bc");
@@ -78,14 +84,26 @@ int main(int argc, char* argv[])
         bc_rank[bcs[i].second] = i + 1;
     }
 
-    cout << "|node id|degree|degree rank|ISS rank|betweenness centrality rank|clustering coefficient|#strahler|" << endl;
-    cout << "|:--:|:--:|:--:|:--:|:--:|:--:|:--:|" << endl;
-    for (int i = 0; i < top_range; ++i) {
-        int nd = by_size[i].second;
+    cout << endl;
+    cout << "\\begin{table}[tbp]" << endl;
+    cout << "\\begin{center}" << endl;
+    cout << "\\caption{キャプションです}" << endl;
+    cout << "\\begin{tabular}{cccccc} \\hline" << endl;
+    cout << "$i$ & $BC$についての順位 & $d$ についての順位 & $BC_i$ & $d_i$ & $CC_i$ \\\\ \\hline" << endl;
+    for (int i = 0; i < 10; ++i) {
+        int nd = bcs[i].second;
         double cc = g.compute_clustering_coefficient(nd);
-        cout << "|" << nd << "|" << g.degree(nd) << "|" << degree_rank[nd] << "|"
-             << size_rank[nd] << "|" << bc_rank[nd] << "|" << cc << "|" << t.compute_strahler(nd) << "|" << endl;
+        double bc = bcs[i].first;
+        int d = g.degree(nd);
+        int rank_d = degree_rank[nd];
+        int rank_bc = bc_rank[nd];
+        cout << nd << " & " << rank_bc << " & " << rank_d << " & " << bc << " & " << d << " & " << cc << "\\\\" << endl;
     }
+    cout << "\\hline" << endl;
+    cout << "\\end{tabular}" << endl;
+    cout << "\\label{tab:random_example_score}" << endl;
+    cout << "\\end{center}" << endl;
+    cout << "\\end{table}" << endl;
 
     return 0;
 }

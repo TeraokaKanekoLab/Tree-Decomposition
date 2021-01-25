@@ -1,4 +1,5 @@
 #include "../betweenness_centrality.hpp"
+#include "../graph.hpp"
 #include "../tree_decomposition.hpp"
 #include "../util.hpp"
 
@@ -6,6 +7,10 @@ int main(int argc, char* argv[])
 {
     string filename = argv[1];
     string width = argv[2];
+
+    Graph g;
+    string path_to_g = "graph/" + filename + ".gr";
+    g.read_graph(path_to_g);
 
     Tree_Decomposition t;
     string path_to_t = "tree/" + width + "-" + filename + ".tree";
@@ -30,7 +35,7 @@ int main(int argc, char* argv[])
             num_mainstream++;
         else
             num_non_mainstream++;
-        output << is_in_mainstream << " " << bc << endl;
+        output << is_in_mainstream << " " << bc << " " << g.degree(nd) << endl;
     }
     cout << "** mainstream: " << num_mainstream << " (" << (double)num_mainstream / (num_mainstream + num_non_mainstream) * 100 << "%)" << endl;
     cout << "non-mainstream : " << num_non_mainstream << "(" << (double)num_non_mainstream / (num_mainstream + num_non_mainstream) * 100 << " %) " << endl;

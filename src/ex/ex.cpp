@@ -40,6 +40,8 @@ int main(int argc, char* argv[])
     b.read_betweenness_centrality("data/betweenness_centrality/" + filename + ".bc");
     vector<pair<double, int>> bcs = bc_index(b.get_betweenness_centrality());
 
-    
+    cout << g.compute_average_degree() << endl;
+    cout << g.compute_average_clustering() << endl;
+
     return 0;
 }

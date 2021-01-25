@@ -8,6 +8,10 @@ int main(int argc, char* argv[])
     string filename = argv[1];
     string width = argv[2];
 
+    Graph g;
+    string path_to_g = "graph/" + filename + ".gr";
+    g.read_graph(path_to_g);
+
     Tree_Decomposition t;
     string path_to_t = "tree/" + width + "-" + filename + ".tree";
     t.read_tree(path_to_t);
@@ -17,9 +21,6 @@ int main(int argc, char* argv[])
     b.read_betweenness_centrality(path_to_b);
     vector<pair<int, double>> bcs = b.get_betweenness_centrality();
 
-    Graph g;
-    g.read_graph("graph/" + filename + ".gr");
-
     string output_name = "output/bc-dist_leaf/" + width + "-" + filename + ".output";
     ofstream output(output_name);
 
@@ -28,7 +29,7 @@ int main(int argc, char* argv[])
         double bc = bc_pair.second;
         int dl = t.dist_from_leaf(nd);
         // int dl = g.degree(nd);
-        output << dl << " " << bc << endl;
+        output << dl << " " << bc << " " << g.degree(nd) << endl;
     }
     cout << "result written to " << output_name << endl;
 

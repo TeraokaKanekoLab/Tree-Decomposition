@@ -1,4 +1,5 @@
 #include "../betweenness_centrality.hpp"
+#include "../graph.hpp"
 #include "../tree_decomposition.hpp"
 #include "../util.hpp"
 
@@ -6,6 +7,10 @@ int main(int argc, char* argv[])
 {
     string filename = argv[1];
     string width = argv[2];
+
+    Graph g;
+    string path_to_g = "graph/" + filename + ".gr";
+    g.read_graph(path_to_g);
 
     Tree_Decomposition t;
     string path_to_t = "tree/" + width + "-" + filename + ".tree";
@@ -24,7 +29,7 @@ int main(int argc, char* argv[])
         int nd = bc_pair.first;
         double bc = bc_pair.second;
         int bc_tree = t.compute_betweenness_centrality(nd);
-        output << bc_tree << " " << bc << endl;
+        output << bc_tree << " " << bc << " " << g.degree(nd) << endl;
     }
     cout << "result written to " << output_name << endl;
 

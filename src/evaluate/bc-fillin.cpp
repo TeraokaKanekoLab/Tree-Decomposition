@@ -8,6 +8,10 @@ int main(int argc, char* argv[])
     string filename = argv[1];
     string width = argv[2];
 
+    Graph g;
+    string path_to_g = "graph/" + filename + ".gr";
+    g.read_graph(path_to_g);
+
     Betweenness_centrality b;
     string path_to_b = "data/betweenness_centrality/" + filename + ".bc";
     b.read_betweenness_centrality(path_to_b);
@@ -24,7 +28,7 @@ int main(int argc, char* argv[])
         int nd = fillin.first;
         double fl = fillin.second;
         double bc = b.betweenness_centrality_of(nd);
-        output << fl << " " << bc << endl;
+        output << fl << " " << bc << " " << g.degree(nd) << endl;
     }
     cout << "result written to " << output_name << endl;
 

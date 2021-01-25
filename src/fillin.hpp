@@ -42,7 +42,7 @@ public:
     double fillin_of(int nd)
     {
         if (fillin_map.find(nd) == fillin_map.end())
-            return 0;
+            return -1;
         return fillin_map[nd];
     }
 };
