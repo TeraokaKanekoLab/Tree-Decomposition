@@ -1,6 +1,7 @@
 #include "../betweenness_centrality.hpp"
 #include "../fillin.hpp"
 #include "../graph.hpp"
+#include "../tree_decomposition.hpp"
 #include "../util.hpp"
 
 int main(int argc, char* argv[])
@@ -15,6 +16,11 @@ int main(int argc, char* argv[])
     Betweenness_centrality b;
     string path_to_b = "data/betweenness_centrality/" + filename + ".bc";
     b.read_betweenness_centrality(path_to_b);
+
+    Tree_Decomposition t;
+    string path_to_t = "tree/" + width + "-" + filename + ".tree";
+    t.read_tree(path_to_t);
+    vector<int> eccentricities = t.get_eccentricities();
 
     Fillin f;
     string path_to_f = "data/fillin/" + filename + ".fl";
