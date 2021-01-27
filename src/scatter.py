@@ -26,6 +26,8 @@ def read_file():
         right = float(line.split()[1])
         if (left, right) in s:
             continue
+        if right > 0.01:
+            continue
         x_axis.append(left)
         y_axis.append(right)
         s.add((left, right))

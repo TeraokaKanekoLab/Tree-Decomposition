@@ -783,6 +783,10 @@ case $1 in
     bc-sum_strahler-chart $2 $3
     correl "bc-sum_strahler" $2 $3
     ;;
+"bc-sum_strahler-chart")
+    bc-sum_strahler-chart $2 $3
+    correl "bc-sum_strahler" $2 $3
+    ;;
 "bc-induce")
     bc-induce $2 $3
     bc-induce-chart $2 $3

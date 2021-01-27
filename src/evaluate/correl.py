@@ -13,6 +13,8 @@ for line in lines:
     line = line.split()
     x = float(line[0])
     y = float(line[1])
+    if y > 0.01:
+        continue
     X.append(x)
     Y.append(y)
     Y_X.append(y-x)

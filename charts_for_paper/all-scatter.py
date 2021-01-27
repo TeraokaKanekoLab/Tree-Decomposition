@@ -25,14 +25,18 @@ def read_file(filename, chart_type):
     y2 = []
     x3 = []
     y3 = []
+    x4 = []
+    y4 = []
     s1 = set()
     s2 = set()
     s3 = set()
+    s4 = set()
     for line in lines:
         x = float(line.split()[0])
         y = float(line.split()[1])
         z = float(line.split()[2])
         w = float(line.split()[3])
+        v = float(line.split()[4])
         if (x, y) not in s1:
             x1.append(x)
             y1.append(y)
@@ -45,7 +49,11 @@ def read_file(filename, chart_type):
             x3.append(x)
             y3.append(w)
             s3.add((x, w))
-    return x1, y1, x2, y2, x3, y3
+        if (x, v) not in s4:
+            x4.append(x)
+            y4.append(w)
+            s4.add((x, v))
+    return x1, y1, x2, y2, x3, y3, x4, y4
 
 
 def print_latex(chart_type, caption):
@@ -63,7 +71,7 @@ def draw_chart(X, Y, chart_type, x_title, y_title):
     MARKER_SIZE = 10
     MARKER_COLOR = "blue"
     fig, axes = plt.subplots(2, 2, figsize=(16, 12))
-    # saved_name = "charts_for_paper/charts/" + chart_type + "-scatter.pdf"
+    saved_name = "charts_for_paper/charts/" + chart_type + "-scatter.pdf"
     # print(saved_name)
     for i in range(2):
         for j in range(2):
@@ -90,21 +98,28 @@ if __name__ == '__main__':
         X1 = []
         X2 = []
         X3 = []
+        X4 = []
         Y1 = []
         Y2 = []
         Y3 = []
+        Y4 = []
         for filename in GRAPHS:
-            x1, y1, x2, y2, x3, y3 = read_file(filename, "bc-" + m)
+            x1, y1, x2, y2, x3, y3, x4, y4 = read_file(filename, "bc-" + m)
             X1.append(x1)
             Y1.append(y1)
             X2.append(x2)
             Y2.append(y2)
             X3.append(x3)
             Y3.append(y3)
-        draw_chart(X1, Y1, "bc-" + m, x_title, "betweenness centrality")
-        draw_chart(X2, Y2, "degree-" + m, x_title, "degree")
-        draw_chart(X3, Y3, "induce-" + m, x_title, "ISS")
-        print_latex("bc-" + m, "各データセットにおける" + "媒介中心性と " + NAME[m] + " の相関")
+            X4.append(x4)
+            Y4.append(y4)
+        # draw_chart(X1, Y1, "bc-" + m, x_title, "betweenness centrality")
+        # draw_chart(X2, Y2, "degree-" + m, x_title, "degree")
+        # draw_chart(X3, Y3, "induce-" + m, x_title, "ISS")
+        # draw_chart(X4, Y4, "cc-" + m, x_title, "clustering coefficient")
         print_latex("degree-" + m, "各データセットにおける" + "次数と " + NAME[m] + " の相関")
+        print_latex("cc-" + m, "各データセットにおける" +
+                    "クラスタリング係数 と " + NAME[m] + " の相関")
+        print_latex("bc-" + m, "各データセットにおける" + "媒介中心性と " + NAME[m] + " の相関")
         print_latex("induce-" + m, "各データセットにおける" +
                     " $ISS$ と " + NAME[m] + " の相関")

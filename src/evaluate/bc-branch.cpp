@@ -30,7 +30,9 @@ int main(int argc, char* argv[])
         double bc = bc_pair.second;
         if (t.num_children(nd) < 2)
             continue;
-        int ss = t.subtree_size(nd);
+        int ss = t.num_children(nd) + 1;
+        if (nd == t.get_root())
+            ss--;
         output << ss << " " << bc << " " << g.degree(nd) << " " << t.subtree_size_induced_by(nd) << " " << g.compute_clustering_coefficient(nd) << endl;
     }
     cout << "result written to " << output_name << endl;

@@ -24,27 +24,27 @@ def read_file(metric, graphname):
     Y = []
     Z = []
     W = []
+    V = []
     for line in lines:
         x = float(line.split()[0])
         y = float(line.split()[1])
         z = float(line.split()[2])
         w = float(line.split()[3])
-        X.append(x)
-        Y.append(y)
-        Z.append(z)
-        W.append(w)
-    return X, Y, Z, W
+        v = float(line.split()[4])
+        X.append(x)  # metric
+        Y.append(y)  # bc
+        Z.append(z)  # degree
+        W.append(w)  # iss
+        V.append(v)  # cc
+    return X, Y, Z, W, V
 
 
 if __name__ == "__main__":
     for m in METRICS:
+        print(NAME[m], end='')
         for g in GRAPHS:
             metric = BC + "-" + m
-            X, Y, Z, W = read_file(metric, g)
-            if g == "ca-grqc-connected":
-                print(NAME[m] + " & " + GNAME[g] + " & " + str(round(correl(X, Y), 3)) + " & " +
-                      str(round(correl(X, Z), 3)) + " & " + str(round(correl(X, W), 3)) + " \\\\")
-            else:
-                print(" & " + GNAME[g] + " & " + str(round(correl(X, Y), 3)) + " & " +
-                      str(round(correl(X, Z), 3)) + " & " + str(round(correl(X, W), 3)) + " \\\\")
+            X, Y, Z, W, V = read_file(metric, g)
+            print(" & " + GNAME[g] + " & " + str(round(correl(X, Z), 3)) + " & " + str(round(correl(X, V), 3)
+                                                                                       ) + " & " + str(round(correl(X, Y), 3)) + " & " + str(round(correl(X, W), 3)) + " \\\\")
         print("\hline")
