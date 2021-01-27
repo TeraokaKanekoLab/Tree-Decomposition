@@ -3,9 +3,13 @@ import numpy as np
 BC = "bc"
 METRICS = ["child", "branch", "bagsize", "width", "subtree", "induce", "total_induce",
            "dist_root", "dist_leaf", "strahler", "sum_strahler", "mainstream",  "bc_tree"]
+NAME = {"child": "$CH$", "branch": "$BR$", "bagsize": "$BS$", "width": "$w$", "subtree": "$ST$", "induce": "$ISS$", "total_induce": "$TIS$",
+        "dist_root": "$DR$", "dist_leaf": "$DD$", "strahler": "$STR$", "sum_strahler": "$SSTR$", "mainstream": "$TRK$",  "bc_tree": "$TBC$"}
 
 GRAPHS = ["ca-grqc-connected", "ca-astroph-connected",
           "email-enron-connected", "soc-slashdot"]
+GNAME = {"ca-grqc-connected": "ca-GrQc", "ca-astroph-connected": "ca-AstroPh",
+         "email-enron-connected": "email-Enron", "soc-slashdot": "soc-Slashdot"}
 
 
 def correl(X, Y):
@@ -33,10 +37,14 @@ def read_file(metric, graphname):
 
 
 if __name__ == "__main__":
-    for g in GRAPHS:
-        print("graph", g)
-        for m in METRICS:
+    for m in METRICS:
+        for g in GRAPHS:
             metric = BC + "-" + m
             X, Y, Z, W = read_file(metric, g)
-            print(m + "; bc: " + str(correl(X, Y)) + ", deg: " +
-                  str(correl(X, Z)) + ", ISS: " + str(correl(X, W)))
+            if g == "ca-grqc-connected":
+                print(NAME[m] + " & " + GNAME[g] + " & " + str(round(correl(X, Y), 3)) + " & " +
+                      str(round(correl(X, Z), 3)) + " & " + str(round(correl(X, W), 3)) + " \\\\")
+            else:
+                print(" & " + GNAME[g] + " & " + str(round(correl(X, Y), 3)) + " & " +
+                      str(round(correl(X, Z), 3)) + " & " + str(round(correl(X, W), 3)) + " \\\\")
+        print("\hline")

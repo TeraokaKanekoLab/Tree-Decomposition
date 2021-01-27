@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
         int nd = bc_pair.first;
         double bc = bc_pair.second;
         int num_children = t.num_children(nd);
-        output << num_children << " " << bc << " " << g.degree(nd) << " " << t.subtree_size_induced_by(nd) << endl;
+        output << num_children << " " << bc << " " << g.degree(nd) << " " << t.subtree_size_induced_by(nd) << " " << g.compute_clustering_coefficient(nd) << endl;
     }
     cout << "result written to " << output_name << endl;
 

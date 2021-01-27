@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
         if (t.num_children(nd) < 2)
             continue;
         int ss = t.subtree_size(nd);
-        output << ss << " " << bc << " " << g.degree(nd) << " " << t.subtree_size_induced_by(nd) << endl;
+        output << ss << " " << bc << " " << g.degree(nd) << " " << t.subtree_size_induced_by(nd) << " " << g.compute_clustering_coefficient(nd) << endl;
     }
     cout << "result written to " << output_name << endl;
 

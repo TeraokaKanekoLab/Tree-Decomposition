@@ -31,7 +31,7 @@ int main(int argc, char* argv[])
         int ss = 0;
         for (int child : t.children_of(nd))
             ss += t.compute_strahler(child);
-        output << ss << " " << bc << " " << g.degree(nd) << " " << t.subtree_size_induced_by(nd) << endl;
+        output << ss << " " << bc << " " << g.degree(nd) << " " << t.subtree_size_induced_by(nd) << " " << g.compute_clustering_coefficient(nd) << endl;
     }
     cout << "result written to " << output_name << endl;
 

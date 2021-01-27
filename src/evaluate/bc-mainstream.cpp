@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
             num_mainstream++;
         else
             num_non_mainstream++;
-        output << is_in_mainstream << " " << bc << " " << g.degree(nd) << " " << t.subtree_size_induced_by(nd) << endl;
+        output << is_in_mainstream << " " << bc << " " << g.degree(nd) << " " << t.subtree_size_induced_by(nd) << " " << g.compute_clustering_coefficient(nd) << endl;
     }
     cout << "** mainstream: " << num_mainstream << " (" << (double)num_mainstream / (num_mainstream + num_non_mainstream) * 100 << "%)" << endl;
     cout << "non-mainstream : " << num_non_mainstream << "(" << (double)num_non_mainstream / (num_mainstream + num_non_mainstream) * 100 << " %) " << endl;

@@ -28,7 +28,7 @@ int main(int argc, char* argv[])
         int nd = bc_pair.first;
         double bc = bc_pair.second;
         int bagsize = t.compute_width(nd);
-        output << bagsize << " " << bc << " " << g.degree(nd) << " " << t.subtree_size_induced_by(nd) << endl;
+        output << bagsize << " " << bc << " " << g.degree(nd) << " " << t.subtree_size_induced_by(nd) << " " << g.compute_clustering_coefficient(nd) << endl;
     }
     cout << "result written to " << output_name << endl;
 
