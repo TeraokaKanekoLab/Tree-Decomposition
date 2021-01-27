@@ -1,5 +1,5 @@
 graph {
-	node [fontname="Hiragino Sans" shape=box]
+	node [shape=box]
 	"長野" -- "埼玉 長野"
 	"埼玉 長野" -- "山梨 埼玉 長野"
 	"山梨 埼玉 長野" -- "新潟 埼玉 山梨 長野"

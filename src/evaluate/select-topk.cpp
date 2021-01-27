@@ -57,41 +57,38 @@ int main(int argc, char* argv[])
     string output_name = "output/select-topk/" + width + "-" + filename + ".output";
     ofstream output(output_name);
 
-    vector<node> by_size;
+    vector<node> by_iss;
     vector<node> by_dist;
     vector<node> by_degree;
-    vector<node> by_size_degree;
+    vector<node> by_sum_strahler;
     vector<node> by_child;
     for (int bg : t.all_bags()) {
-        by_size.push_back(node(bg, t.bagsize_of(bg), t.subtree_size_induced_by(bg), true));
-        // by_size.push_back(node(bg, t.bagsize_of(bg), 5 * t.subtree_size_induced_by(bg) + g.degree(bg), true));
-        by_dist.push_back(node(bg, t.bagsize_of(bg), t.dist_from_leaf(bg), true));
-        // by_dist.push_back(node(bg, t.bagsize_of(bg), 10 * t.subtree_size_induced_by(bg) + g.degree(bg), true));
+        by_iss.push_back(node(bg, t.bagsize_of(bg), t.subtree_size_induced_by(bg), true));
         by_degree.push_back(node(bg, t.bagsize_of(bg), g.degree(bg), false));
-        // by_degree.push_back(node(bg, t.bagsize_of(bg), 20 * t.subtree_size_induced_by(bg) + g.degree(bg), true));
         int sum = 0;
         for (int child : t.children_of(bg))
             sum += t.compute_strahler(child);
-        by_size_degree.push_back(node(bg, t.bagsize_of(bg), sum, true));
+        by_sum_strahler.push_back(node(bg, t.bagsize_of(bg), sum, true));
         by_child.push_back(node(bg, t.bagsize_of(bg), t.num_children(bg), true));
+        by_dist.push_back(node(bg, t.bagsize_of(bg), t.subtree_size_induced_by(bg) + sum, true));
     }
     int num_bags = t.num_bags();
     int array_size = t.get_array_size();
 
-    sort(by_size.begin(), by_size.end(), sort_by_metric);
-    // by_size.resize(range);
+    sort(by_iss.begin(), by_iss.end(), sort_by_metric);
+    // by_iss.resize(range);
     sort(by_dist.begin(), by_dist.end(), sort_by_metric);
     // by_dist.resize(range);
     sort(by_degree.begin(), by_degree.end(), sort_by_metric);
     // by_degree.resize(range);
-    sort(by_size_degree.begin(), by_size_degree.end(), sort_by_metric);
-    // by_size_degree.resize(range);
+    sort(by_sum_strahler.begin(), by_sum_strahler.end(), sort_by_metric);
+    // by_sum_strahler.resize(range);
     sort(by_child.begin(), by_child.end(), sort_by_metric);
-    // by_size_degree.resize(range);
+    // by_sum_strahler.resize(range);
 
     cout << "root: " << t.get_root() << endl;
-    cout << "size: " << by_size.size() << endl;
-    vector<int> size_rank(array_size, 0);
+    cout << "size: " << by_iss.size() << endl;
+    vector<int> iss_rank(array_size, 0);
     vector<int> dist_rank(array_size, 0);
     vector<int> degree_rank(array_size, 0);
     vector<int> size_degree_rank(array_size, 0);
@@ -100,7 +97,7 @@ int main(int argc, char* argv[])
     int cnt = 0;
     for (int i = 0; i < bcs.size(); ++i) {
         int nd = bcs[i].second;
-        size_rank[nd] = i + 1;
+        iss_rank[nd] = i + 1;
         dist_rank[nd] = i + 1;
         degree_rank[nd] = i + 1;
         size_degree_rank[nd] = i + 1;
@@ -111,49 +108,50 @@ int main(int argc, char* argv[])
     int range = num_bags * 1 / SAMPLE;
     for (int index = 0; index < num_bags; index += range) {
         int diffsr = 0, diffdir = 0, diffdgr = 0, diffsdr = 0, diffch = 0;
-        int misssr = 0, missdir = 0, missdgr = 0, misssdr = 0, missch = 0;
+        int hit_iss = 0, hit_dist = 0, hit_degree = 0, hit_sum_strahler = 0, hit_child = 0;
         bool has_reached_zero = false;
         for (int i = 0; i < index + range; ++i) {
             if (bcs[i].first <= 0)
                 has_reached_zero = true;
             top_b.insert(bcs[i].second);
 
-            int r = size_rank[by_size[i].node_id];
+            int r = iss_rank[by_iss[i].node_id];
             sr.push_back(r);
             diffsr += (r - i - 1) * (r - i - 1);
-            if (top_b.find(by_size[i].node_id) != top_b.end())
-                misssr++;
+            if (top_b.find(by_iss[i].node_id) != top_b.end())
+                hit_iss++;
 
             r = dist_rank[by_dist[i].node_id];
             dir.push_back(r);
             diffdir += (r - i - 1) * (r - i - 1);
             if (top_b.find(by_dist[i].node_id) != top_b.end())
-                missdir++;
+                hit_dist++;
 
             r = degree_rank[by_degree[i].node_id];
             dgr.push_back(r);
             diffdgr += (r - i - 1) * (r - i - 1);
             if (top_b.find(by_degree[i].node_id) != top_b.end())
-                missdgr++;
+                hit_degree++;
 
-            r = size_degree_rank[by_size_degree[i].node_id];
+            r = size_degree_rank[by_sum_strahler[i].node_id];
             sdr.push_back(r);
             diffsdr += (r - i - 1) * (r - i - 1);
-            if (top_b.find(by_size_degree[i].node_id) != top_b.end())
-                misssdr++;
+            if (top_b.find(by_sum_strahler[i].node_id) != top_b.end())
+                hit_sum_strahler++;
 
             r = child_rank[by_child[i].node_id];
             ch.push_back(r);
             diffch += (r - i - 1) * (r - i - 1);
             if (top_b.find(by_child[i].node_id) != top_b.end())
-                missch++;
+                hit_child++;
         }
 
         output << (double)(index + range) / num_bags * 100
-               << " " << (double)misssr / top_b.size() * 100
-               << " " << (double)missch / top_b.size() * 100
-               << " " << (double)misssdr / top_b.size() * 100
-               << " " << (double)missdgr / top_b.size() * 100 << endl;
+               << " " << (double)hit_iss / top_b.size() * 100
+               << " " << (double)hit_dist / top_b.size() * 100
+               << " " << (double)hit_child / top_b.size() * 100
+               << " " << (double)hit_sum_strahler / top_b.size() * 100
+               << " " << (double)hit_degree / top_b.size() * 100 << endl;
 
         if (has_reached_zero) {
             break;

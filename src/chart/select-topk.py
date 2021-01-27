@@ -31,31 +31,36 @@ def read_file():
     cnta5 = []
     cnta10 = []
     cnta15 = []
+    cnta20 = []
     for line in lines:
         per = float(line.split()[0])
         cnt1 = float(line.split()[1])
         cnt5 = float(line.split()[2])
         cnt10 = float(line.split()[3])
         cnt15 = float(line.split()[4])
+        cnt20 = float(line.split()[5])
         per_a.append(per)
         cnta1.append(cnt1)
         cnta5.append(cnt5)
         cnta10.append(cnt10)
         cnta15.append(cnt15)
+        cnta20.append(cnt20)
+    return per_a, cnta1, cnta5, cnta10, cnta15, cnta20
 
-    return per_a, cnta1, cnta5, cnta10, cnta15
 
-
-def draw_chart(x_axis, y_axis1, y_axis2, y_axis3, y_axis4):
+def draw_chart(x_axis, y_axis1, y_axis2, y_axis3, y_axis4, y_axis5):
     xlim = 100
     plt.xticks([i/10 * xlim for i in range(11)], [str(i/10 * xlim)
                                                   for i in range(11)])
     plt.yticks([i for i in range(0, 101, 10)], [str(i)
                                                 for i in range(0, 101,  10)])
-    plt.plot(x_axis, y_axis1,  c=RED,  label="ISS", zorder=50)
-    # plt.plot(x_axis, y_axis2,  c=YELLOW, label="#Child", zorder=10)
-    # plt.plot(x_axis, y_axis3,  c=RED, label="#Strahler", zorder=100)
-    plt.plot(x_axis, y_axis4,  c=BLUE, label="Degree", zorder=5)
+    plt.plot(x_axis, y_axis1,  c=RED,  label="ISS", zorder=500)
+    plt.plot(x_axis, y_axis4,  c=BLUE,
+             label="Sum Children's #Strahler", zorder=5)
+    plt.plot(x_axis, y_axis3,  c=GREEN, label="#Child", zorder=100)
+    plt.plot(x_axis, y_axis2,  c=YELLOW,
+             label="ISS + Sum Children's #Strahler", zorder=10)
+    plt.plot(x_axis, y_axis5,  c=BLACK, label="Degree", zorder=5)
     plt.grid(ls='--')
     filename = sys.argv[1]
     width = sys.argv[2]
@@ -74,5 +79,5 @@ def draw_chart(x_axis, y_axis1, y_axis2, y_axis3, y_axis4):
 
 
 if __name__ == '__main__':
-    per_a, cnta1, cnta5, cnta10, cnta15 = read_file()
-    draw_chart(per_a, cnta1, cnta5, cnta10, cnta15)
+    per_a, cnta1, cnta5, cnta10, cnta15, cnta20 = read_file()
+    draw_chart(per_a, cnta1, cnta5, cnta10, cnta15, cnta20)

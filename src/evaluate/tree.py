@@ -138,7 +138,7 @@ def read_file():
 
 def draw_tree(edges):
     G = Graph(format="pdf")
-    G.attr("node", shape="box", fontname="Hiragino Sans")
+    G.attr("node", shape="box")
     filepath = "tree/figures/" + arg_width+"-"+filename
     print(filepath + ".pdf")
     for i, j in edges:
