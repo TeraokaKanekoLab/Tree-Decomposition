@@ -2,7 +2,7 @@ import numpy as np
 
 BC = "bc"
 METRICS = ["child", "branch", "bagsize", "width", "subtree", "induce", "total_induce",
-           "dist_root", "dist_leaf", "strahler", "sum_strahler", "mainstream",  "bc_tree", "fillin"]
+           "dist_root", "dist_leaf", "strahler", "sum_strahler", "mainstream",  "bc_tree"]
 
 GRAPHS = ["ca-grqc-connected", "ca-astroph-connected",
           "email-enron-connected", "soc-slashdot"]
